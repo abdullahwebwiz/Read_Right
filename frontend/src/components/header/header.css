@@ -1,0 +1,33 @@
+header {
+  background-color: #0bda51;
+  position: relative;
+  width: 100%;
+  height: 50px;
+}
+
+header .mainlogo {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 50px;
+}
+
+.addpostbutton {
+  width: 37px;
+  height: 37px;
+  background-color: white;
+  border-radius: 50%;
+  position: absolute;
+  right: 100px;
+  top: 7px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
+
+.addpostbutton img {
+  position: absolute;
+  width: 80%;
+  pointer-events: none;
+}
