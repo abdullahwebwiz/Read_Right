@@ -1,3 +1,6 @@
 ::placeholder {
-  color:  #1fd12e;
+  color: #1fd12e;
+}
+.blurry {
+  filter: blur(2px);
 }
