@@ -8,22 +8,31 @@ import {
   useNavigate,
 } from "react-router-dom";
 
-import Header from "./components/header/Header";
+import HomePage from "./pages/HomePage";
+import SignUpPage from "./pages/SignUpPage";
+import SignInPage from "./pages/SignInPage";
+import DashboardPage from "./pages/DashboardPage";
+import PostBuilderPage from "./pages/PostBuilderPage";
+import PostPage from "./pages/PostPage";
+import TagPage from "./pages/TagPage";
+import RighterPage from "./pages/RighterPage";
+import ImgCropper from "./components/imgcropper/ImgCropper";
 
 const App = () => {
   return (
     <>
       <BrowserRouter>
         <Routes>
-          <Route index element={<Home />} />
-          <Route path="/" element={<Home />} />
-          <Route path="/signup" element={<SignUp />} />
-          <Route path="/signin" element={<SignIn />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/postbuilder" element={<PostBuilder />} />
+          <Route index element={<HomePage />} />
+          <Route path="/" element={<HomePage />} />
+          <Route path="/signup" element={<SignUpPage />} />
+          <Route path="/signin" element={<SignInPage />} />
+          <Route path="/dashboard" element={<DashboardPage />} />
+          <Route path="/postbuilder" element={<PostBuilderPage />} />
           <Route path="/post/:postid" element={<PostPage />} />
           <Route path="/tag/:tagname" element={<TagPage />} />
           <Route path="/righter/:rname" element={<RighterPage />} />
+          <Route path="/rec" element={<ImgCropper />} />
         </Routes>
       </BrowserRouter>
     </>
