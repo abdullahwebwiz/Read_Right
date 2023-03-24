@@ -1,3 +1,9 @@
+.popupcontainer{
+position: absolute;
+width: 100%;
+top: 60px;
+text-align: center;
+}
 .popup {
   background-color: white;
   width: 330px;
@@ -6,7 +12,7 @@
   border-radius: 30px;
   box-shadow: 3px 3px 10px black;
   margin: auto;
-  margin-top: 100px;
+
   position: relative;
   display: flex;
   flex-direction: column;
