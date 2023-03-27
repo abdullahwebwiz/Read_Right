@@ -1,8 +1,13 @@
+* {
+  text-decoration: none;
+  padding: 0;
+  margin: 0;
+  box-sizing: border-box;
+}
 ::placeholder {
   color: #1fd12e;
   font-size: 14px;
 }
-
 
 .blurry {
   filter: blur(2px);
@@ -47,8 +52,6 @@
   font-size: 20px;
   letter-spacing: 1px;
 }
-
-
 
 .headersearch {
   color: red;

@@ -17,7 +17,10 @@ import PostPage from "./pages/PostPage";
 import TagPage from "./pages/TagPage";
 import RighterPage from "./pages/RighterPage";
 import ImgCropper from "./components/imgcropper/ImgCropper";
-import Header from "../src/components/header/Header";
+import ExplorePage from "./pages/explorepge";
+import HistoryPage from "./pages/historypage";
+import FollowingPage from "./pages/followingpage";
+import LikedPostsPage from "./pages/likedpostspage";
 
 const App = () => {
   return (
@@ -26,6 +29,7 @@ const App = () => {
         <Routes>
           <Route index element={<HomePage />} />
           <Route path="/" element={<HomePage />} />
+          <Route path="/explore" element={<ExplorePage />} />
           <Route path="/signup" element={<SignUpPage />} />
           <Route path="/signin" element={<SignInPage />} />
           <Route path="/dashboard" element={<DashboardPage />} />
@@ -34,7 +38,9 @@ const App = () => {
           <Route path="/tag/:tagname" element={<TagPage />} />
           <Route path="/righter/:rname" element={<RighterPage />} />
           <Route path="/rec" element={<ImgCropper />} />
-          <Route path="/prac" element={<Header />} />
+          <Route path="/history" element={<HistoryPage />} />
+          <Route path="/following" element={<FollowingPage />} />
+          <Route path="/likedposts" element={<LikedPostsPage />} />
         </Routes>
       </BrowserRouter>
     </>

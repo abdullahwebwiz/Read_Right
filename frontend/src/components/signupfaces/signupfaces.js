@@ -33,6 +33,7 @@ const Signupface = ({ popfun }) => {
   }, []);
 
   const submitHandle = () => {
+    console.log(personinfo.password.length);
     setloading(true);
     if (
       personinfo.name &&
@@ -41,30 +42,35 @@ const Signupface = ({ popfun }) => {
       personinfo.city &&
       personinfo.password
     ) {
-      let otp = (Math.floor(Math.random() * 10000) + 10000)
-        .toString()
-        .substring(1);
-      let salt = bcrypt.genSaltSync(2);
-      let hash = bcrypt.hashSync(otp, salt);
-      localStorage.setItem("pin", hash);
-      axios
-        .post("/otp/verify", {
-          email: personinfo.email,
-          otp: otp,
-        })
-        .then((res) => {
-          if (res.data.msg == "success") {
-            setotpinput(true);
-            setloading(false);
-            localStorage.setItem("otpinput", true);
-          } else {
-            popfun("emailsendfailed");
-            setloading(false);
-          }
-        })
-        .catch((error) => {
-          console.log(error);
-        });
+      if (personinfo.password.length > 8) {
+        let otp = (Math.floor(Math.random() * 10000) + 10000)
+          .toString()
+          .substring(1);
+        let salt = bcrypt.genSaltSync(2);
+        let hash = bcrypt.hashSync(otp, salt);
+        localStorage.setItem("pin", hash);
+        axios
+          .post("/otp/verify", {
+            email: personinfo.email,
+            otp: otp,
+          })
+          .then((res) => {
+            if (res.data.msg == "success") {
+              setotpinput(true);
+              setloading(false);
+              localStorage.setItem("otpinput", true);
+            } else {
+              popfun("emailsendfailed");
+              setloading(false);
+            }
+          })
+          .catch((error) => {
+            console.log(error);
+          });
+      } else {
+        popfun("shortpass");
+        setloading(false);
+      }
     } else {
       popfun("incompletepop");
       setloading(false);
@@ -83,6 +89,7 @@ const Signupface = ({ popfun }) => {
         .then((res) => {
           if (res.data.msg == "success") {
             navigate("/");
+            localStorage.clear();
           } else {
             setloading(false);
             setpersoninfo({});
@@ -241,7 +248,7 @@ const Signupface = ({ popfun }) => {
         whatbut={"buttonsecond"}
         location={{ bottom: "11px", left: "20px" }}
         val={"Home"}
-        fun={()=> navigate('/')}
+        fun={() => navigate("/")}
         type={"button"}
       />
 

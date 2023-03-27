@@ -1,7 +1,7 @@
 import "./header.css";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState,memo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useCookie from "../../hooks/useCookie";
 import Popup from "../popup/Popup";
@@ -55,36 +55,50 @@ const Header = () => {
           className={"menuicon"}
           alt={"menuicon"}
           onClick={() => {
-            if(!menushow){
+            if (!menushow) {
               menuelem.current.style.display = "block";
               setmenushow(true);
-            }else{
+            } else {
               menuelem.current.style.display = "none";
               setmenushow(false);
             }
           }}
         />
         <div className={"menubar"} ref={menuelem}>
-          <div className={"mbone"}>
-            <img src={homeicon} />
-            <p>Home</p>
-          </div>
-          <div className={"mbone"}>
-            <img src={exploreicon} />
-            <p>Explore</p>
-          </div>
-          <div className={"mbone"}>
-            <img src={historyicon} />
-            <p>History</p>
-          </div>
-          <div className={"mbone"}>
-            <img src={followingicon} />
-            <p>Following</p>
-          </div>
-          <div className={"mbone"}>
-            <img src={likedpostsicon} />
-            <p>Liked Posts</p>
-          </div>
+          <Link to={"/"}>
+            <div className={"mbone"}>
+              <img src={homeicon} />
+              <p>Home</p>
+            </div>
+          </Link>
+          <Link to={"/explore"}>
+            {" "}
+            <div className={"mbone"}>
+              <img src={exploreicon} />
+              <p>Explore</p>
+            </div>
+          </Link>
+          <Link to={"/history"}>
+            {" "}
+            <div className={"mbone"}>
+              <img src={historyicon} />
+              <p>History</p>
+            </div>
+          </Link>
+          <Link to={"/following"}>
+            {" "}
+            <div className={"mbone"}>
+              <img src={followingicon} />
+              <p>Following</p>
+            </div>
+          </Link>
+          <Link to={"/likedposts"}>
+            {" "}
+            <div className={"mbone"}>
+              <img src={likedpostsicon} />
+              <p>Liked Posts</p>
+            </div>
+          </Link>
         </div>
         <Input
           type={"text"}
@@ -149,4 +163,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

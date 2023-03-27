@@ -67,6 +67,16 @@ const SignUpPage = () => {
         },
       });
     }
+    else if (x == "shortpass") {
+      setmsgprops({
+        msg: "Password must be at least 8 character long.",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
+    }
   };
   return (
     <>
