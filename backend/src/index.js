@@ -24,8 +24,10 @@ app.use(
 
 let data1 = require("../routes/countrycity");
 let data2 = require("../routes/checkotp");
+let data3 = require("../routes/signup");
 app.use("/csc", data1);
 app.use("/otp", data2);
+app.use("/signup", data3);
 
 app.get("/", (req, res) => {
   res.send({ msg: "success" });

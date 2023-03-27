@@ -1,18 +1,18 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
 import PropagateLoader from "react-spinners/PropagateLoader";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
 import Select from "../utilcomps/select";
 import Password from "../utilcomps/password";
-import Popup from "../popup/Popup";
 import axios from "axios";
 const Signupface = ({ popfun }) => {
+  let navigate = useNavigate();
   let [personinfo, setpersoninfo] = React.useState({
     name: "",
     email: "",
     password: "",
-    dob: "",
     country: "",
     city: "",
     otp: "",
@@ -37,7 +37,6 @@ const Signupface = ({ popfun }) => {
     if (
       personinfo.name &&
       personinfo.email &&
-      personinfo.dob &&
       personinfo.country &&
       personinfo.city &&
       personinfo.password
@@ -58,7 +57,6 @@ const Signupface = ({ popfun }) => {
             setotpinput(true);
             setloading(false);
             localStorage.setItem("otpinput", true);
-            localStorage.setItem("otpinput");
           } else {
             popfun("emailsendfailed");
             setloading(false);
@@ -78,7 +76,23 @@ const Signupface = ({ popfun }) => {
     let otp_x = localStorage.getItem("pin");
     let cat = bcrypt.compareSync(personinfo.otp, otp_x);
     if (cat) {
-      alert("All done");
+      axios
+        .post("/signup/adduser", {
+          personinfo: personinfo,
+        })
+        .then((res) => {
+          if (res.data.msg == "success") {
+            navigate("/");
+          } else {
+            setloading(false);
+            setpersoninfo({});
+            popfun("somethingwrong");
+          }
+        })
+        .catch((error) => {
+          console.log("Failed" + error);
+          setloading(false);
+        });
       setloading(false);
     } else {
       popfun("wrongotp");
@@ -146,23 +160,9 @@ const Signupface = ({ popfun }) => {
         placeholder={"Enter fullName.."}
       />
       <Input
-        type={"date"}
-        whatinput={"inputfirst"}
-        location={{ top: "100px" }}
-        naam={"dob"}
-        fun={(a, b) => {
-          setpersoninfo((prevState) => ({
-            ...prevState,
-            [b]: a,
-          }));
-        }}
-        val={personinfo.dob}
-        placeholder={"Enter Date of birth"}
-      />
-      <Input
         type={"email"}
         whatinput={"inputfirst"}
-        location={{ top: "150px" }}
+        location={{ top: "100px" }}
         naam={"email"}
         fun={(a, b) => {
           setpersoninfo((prevState) => ({
@@ -177,7 +177,7 @@ const Signupface = ({ popfun }) => {
         name={"Country"}
         whatselect={"inputfirst"}
         data={countries.map((i) => ({ key1: i.name, key2: i.isoCode }))}
-        location={{ top: "200px" }}
+        location={{ top: "150px" }}
         fun={(e) => {
           if (e.split(",")[1] != "false") {
             countrychange(e.split(",")[1]);
@@ -193,7 +193,7 @@ const Signupface = ({ popfun }) => {
         name={"City"}
         whatselect={"inputfirst"}
         data={cities.map((i) => ({ key1: i.name }))}
-        location={{ top: "250px" }}
+        location={{ top: "200px" }}
         fun={(e) => {
           if (e.split(",")[1] != "false") {
             setpersoninfo((prevState) => ({
@@ -209,7 +209,7 @@ const Signupface = ({ popfun }) => {
       <Password
         name={"password"}
         whatpass={"inputfirst"}
-        location={{ top: "300px" }}
+        location={{ top: "250px" }}
         placeholder={"Password (Double-Click to Show/Hide)"}
         fun={(a, b) => {
           setpersoninfo((prevState) => ({
@@ -223,7 +223,7 @@ const Signupface = ({ popfun }) => {
         <Input
           type={"text"}
           whatinput={"inputfirst"}
-          location={{ top: "350px" }}
+          location={{ top: "300px" }}
           naam={"otp"}
           fun={(a, b) => {
             setpersoninfo((prevState) => ({
@@ -237,6 +237,14 @@ const Signupface = ({ popfun }) => {
       ) : (
         ""
       )}
+      <Button
+        whatbut={"buttonsecond"}
+        location={{ bottom: "11px", left: "20px" }}
+        val={"Home"}
+        fun={()=> navigate('/')}
+        type={"button"}
+      />
+
       {!otpinput || !localStorage.getItem("otpinput") ? (
         <Button
           whatbut={"buttonsecond"}

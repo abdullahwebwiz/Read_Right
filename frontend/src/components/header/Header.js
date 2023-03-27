@@ -1,17 +1,25 @@
 import "./header.css";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useEffect, useRef, useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
 import useCookie from "../../hooks/useCookie";
 import Popup from "../popup/Popup";
 let mainlogo = "/assets/mainlogo.png";
 let addpostimg = "/assets/addpostimg.png";
 let profileiconimg = "/assets/profileiconimg.png";
+let menuicon = "/assets/menuicon.png";
+let homeicon = "/assets/homeicon.png";
+let exploreicon = "/assets/exploreicon.png";
+let likedpostsicon = "/assets/likedpostsicon.png";
+let followingicon = "/assets/followingicon.png";
+let historyicon = "/assets/historyicon.png";
 const Header = () => {
+  let menuelem = useRef("");
   let [val, setval] = useState("");
   let [issigned, setissigned] = useState(false);
   let [msg, setmsg] = useState(false);
+  let [menushow, setmenushow] = useState(false);
   let [msgprops, setmsgprops] = useState({
     msg: "",
     twobut: false,
@@ -39,14 +47,45 @@ const Header = () => {
   return (
     <>
       <header>
+        <Link to={"/"}>
+          <img src={mainlogo} className={"mainlogo"} alt={"mainlogo"} />
+        </Link>
         <img
-          src={mainlogo}
-          className={"mainlogo"}
-          alt={"mainlogo"}
+          src={menuicon}
+          className={"menuicon"}
+          alt={"menuicon"}
           onClick={() => {
-            navigate("/");
+            if(!menushow){
+              menuelem.current.style.display = "block";
+              setmenushow(true);
+            }else{
+              menuelem.current.style.display = "none";
+              setmenushow(false);
+            }
           }}
         />
+        <div className={"menubar"} ref={menuelem}>
+          <div className={"mbone"}>
+            <img src={homeicon} />
+            <p>Home</p>
+          </div>
+          <div className={"mbone"}>
+            <img src={exploreicon} />
+            <p>Explore</p>
+          </div>
+          <div className={"mbone"}>
+            <img src={historyicon} />
+            <p>History</p>
+          </div>
+          <div className={"mbone"}>
+            <img src={followingicon} />
+            <p>Following</p>
+          </div>
+          <div className={"mbone"}>
+            <img src={likedpostsicon} />
+            <p>Liked Posts</p>
+          </div>
+        </div>
         <Input
           type={"text"}
           whatinput={"headersearch"}

@@ -1,5 +1,13 @@
 import React, { useState, useEffect, useRef } from "react";
-const Input = ({ type, whatinput, naam, placeholder, val, fun, location }) => {
+const Input = ({
+  type,
+  whatinput,
+  naam,
+  placeholder,
+  val,
+  fun,
+  location,
+}) => {
   return (
     <>
       <input

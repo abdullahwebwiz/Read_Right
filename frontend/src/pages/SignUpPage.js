@@ -57,6 +57,15 @@ const SignUpPage = () => {
           setmsg(false);
         },
       });
+    } else if (x == "somethingwrong") {
+      setmsgprops({
+        msg: "Something Went Wrong.",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
     }
   };
   return (
@@ -67,7 +76,11 @@ const SignUpPage = () => {
             <Signupface popfun={(x) => popfun(x)} />
           </div>
           <div className={"signuprightface"}>
-            <img src={signupimg} alt={"Signup image"} />
+            {signupimg ? (
+              <img src={signupimg} alt={"Signup image"} />
+            ) : (
+              ""
+            )}
           </div>
         </div>
       </div>
