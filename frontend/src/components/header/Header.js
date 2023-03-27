@@ -49,22 +49,7 @@ const Header = () => {
         />
         <Input
           type={"text"}
-          beauty={{
-            color: "red",
-            position: "absolute",
-            left: "300px",
-            top: "5px",
-            backgroundColor: "#577d82",
-            height: "35px",
-            width: "660px",
-            borderRadius: "20px",
-            border: "none",
-            outline: "none",
-            paddingLeft: "20px",
-            color: " #1fd12e",
-            fontSize: "20px",
-            letterSpacing: "2px",
-          }}
+          whatinput={"headersearch"}
           naam={"input"}
           fun={(e) => setval(e)}
           val={val}
@@ -100,23 +85,10 @@ const Header = () => {
           </>
         ) : (
           <Button
-            beauty={{
-              backgroundColor: "White",
-              color: "#0bda51",
-              fontSize: "17px",
-              border: "none",
-              outline: "none",
-              borderRadius: "5px",
-              position: "absolute",
-              right: "15px",
-              top: "7px",
-              width: "65px",
-              height: "35px",
-              fontStyle: "Calibri",
-              cursor: "pointer",
-            }}
-            val={"SignIn"}
-            fun={() => alert()}
+            whatbut={"buttonsecond"}
+            location={{ bottom: "11px", right: "10px" }}
+            val={"SignUp"}
+            fun={() => navigate("/signup")}
             type={"button"}
           />
         )}

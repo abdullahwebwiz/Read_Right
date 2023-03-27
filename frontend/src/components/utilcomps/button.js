@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from "react";
-const Button = ({fun,type,val, beauty}) => {
+const Button = ({ whatbut, fun, type, val, location }) => {
   return (
     <>
-    <button style={beauty} onClick={fun} type={type}>{val}</button>
+      <button style={location} className={whatbut} onClick={fun} type={type}>
+        {val}
+      </button>
     </>
   );
 };
-
 
 export default Button;

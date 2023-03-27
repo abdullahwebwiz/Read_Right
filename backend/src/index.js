@@ -22,6 +22,11 @@ app.use(
 );
 // ========================== routes ==========================
 
+let data1 = require("../routes/countrycity");
+let data2 = require("../routes/checkotp");
+app.use("/csc", data1);
+app.use("/otp", data2);
+
 app.get("/", (req, res) => {
   res.send({ msg: "success" });
 });

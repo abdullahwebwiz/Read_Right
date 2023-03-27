@@ -1,0 +1,50 @@
+.signupmaincontainer {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  top: 0;
+  left: 0;
+  background-color: #99ebb4;
+}
+
+.signupcontainer {
+  width: 800px;
+  height: 500px;
+  margin: auto;
+  margin-top: 60px;
+  box-shadow: 5px 5px 10px rgb(55, 55, 182);
+  border-radius: 30px;
+  display: flex;
+  flex-direction: row;
+  position: relative;
+}
+
+.signupcontainer div {
+  width: 50%;
+  position: relative;
+}
+
+.signupleftface {
+  display: flex;
+  justify-content: center;
+  background-color: #0bda51;
+  border-top-left-radius: 30px;
+  border-bottom-left-radius: 30px;
+  position: relative;
+}
+.signuprightface {
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  position: relative;
+}
+.signuprightface img {
+  position: absolute;
+  width: 100%;
+  border-top-right-radius: 30px;
+  border-bottom-right-radius: 30px;
+  pointer-events: none;
+}
+
+.signupinputs {
+  position: absolute;
+}

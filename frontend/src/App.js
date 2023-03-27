@@ -17,6 +17,7 @@ import PostPage from "./pages/PostPage";
 import TagPage from "./pages/TagPage";
 import RighterPage from "./pages/RighterPage";
 import ImgCropper from "./components/imgcropper/ImgCropper";
+import Header from "../src/components/header/Header";
 
 const App = () => {
   return (
@@ -33,6 +34,7 @@ const App = () => {
           <Route path="/tag/:tagname" element={<TagPage />} />
           <Route path="/righter/:rname" element={<RighterPage />} />
           <Route path="/rec" element={<ImgCropper />} />
+          <Route path="/prac" element={<Header />} />
         </Routes>
       </BrowserRouter>
     </>
