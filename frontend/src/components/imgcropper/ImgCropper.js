@@ -2,12 +2,15 @@ import React from "react";
 import "./imgcropper.css";
 import Cropper from "react-easy-crop";
 import Button from "../utilcomps/button";
+import { useLocation, useNavigate } from "react-router-dom";
 import getCroppedImg, { generateDownload } from "./cropImage";
 import { dataURLtoFile } from "./dataURLtoFile";
 import PopUp from "../popup/Popup";
 import axios from "axios";
 
-const ImgCropper = ({ aspect, fun }) => {
+const ImgCropper = () => {
+  let { state } = useLocation();
+  let navigate = useNavigate();
   const [image, setImage] = React.useState(null);
   const [imgtype, setimgtype] = React.useState("");
   const [croppedArea, setCroppedArea] = React.useState(null);
@@ -50,7 +53,8 @@ const ImgCropper = ({ aspect, fun }) => {
       let canvas = await getCroppedImg(image, croppedArea);
       let canvadataurl = canvas.toDataURL("image/jpg");
       let x = dataURLtoFile(canvadataurl, "img." + imgtype);
-      await fun(x, imgtype);
+      console.log(x);
+      navigate("/"+state.sender, { state: { img: x } });
       console.log("all done");
     } else {
       setmsg(true);
@@ -74,7 +78,7 @@ const ImgCropper = ({ aspect, fun }) => {
             image={image}
             crop={crop}
             zoom={zoom}
-            aspect={aspect}
+            aspect={state.aspect}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}
@@ -168,4 +172,4 @@ const ImgCropper = ({ aspect, fun }) => {
     </>
   );
 };
-export default ImgCropper;
+export default React.memo(ImgCropper);

@@ -1,0 +1,51 @@
+.dashboardmaincontainer{
+position: relative;
+}
+
+.profilesec{
+width: 100%;
+position: relative;
+margin-top: 10px;
+padding-left: 20px;
+}
+
+.profilesecimg{
+position: relative;
+width: 100px;
+height: 100px;
+outline: 4px solid #1d753a;
+border-radius: 50%;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.profilesecsum{
+position: relative;
+margin-top: -90px;
+margin-left: 110px;
+color: #1da149;
+font-size: 20px;
+text-align: center;
+width: fit-content;
+
+}
+
+
+.profilesecsum p{
+text-decoration: underline 1px black;
+}
+
+
+.profilesecimg .profilesecimg-1{
+position: absolute;
+width: 120%;
+}
+.profilesecimg .profilesecimg-2{
+position: absolute;
+bottom: -5px;
+right: 5px;
+width: 35px;
+cursor: pointer;
+}
+

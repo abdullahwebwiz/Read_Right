@@ -251,6 +251,13 @@ const Signupface = ({ popfun }) => {
         fun={() => navigate("/")}
         type={"button"}
       />
+            <Button
+        whatbut={"buttonsecond"}
+        location={{ bottom: "11px", left: "85px" }}
+        val={"SignIn"}
+        fun={() => navigate("/signin")}
+        type={"button"}
+      />
 
       {!otpinput || !localStorage.getItem("otpinput") ? (
         <Button

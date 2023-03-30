@@ -1,8 +1,11 @@
-const DashboardPage = () =>{
-    return(
+import Header from "../components/header/Header";
+import DashboardBody from "../components/dashboardbody/dashboardbody";
+const DashboardPage = () => {
+  return (
     <>
-    <h1>Dashboard Page</h1>
+      <Header />
+      <DashboardBody />
     </>
-    )
-    }
-    export default DashboardPage;
+  );
+};
+export default DashboardPage;

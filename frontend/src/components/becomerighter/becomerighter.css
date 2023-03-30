@@ -1,0 +1,71 @@
+.becomerighterformcontainer {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.becomerighterform {
+  width: 500px;
+  height: 650px;
+  background-color: white;
+  box-shadow: 5px 5px 10px #0bda51;
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  position: relative;
+  margin-top: 20px;
+}
+.becomerighterform p{
+width: 90%;
+margin: auto;
+font-size: 13px;
+text-align: center;
+Margin-bottom: 60px;
+}
+
+
+.becomerighterform textarea{
+width: 400px;
+height: 150px;
+border: none;
+outline: 2px solid #0bda51;
+resize: none;
+position: absolute;
+bottom: 145px;
+border-radius: 20px;
+padding: 5px;
+font-size: 16px;
+color: #056124;
+}
+
+.brfimg {
+  width: 100px;
+  height: 100px;
+  outline: 6px solid #39a85e;
+  border-radius: 50%;
+  position: absolute;
+  background-color: aqua;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: -20px;
+}
+
+.brfimg img {
+  position: absolute;
+}
+.brfimg .brfimg-1 {
+  width: 120%;
+  border-radius: 50%;
+}
+
+.brfimg .brfimg-2 {
+  width: 35px;
+  bottom: -10px;
+  right: 20px;
+  cursor: pointer;
+}

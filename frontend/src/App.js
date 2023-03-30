@@ -21,6 +21,7 @@ import ExplorePage from "./pages/explorepge";
 import HistoryPage from "./pages/historypage";
 import FollowingPage from "./pages/followingpage";
 import LikedPostsPage from "./pages/likedpostspage";
+import BecomeRighter from "./components/becomerighter/becomerighter";
 
 const App = () => {
   return (
@@ -41,6 +42,8 @@ const App = () => {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/following" element={<FollowingPage />} />
           <Route path="/likedposts" element={<LikedPostsPage />} />
+          <Route path="/prac" element={<BecomeRighter />} />
+          <Route path="/imagecropper" element={<ImgCropper />} />
         </Routes>
       </BrowserRouter>
     </>

@@ -1,10 +1,12 @@
 import "./header.css";
+import axios from "axios";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
-import { useEffect, useMemo, useRef, useState,memo } from "react";
+import { useEffect, useMemo, useRef, useState, memo } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import useCookie from "../../hooks/useCookie";
 import Popup from "../popup/Popup";
+import Cookie from "../../hooks/useCookie";
 let mainlogo = "/assets/mainlogo.png";
 let addpostimg = "/assets/addpostimg.png";
 let profileiconimg = "/assets/profileiconimg.png";
@@ -16,10 +18,13 @@ let followingicon = "/assets/followingicon.png";
 let historyicon = "/assets/historyicon.png";
 const Header = () => {
   let menuelem = useRef("");
+  let profileelem = useRef("");
   let [val, setval] = useState("");
   let [issigned, setissigned] = useState(false);
-  let [msg, setmsg] = useState(false);
   let [menushow, setmenushow] = useState(false);
+  let [profilemenushow, setprofilemenushow] = useState(false);
+  let [email, setemail] = useState("wait...");
+  let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
     msg: "",
     twobut: false,
@@ -43,6 +48,20 @@ const Header = () => {
       setissigned(false);
     }
   }, [user]);
+
+  useEffect(() => {
+    axios
+      .post("/getemailonly/getemailonly", {
+        userid: user,
+      })
+      .then((res) => {
+        setemail(res.data.msg);
+        
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+  }, []);
 
   return (
     <>
@@ -71,28 +90,28 @@ const Header = () => {
               <p>Home</p>
             </div>
           </Link>
-          <Link to={"/explore"}>
+          <Link to={user ? "/explore" : ""}>
             {" "}
             <div className={"mbone"}>
               <img src={exploreicon} />
               <p>Explore</p>
             </div>
           </Link>
-          <Link to={"/history"}>
+          <Link to={user ? "/history" : "/"}>
             {" "}
             <div className={"mbone"}>
               <img src={historyicon} />
               <p>History</p>
             </div>
           </Link>
-          <Link to={"/following"}>
+          <Link to={user ? "/following" : "/"}>
             {" "}
             <div className={"mbone"}>
               <img src={followingicon} />
               <p>Following</p>
             </div>
           </Link>
-          <Link to={"/likedposts"}>
+          <Link to={user ? "/likedposts" : "/"}>
             {" "}
             <div className={"mbone"}>
               <img src={likedpostsicon} />
@@ -113,7 +132,7 @@ const Header = () => {
           className={"addpostbutton"}
           onClick={() => {
             if (user) {
-              alert("Your are signedin");
+              navigate("/dashboard");
             } else {
               setmsg(true);
               setmsgprops({
@@ -132,8 +151,32 @@ const Header = () => {
 
         {issigned ? (
           <>
-            <div className={"profileicon"}>
+            <div
+              className={"profileicon"}
+              onClick={() => {
+                if (profilemenushow) {
+                  profileelem.current.style.display = "none";
+                  setprofilemenushow(false);
+                } else {
+                  profileelem.current.style.display = "block";
+                  setprofilemenushow(true);
+                }
+              }}
+            >
               <img src={profileiconimg} alt={"profile icon"} />
+            </div>
+            <div className={"profilemenu"} ref={profileelem}>
+              <div>{email}</div>
+              <Button
+                whatbut={"buttonfirst"}
+                location={{ bottom: "11px", right: "40px" }}
+                val={"SignOut"}
+                fun={() => {
+                  navigate("/signin");
+                  cookie("clear", "user");
+                }}
+                type={"button"}
+              />
             </div>
           </>
         ) : (

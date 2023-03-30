@@ -27,11 +27,18 @@ let data2 = require("../routes/checkotp");
 let data3 = require("../routes/signup");
 let data4 = require("../routes/forgotpassword");
 let data5 = require("../routes/login");
+let data6 = require("../routes/getmailonly");
+let data7 = require('../routes/becomerighter');
+
 app.use("/csc", data1);
 app.use("/otp", data2);
 app.use("/signup", data3);
 app.use("/forgotpassword", data4);
 app.use("/login", data5);
+app.use("/getemailonly", data6);
+app.use("/becomerighter", data7);
+
+
 
 app.get("/", (req, res) => {
   res.send({ msg: "success" });

@@ -98,3 +98,31 @@ header .mainlogo {
   margin-right: 10px;
   cursor: pointer;
 }
+
+.profilemenu{
+  position: absolute;
+  top: 50px;
+  right: 0px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 160px;
+  background-color: #ffff;
+  border: 2px solid #0bda51;
+  border-bottom-left-radius: 20px;
+  border-bottom-right-radius: 20px;
+  color: #027529;
+  display: none;
+  height: 80px;
+  overflow: hidden;
+}
+
+.profilemenu div{
+position: absolute;
+left: 2px;
+top: 2px;
+white-space: nowrap;
+overflow: hidden;
+text-overflow: ellipsis;
+width: 100%;
+}
