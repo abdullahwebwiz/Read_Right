@@ -1,14 +1,13 @@
 import { Navigate } from "react-router-dom";
 import useCookie from "../hooks/useCookie";
-import Header from "../components/header/Header";
-const HistoryPage = () => {
+import BecomeRighter from "../components/becomerighter/becomerighter";
+const BecomeRighterPage = () => {
   let cookie = useCookie;
   let issigned = cookie("get", "user");
   if (issigned) {
     return (
       <>
-        <Header />
-        <h1>History Page</h1>
+        <BecomeRighter />
       </>
     );
   } else {
@@ -20,4 +19,4 @@ const HistoryPage = () => {
     );
   }
 };
-export default HistoryPage;
+export default BecomeRighterPage;

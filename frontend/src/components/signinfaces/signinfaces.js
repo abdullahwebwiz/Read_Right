@@ -7,15 +7,14 @@ import Button from "../utilcomps/button";
 import Select from "../utilcomps/select";
 import Password from "../utilcomps/password";
 import axios from "axios";
-import Cookie from "../../hooks/useCookie";
+import useCookie from "../../hooks/useCookie";
 const Signinface = ({ popfun }) => {
+  let cookie = useCookie;
   let navigate = useNavigate();
   let [personinfo, setpersoninfo] = React.useState({
     email: "",
     password: "",
   });
-  console.log(personinfo.email);
-  console.log(personinfo.password);
   let [loading, setloading] = useState(false);
 
   const forgotpassword = () => {
@@ -55,7 +54,7 @@ const Signinface = ({ popfun }) => {
         })
         .then((res) => {
           if (res.data.msg == "success") {
-            Cookie("set", "user", res.data.userid);
+            cookie("set", "user", res.data.userid);
             navigate("/");
           } else if (res.data.msg == "noaccount") {
             popfun("noaccount");

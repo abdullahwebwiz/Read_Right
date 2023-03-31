@@ -39,7 +39,8 @@ text-decoration: underline 1px black;
 
 .profilesecimg .profilesecimg-1{
 position: absolute;
-width: 120%;
+width: 100%;
+border-radius: 50%;
 }
 .profilesecimg .profilesecimg-2{
 position: absolute;

@@ -17,12 +17,11 @@ import PostPage from "./pages/PostPage";
 import TagPage from "./pages/TagPage";
 import RighterPage from "./pages/RighterPage";
 import ImgCropper from "./components/imgcropper/ImgCropper";
-import ExplorePage from "./pages/explorepge";
+import ExplorePage from "./pages/explorepage";
 import HistoryPage from "./pages/historypage";
 import FollowingPage from "./pages/followingpage";
 import LikedPostsPage from "./pages/likedpostspage";
-import BecomeRighter from "./components/becomerighter/becomerighter";
-
+import BecomeRighterPage from "./pages/becomerighterpage";
 const App = () => {
   return (
     <>
@@ -42,7 +41,7 @@ const App = () => {
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/following" element={<FollowingPage />} />
           <Route path="/likedposts" element={<LikedPostsPage />} />
-          <Route path="/prac" element={<BecomeRighter />} />
+          <Route path="/becomerighter" element={<BecomeRighterPage />} />
           <Route path="/imagecropper" element={<ImgCropper />} />
         </Routes>
       </BrowserRouter>

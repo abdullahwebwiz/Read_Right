@@ -20,7 +20,6 @@ router.post("/login", (req, res) => {
   console.log("login reached");
   let email = req.body.email;
   let password = req.body.password;
-  console.log(req.body);
   db1.all(
     `SELECT password,userid FROM users WHERE email = '${email}'`,
     (err, result) => {

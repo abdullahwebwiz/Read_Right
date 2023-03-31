@@ -31,9 +31,10 @@ router.post("/becomerighter", (req, res) => {
   let link3 = req.body.link3;
   let link4 = req.body.link4;
   let img = req.files.img;
+  let filetype = req.files.img.mimetype;
   let followers = 0;
 
-  console.log(req.files.img);
+  console.log(req.body);
   db1.all(
     `SELECT rightername FROM righters WHERE rightername = '${rightername}' `,
     (err, result) => {
@@ -43,8 +44,8 @@ router.post("/becomerighter", (req, res) => {
       } else {
         if (result == "") {
           db1.run(
-            `INSERT INTO righters (righterid,rightername,desc,link1,link2,link3,link4,followers)
-            VALUES('${userid}','${rightername}','${desc}','${link1}','${link2}','${link3}','${link4}',${followers})`,
+            `INSERT INTO righters (righterid,rightername,desc,link1,link2,link3,link4,followers,filetype)
+            VALUES('${userid}','${rightername}','${desc}','${link1}','${link2}','${link3}','${link4}',${followers},'${filetype}')`,
             (err) => {
               if (err) {
                 res.send({ msg: "failed" });
@@ -62,7 +63,7 @@ router.post("/becomerighter", (req, res) => {
                         "../righterimgs/pi_" +
                           rightername +
                           "." +
-                          img.mimetype.replace("image/", "")
+                          filetype.replace("image/", "")
                       );
                       img.mv(dest2, (err) => {
                         if (err) {

@@ -4,13 +4,15 @@ import axios from "axios";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
 import Popup from "../popup/Popup";
-import Cookie from "../../hooks/useCookie";
+import useCookie from "../../hooks/useCookie";
 import { useNavigate, useLocation } from "react-router-dom";
 let profileiconimg = "/assets/profileiconimg.png";
 let uploadicon = "/assets/uploadicon.png";
-let user = Cookie("get", "user");
-console.log(user);
+
 const BecomeRighter = () => {
+  let cookie = useCookie;
+  let user = cookie("get", "user");
+
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
     msg: "",
@@ -86,6 +88,8 @@ const BecomeRighter = () => {
                 });
               } else if (res.data.msg == "success") {
                 alert("all good");
+                navigate("/");
+                localStorage.clear();
               }
             });
         } else {
@@ -215,7 +219,7 @@ const BecomeRighter = () => {
               className={"brfimg-2"}
               onClick={() => {
                 navigate("/imagecropper", {
-                  state: { aspect: 1, sender: "prac" },
+                  state: { aspect: 1, sender: "becomerighter" },
                 });
               }}
             />
