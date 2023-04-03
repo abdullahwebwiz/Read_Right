@@ -1,0 +1,91 @@
+.sideedit {
+  position: absolute;
+  height: 100vh;
+  width: 30%;
+  top: 0;
+  right: 0;
+  background-image: linear-gradient(to right, #0bd, #0bda51);
+  z-index: -1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.editor {
+  position: absolute;
+  top: 0;
+  left: 0;
+}
+
+.posttagcontainer {
+  position: absolute;
+  width: 95%;
+  height: 100px;
+  top: 150px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+.posttagitself {
+  background-color: #ffff;
+  width: fit-content;
+  height: fit-content;
+  margin: 3px 3px 0px 3px;
+  padding: 2px 23px 2px 9px;
+  border-radius: 5px;
+  position: relative;
+  outline: 2px solid #2e814a;
+}
+
+.posttagitself img {
+  position: absolute;
+  width: 15px;
+  right: 1px;
+  top: 6px;
+  cursor: pointer;
+}
+
+.postdemosec {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 400px;
+  position: absolute;
+}
+
+.dumpost {
+  position: absolute;
+  width: 90%;
+  height: 265px;
+  border-radius: 20px;
+}
+
+.dumpost img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  border-top-right-radius: 20px;
+  border-top-left-radius: 20px;
+  pointer-events: none;
+}
+
+.dumpost div {
+  padding: 0px 0px 0px 8px;
+  position: absolute;
+  bottom: 0;
+  background-color: white;
+  width: 100%;
+  height: 60px;
+  border-bottom-right-radius: 20px;
+  border-bottom-left-radius: 20px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  font-size: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+}

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 const Select = ({ data, whatselect, location, name, fun }) => {
   return (
     <>
@@ -34,4 +34,4 @@ const Select = ({ data, whatselect, location, name, fun }) => {
   );
 };
 
-export default Select;
+export default memo(Select);

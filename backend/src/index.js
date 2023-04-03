@@ -7,8 +7,11 @@ const cors = require("cors");
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
+const uuid = require("uuid");
+const shuffle = require("shuffle-array");
 const app = express();
 const dest = require("../config/destination");
+
 // =================middlewares==============================
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -28,7 +31,8 @@ let data3 = require("../routes/signup");
 let data4 = require("../routes/forgotpassword");
 let data5 = require("../routes/login");
 let data6 = require("../routes/getonly");
-let data7 = require('../routes/becomerighter');
+let data7 = require("../routes/becomerighter");
+let data8 = require('../routes/posting');
 
 app.use("/csc", data1);
 app.use("/otp", data2);
@@ -37,8 +41,7 @@ app.use("/forgotpassword", data4);
 app.use("/login", data5);
 app.use("/getonly", data6);
 app.use("/becomerighter", data7);
-
-
+app.use("/posting", data8);
 
 app.get("/", (req, res) => {
   res.send({ msg: "success" });

@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect, useRef, memo } from "react";
 const Input = ({
   type,
   whatinput,
@@ -25,4 +25,4 @@ const Input = ({
   );
 };
 
-export default Input;
+export default memo(Input);

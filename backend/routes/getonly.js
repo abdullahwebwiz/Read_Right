@@ -76,4 +76,10 @@ router.post("/getrighterdata", (req, res) => {
   );
 });
 
+router.get("/tagnames", (req, res) => {
+  db1.all(`SELECT * FROM tagnames`, (err, result) => {
+    res.send({ msg: result });
+  });
+});
+
 module.exports = router;

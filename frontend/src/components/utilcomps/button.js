@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, memo } from "react";
 const Button = ({ whatbut, fun, type, val, location }) => {
   return (
     <>
@@ -9,4 +9,4 @@ const Button = ({ whatbut, fun, type, val, location }) => {
   );
 };
 
-export default Button;
+export default memo(Button);

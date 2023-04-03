@@ -1,5 +1,5 @@
-import './password.css'
-import React, { useState, useEffect } from "react";
+import './utilcomps.css'
+import React, { useState, useEffect, memo } from "react";
 const Password = ({ whatpass, val, fun, name, location, placeholder }) => {
   let [passtype, setpasstype] = useState("password");
   return (
@@ -26,4 +26,4 @@ const Password = ({ whatpass, val, fun, name, location, placeholder }) => {
   );
 };
 
-export default Password;
+export default  memo(Password);

@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/adduser", (req, res) => {
   console.log(req.body.personinfo);
-  let userid = ang.generate({ length: 11, charset: "alphanumeric" });
+  let userid = ang.generate({ length: 20, charset: "alphanumeric" });
   let name = req.body.personinfo.name;
   let email = req.body.personinfo.email;
   let password = req.body.personinfo.password;
