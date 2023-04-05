@@ -32,7 +32,7 @@ let data4 = require("../routes/forgotpassword");
 let data5 = require("../routes/login");
 let data6 = require("../routes/getonly");
 let data7 = require("../routes/becomerighter");
-let data8 = require('../routes/posting');
+let data8 = require("../routes/posting");
 
 app.use("/csc", data1);
 app.use("/otp", data2);
@@ -52,3 +52,4 @@ app.listen(port, (err) => {
   if (err) console.log("failed to listen" + err);
   console.log("success listening " + port);
 });
+

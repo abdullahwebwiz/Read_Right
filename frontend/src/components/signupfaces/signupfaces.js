@@ -88,7 +88,7 @@ const Signupface = ({ popfun }) => {
         })
         .then((res) => {
           if (res.data.msg == "success") {
-            navigate("/");
+            navigate("/signin");
             localStorage.clear();
           } else {
             setloading(false);

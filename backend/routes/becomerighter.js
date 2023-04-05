@@ -44,7 +44,7 @@ router.post("/becomerighter", (req, res) => {
       } else {
         if (result == "") {
           db1.run(
-            `INSERT INTO righters (righterid,rightername,desc,link1,link2,link3,link4,followers,filetype)
+            `INSERT INTO righters (righterid,rightername,desc,link1,link2,link3,link4,readers,filetype)
             VALUES('${userid}','${rightername}','${desc}','${link1}','${link2}','${link3}','${link4}',${followers},'${filetype}')`,
             (err) => {
               if (err) {

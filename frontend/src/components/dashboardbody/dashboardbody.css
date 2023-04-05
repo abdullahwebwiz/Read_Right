@@ -1,52 +1,80 @@
-.dashboardmaincontainer{
-position: relative;
+.dashboardmaincontainer {
+  position: relative;
 }
 
-.profilesec{
-width: 100%;
-position: relative;
-margin-top: 10px;
-padding-left: 20px;
+.profilesec {
+  width: 100%;
+  position: relative;
+  margin-top: 10px;
+  padding-left: 20px;
 }
 
-.profilesecimg{
-position: relative;
-width: 100px;
-height: 100px;
-outline: 4px solid #1d753a;
-border-radius: 50%;
-display: flex;
-justify-content: center;
-align-items: center;
+.profilesecimg {
+  position: relative;
+  width: 100px;
+  height: 100px;
+  outline: 4px solid #1d753a;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.profilesecsum{
-position: relative;
-margin-top: -90px;
-margin-left: 110px;
-color: #1da149;
-font-size: 20px;
-text-align: center;
-width: fit-content;
-
+.profilesecsum {
+  position: relative;
+  margin-top: -90px;
+  margin-left: 110px;
+  color: #1da149;
+  font-size: 20px;
+  text-align: center;
+  width: fit-content;
 }
 
-
-.profilesecsum p{
-text-decoration: underline 1px black;
+.profilesecsum p {
+  text-decoration: underline 1px black;
 }
 
-
-.profilesecimg .profilesecimg-1{
-position: absolute;
-width: 100%;
-border-radius: 50%;
+.profilesecimg .profilesecimg-1 {
+  position: absolute;
+  width: 100%;
+  border-radius: 50%;
 }
-.profilesecimg .profilesecimg-2{
-position: absolute;
-bottom: -5px;
-right: 5px;
-width: 35px;
-cursor: pointer;
+.profilesecimg .profilesecimg-2 {
+  position: absolute;
+  bottom: -5px;
+  right: 5px;
+  width: 35px;
+  cursor: pointer;
 }
 
+.dashboardbuttons {
+  position: relative;
+  margin-top: 20px;
+  width: 100%;
+  height: 50px;
+}
+
+.profiledesc {
+  position: relative;
+  margin-top: 20px;
+  padding-left: 3px;
+  width: 100%;
+  margin-left: 15px;
+  width: 300px;
+  overflow: hidden;
+  font-style: italic;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+}
+
+.dashboardpostcontainers {
+  width: 100%;
+  margin-top: 10px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}

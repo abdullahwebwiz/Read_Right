@@ -76,6 +76,49 @@ router.post("/getrighterdata", (req, res) => {
   );
 });
 
+router.post("/getposts", (req, res) => {
+  console.log("getrighterdata reached");
+  let righterid = req.body.righterid;
+  db1.all(
+    `SELECT * FROM postrecords WHERE righterid = '${righterid}'`,
+    (err, result) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        if (result != "") {
+
+
+          let dest = path.join(
+            __dirname,
+            "../postthumbnails/tn_" +
+              result[0].postid +
+              "." +
+              result[0].filetype.toString().replace("image/", "")
+          );
+
+          fs.readFile(dest, (err, data) => {
+            if (err) {
+              res.send({ msg: "failed" });
+              console.log(err);
+            } else {
+              let base64Image = new Buffer.from(data, "binary").toString(
+                "base64"
+              );
+
+              res.send({ msg: result[0], pimg: base64Image });
+            }
+          });
+
+
+        } else {
+          res.send({ msg: "notfound" });
+        }
+      }
+    }
+  );
+});
+
 router.get("/tagnames", (req, res) => {
   db1.all(`SELECT * FROM tagnames`, (err, result) => {
     res.send({ msg: result });

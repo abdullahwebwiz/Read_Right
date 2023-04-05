@@ -58,7 +58,8 @@ const SideEdit = ({ popfun }) => {
       postthumbnail &&
       posttitle &&
       posttaglist &&
-      localStorage.getItem("postbody")
+      localStorage.getItem("postbody") &&
+      posttaglist.length == 5
     ) {
       let fb = new FormData();
       fb.append("postthumbnail", postthumbnail);
@@ -88,7 +89,7 @@ const SideEdit = ({ popfun }) => {
           console.log(err);
         });
     } else {
-      setloading(true);
+      setloading(false);
       popfun("incompleteinput");
     }
   };
@@ -101,8 +102,10 @@ const SideEdit = ({ popfun }) => {
         })
         .then((res) => {
           if (res.data.msg == "success") {
-            navigate("dashboard");
-            localStorage.clear();
+            navigate("/dashboard");
+            localStorage.removeItem("posttitle");
+            localStorage.removeItem("posttaglist");
+            localStorage.removeItem("postbody");
             setloading(false);
           } else {
             setloading(false);
@@ -116,6 +119,7 @@ const SideEdit = ({ popfun }) => {
         });
     } else {
       popfun("firstsave");
+      setloading(false);
     }
   };
 
@@ -228,13 +232,12 @@ const SideEdit = ({ popfun }) => {
             })}
           </div>
         )}
-        <div className={"postdemosec"}>
-          <div className={"dumpost"}>
-            <img
-              src={postthumbnail ? URL.createObjectURL(postthumbnail) : dumimg}
-            />
-            <div>{posttitle}</div>
-          </div>
+
+        <div className={"dumpost"}>
+          <img
+            src={postthumbnail ? URL.createObjectURL(postthumbnail) : dumimg}
+          />
+          <div>{posttitle}</div>
         </div>
       </div>
       {loading ? <GeneralLoader /> : ""}

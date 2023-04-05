@@ -1,15 +1,20 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "./dashboardbody.css";
+import PostBox from "../postbox/postbox";
 import Popup from "../popup/Popup";
 import Cookie from "../../hooks/useCookie";
+import Button from "../utilcomps/button";
+import Input from "../utilcomps/input";
+import Link from "../utilcomps/linker";
+import Select from "../utilcomps/select";
 let profileiconimg = "/assets/profileiconimg.png";
 let uploadicon = "/assets/uploadicon.png";
 const DashboardBody = () => {
   let cookie = Cookie;
   let [righterdata, setrighterdata] = useState({
-    righername: "plz wait...",
-    followers: "",
+    rightername: "plz wait...",
+    readers: "",
     desc: "plz wait...",
     link1: "plz wait...",
     link2: "plz wait...",
@@ -19,6 +24,8 @@ const DashboardBody = () => {
     pimgtype: "",
     img: "",
   });
+  let [posts, setposts] = useState([]);
+
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
     msg: "",
@@ -32,6 +39,7 @@ const DashboardBody = () => {
       return false;
     },
   });
+  let [postfilter, setpostfilter] = useState("recent");
   let elemfile = useRef("");
   let righterid = cookie("get", "user");
   useEffect(() => {
@@ -63,8 +71,8 @@ const DashboardBody = () => {
         } else {
           setrighterdata((prevState) => ({
             ...prevState,
-            righername: res.data.msg.rightername,
-            followers: res.data.msg.followers,
+            rightername: res.data.msg.rightername,
+            readers: res.data.msg.readers,
             desc: res.data.msg.desc,
             link1: res.data.msg.link1,
             link2: res.data.msg.link2,
@@ -78,6 +86,17 @@ const DashboardBody = () => {
       });
   }, []);
 
+
+
+
+
+
+
+
+
+
+
+  
   return (
     <>
       <input
@@ -103,12 +122,55 @@ const DashboardBody = () => {
           </div>
 
           <div className={"profilesecsum"}>
-            <p>{"@" + righterdata.righername}</p>
-            <p>{righterdata.followers + " followers"}</p>
+            <p>{"@" + righterdata.rightername}</p>
+            <p>{righterdata.readers + " readers"}</p>
             <p>98 Posts</p>
           </div>
         </div>
       </div>
+      <div className={"profiledesc"}>{righterdata.desc}</div>
+      <div className={"dashboardbuttons"}>
+        <Select
+          name={"postfilter"}
+          whatselect={"inputfirst"}
+          data={[{ key1: "Most Viewed" }, { key1: "Recent" }]}
+          location={{
+            top: "10px",
+            left: "10px",
+            width: "100px",
+            backgroundColor: "#0bda51",
+            color: "white",
+            fontSize: "15px",
+          }}
+          fun={(e) => {
+            if (e.split(",")[1] != "false") {
+              setpostfilter(e.split(",")[0]);
+            } else {
+              return false;
+            }
+          }}
+        />
+
+        <Button
+          whatbut={"buttonsecond"}
+          location={{ top: "10px", left: "120px", height: "35px" }}
+          val={"New Post"}
+          fun={""}
+          type={"button"}
+        />
+        <Button
+          whatbut={"buttonsecond"}
+          location={{ top: "10px", left: "220px", height: "35px" }}
+          val={"Update Profile"}
+          fun={""}
+          type={"button"}
+        />
+      </div>
+
+      <div className={"dashboardpostcontainers"}>
+        <PostBox righterimg={righterdata.img} rightername={"@"+righterdata.rightername}/>
+      </div>
+
       {msg ? (
         <Popup
           closepop={() => setmsg(false)}
