@@ -77,8 +77,8 @@ router.post("/getrighterdata", (req, res) => {
 });
 
 router.post("/getposts", (req, res) => {
-  console.log("getrighterdata reached");
   let righterid = req.body.righterid;
+  console.log(righterid);
   db1.all(
     `SELECT * FROM postrecords WHERE righterid = '${righterid}'`,
     (err, result) => {
@@ -87,30 +87,8 @@ router.post("/getposts", (req, res) => {
         console.log(err);
       } else {
         if (result != "") {
-
-
-          let dest = path.join(
-            __dirname,
-            "../postthumbnails/tn_" +
-              result[0].postid +
-              "." +
-              result[0].filetype.toString().replace("image/", "")
-          );
-
-          fs.readFile(dest, (err, data) => {
-            if (err) {
-              res.send({ msg: "failed" });
-              console.log(err);
-            } else {
-              let base64Image = new Buffer.from(data, "binary").toString(
-                "base64"
-              );
-
-              res.send({ msg: result[0], pimg: base64Image });
-            }
-          });
-
-
+          res.send({ msg: result });
+          console.log(result);
         } else {
           res.send({ msg: "notfound" });
         }

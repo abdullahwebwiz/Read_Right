@@ -1,27 +1,48 @@
 import "./postbox.css";
 import Linker from "../utilcomps/linker";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 let dumbimg = "/assets/dumimg.png";
 let profileiconimg = "/assets/profileiconimg.png";
 let threedots = "/assets/threedots.png";
 const PostBox = ({
-  thumbnail,
-  righterimg,
+  whatimg,
+  imgid,
+  imgtype,
   title,
-  rightername,
   reads,
   ago,
+  rightername,
+  righterimg,
   todoarray,
 }) => {
   let [showdropdown, setshowdropdown] = useState(false);
+  let [img, setimg] = useState("");
+  useEffect(() => {
+    axios
+      .post("/sendimg", {
+        whatimg: whatimg,
+        imgid: imgid,
+        imgtype: imgtype,
+      })
+      .then((res) => {
+        setimg(res.data.img);
+      });
+  }, [whatimg, imgid, imgtype]);
+
   return (
     <>
       <div className={"mainpostbox"}>
-        <img src={dumbimg} className={"postboxthumbnail"} />
+        <img
+          src={img ? "data:" + imgtype + ";base64," + img : dumbimg}
+          className={"postboxthumbnail"}
+          alt={"Thumbnail"}
+        />
         <img
           src={righterimg ? righterimg : profileiconimg}
           className={"postboxrighterimg"}
         />
+
         <img
           src={threedots}
           className={"postboxthreedots"}
@@ -33,15 +54,12 @@ const PostBox = ({
             }
           }}
         />
-        <div className={"postboxtitle"}>
-          I am Abdullah son of sohail ahmad and he is son of tofail husain and i
-          am a full stack developer
-        </div>
+        <div className={"postboxtitle"}>{title}</div>
         <div className={"postboxinfo"}>
           <p>{rightername}</p>
-          <p>1.1K reads</p>
+          <p>{reads + " reads"}</p>
         </div>
-        <p className={"postboxago"}>2 years ago</p>
+        <p className={"postboxago"}>{ago}</p>
         {showdropdown ? (
           <div className={"postboxdropdown"}>
             <div>Edit</div>

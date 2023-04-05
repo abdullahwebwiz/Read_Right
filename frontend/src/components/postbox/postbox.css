@@ -47,6 +47,7 @@
   justify-content: space-between;
   font-size: 14px;
   font-style: italic;
+  color:#1d6d37;
 }
 
 .postboxago{
@@ -55,6 +56,7 @@ bottom: 2px;
 right: 15px;
 font-size: 14px;
 font-style: italic;
+color:#1d6d37;
 }
 
 .postboxthreedots{

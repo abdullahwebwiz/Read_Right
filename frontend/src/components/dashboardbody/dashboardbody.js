@@ -1,7 +1,10 @@
 import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "./dashboardbody.css";
+import timeAgo from "epoch-to-timeago/";
+import { useNavigate } from "react-router-dom";
 import PostBox from "../postbox/postbox";
+import GeneralLoader from "../generalloader/generalloader";
 import Popup from "../popup/Popup";
 import Cookie from "../../hooks/useCookie";
 import Button from "../utilcomps/button";
@@ -10,8 +13,16 @@ import Link from "../utilcomps/linker";
 import Select from "../utilcomps/select";
 let profileiconimg = "/assets/profileiconimg.png";
 let uploadicon = "/assets/uploadicon.png";
+let facebookicon = "/assets/facebookicon.png";
+let instagramicon = "/assets/instagramicon.png";
+let youtubeicon = "/assets/youtubeicon.png";
+let linkedinicon = "/assets/linkedinicon.png";
+let websiteicon = "/assets/websiteicon.png";
 const DashboardBody = () => {
   let cookie = Cookie;
+  let navigate = useNavigate();
+  var originalTime = new Date().getTime();
+
   let [righterdata, setrighterdata] = useState({
     rightername: "plz wait...",
     readers: "",
@@ -24,7 +35,7 @@ const DashboardBody = () => {
     pimgtype: "",
     img: "",
   });
-  let [posts, setposts] = useState([]);
+  let [postarray, setpostarray] = useState([]);
 
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
@@ -86,25 +97,41 @@ const DashboardBody = () => {
       });
   }, []);
 
+  useEffect(() => {
+    axios
+      .post("/getonly/getposts", {
+        righterid: righterid,
+      })
+      .then((res) => {
+        console.log(res.data.msg);
+        if (res.data.msg == "failed") {
+          setmsg(true);
+          setmsgprops({
+            msg: "Something went wrong.",
+            buttwo: false,
+            butval1: "Ok",
+            fun1: () => {
+              setmsg(false);
+            },
+          });
+        } else if (res.data.msg == "notfound") {
+          setmsg(true);
+          setmsgprops({
+            msg: "You have no posts yet.",
+            buttwo: false,
+            butval1: "Ok",
+            fun1: () => {
+              setmsg(false);
+            },
+          });
+        } else {
+          setpostarray(res.data.msg);
+        }
+      });
+  }, [righterid]);
 
-
-
-
-
-
-
-
-
-
-  
   return (
     <>
-      <input
-        ref={elemfile}
-        type={"file"}
-        accept="image/png,image/jpg,image/jpeg"
-        style={{ display: "none" }}
-      />
       <div className={"dashboardmaincontainer"}>
         <div className={"profilesec"}>
           <div className={"profilesecimg"}>
@@ -113,22 +140,23 @@ const DashboardBody = () => {
               className={"profilesecimg-1"}
               alt={"Profile image"}
             />
-            <img
-              src={uploadicon}
-              className={"profilesecimg-2"}
-              alt={"Upload icon"}
-              onClick={() => elemfile.current.click()}
-            />
           </div>
 
           <div className={"profilesecsum"}>
             <p>{"@" + righterdata.rightername}</p>
             <p>{righterdata.readers + " readers"}</p>
-            <p>98 Posts</p>
+            <p>{postarray.length + " Posts"}</p>
           </div>
         </div>
       </div>
       <div className={"profiledesc"}>{righterdata.desc}</div>
+      <div className={"linkcontainer"}>
+        <img src={facebookicon} alt={"facebook icon"} />
+        <img src={instagramicon} alt={"instagram icon"} />
+        <img src={youtubeicon} alt={"youtube icon"} />
+        <img src={linkedinicon} alt={"linkedin icon"} />
+        <img src={websiteicon} alt={"website icon"} />
+      </div>
       <div className={"dashboardbuttons"}>
         <Select
           name={"postfilter"}
@@ -155,7 +183,9 @@ const DashboardBody = () => {
           whatbut={"buttonsecond"}
           location={{ top: "10px", left: "120px", height: "35px" }}
           val={"New Post"}
-          fun={""}
+          fun={() => {
+            navigate("/postbuilder");
+          }}
           type={"button"}
         />
         <Button
@@ -168,7 +198,28 @@ const DashboardBody = () => {
       </div>
 
       <div className={"dashboardpostcontainers"}>
-        <PostBox righterimg={righterdata.img} rightername={"@"+righterdata.rightername}/>
+        {postarray ? (
+          postarray.map((data, index) => {
+            let ago = timeAgo.timeAgo(data.epoch, originalTime);
+            return (
+              <>
+                <PostBox
+                  key={index}
+                  whatimg={"postthumbnails"}
+                  imgtype={data.filetype}
+                  imgid={data.postid}
+                  title={data.posttitle}
+                  reads={data.reads}
+                  ago={ago}
+                  righterimg={righterdata.img}
+                  rightername={"@" + righterdata.rightername}
+                />
+              </>
+            );
+          })
+        ) : (
+          <GeneralLoader />
+        )}
       </div>
 
       {msg ? (

@@ -33,6 +33,7 @@ let data5 = require("../routes/login");
 let data6 = require("../routes/getonly");
 let data7 = require("../routes/becomerighter");
 let data8 = require("../routes/posting");
+let data9 = require("../routes/sendimg");
 
 app.use("/csc", data1);
 app.use("/otp", data2);
@@ -42,7 +43,7 @@ app.use("/login", data5);
 app.use("/getonly", data6);
 app.use("/becomerighter", data7);
 app.use("/posting", data8);
-
+app.use("/sendimg", data9);
 app.get("/", (req, res) => {
   res.send({ msg: "success" });
 });
