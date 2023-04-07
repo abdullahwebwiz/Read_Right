@@ -54,7 +54,7 @@ router.post("/savepost", (req, res) => {
       } else {
         let dest2 = path.join(
           __dirname,
-          "../postthumbnails/tn_" +
+          "../postthumbnails/" +
             postid +
             "." +
             filetype.replace("image/", "")

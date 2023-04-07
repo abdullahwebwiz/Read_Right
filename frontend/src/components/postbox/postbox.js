@@ -9,6 +9,10 @@ const PostBox = ({
   whatimg,
   imgid,
   imgtype,
+  whatrimg,
+  rimgid,
+  rimgtype,
+
   title,
   reads,
   ago,
@@ -18,6 +22,7 @@ const PostBox = ({
 }) => {
   let [showdropdown, setshowdropdown] = useState(false);
   let [img, setimg] = useState("");
+  let [rimg, setrimg] = useState("");
   useEffect(() => {
     axios
       .post("/sendimg", {
@@ -30,6 +35,19 @@ const PostBox = ({
       });
   }, [whatimg, imgid, imgtype]);
 
+  
+  useEffect(() => {
+    axios
+      .post("/sendimg", {
+        whatimg: whatrimg,
+        imgid: rimgid,
+        imgtype: rimgtype,
+      })
+      .then((res) => {
+        setrimg(res.data.img);
+      });
+  }, [whatrimg, rimgid, rimgtype]);
+
   return (
     <>
       <div className={"mainpostbox"}>
@@ -39,7 +57,7 @@ const PostBox = ({
           alt={"Thumbnail"}
         />
         <img
-          src={righterimg ? righterimg : profileiconimg}
+          src={rimg ? "data:" + rimgtype + ";base64," + rimg : profileiconimg}
           className={"postboxrighterimg"}
         />
 

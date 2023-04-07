@@ -50,7 +50,7 @@ router.post("/getrighterdata", (req, res) => {
           let data = result[0];
           let dest = path.join(
             __dirname,
-            "../righterimgs/pi_" +
+            "../righterimgs/" +
               data.rightername +
               "." +
               data.filetype.toString().replace("image/", "")
@@ -78,9 +78,16 @@ router.post("/getrighterdata", (req, res) => {
 
 router.post("/getposts", (req, res) => {
   let righterid = req.body.righterid;
+  let postfilter = req.body.postfilter;
   console.log(righterid);
+
+  let recent = `ORDER BY epoch DESC`;
+  let popular = `ORDER BY reads DESC`;
+  
   db1.all(
-    `SELECT * FROM postrecords WHERE righterid = '${righterid}'`,
+    `SELECT * FROM postrecords WHERE righterid = '${righterid}' ${
+      postfilter == "Recent" ? recent : popular
+    }`,
     (err, result) => {
       if (err) {
         res.send({ msg: "failed" });
@@ -101,6 +108,42 @@ router.get("/tagnames", (req, res) => {
   db1.all(`SELECT * FROM tagnames`, (err, result) => {
     res.send({ msg: result });
   });
+});
+
+router.post("/checkisrighter", (req, res) => {
+  let userid = req.body.userid;
+
+  db1.all(
+    `SELECT s_no FROM righters WHERE righterid = '${userid}'`,
+    (err, result) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        if (result != "") {
+          res.send({ msg: true });
+          console.log(result);
+        } else {
+          res.send({ msg: false });
+        }
+      }
+    }
+  );
+});
+
+router.post("/getrighterinfo", (req, res) => {
+  let righterid = req.body.righterid;
+  db1.all(
+    `SELECT filetype, rightername FROM righters WHERE righterid = '${righterid}'`,
+    (err, result) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        res.send({ msg: result[0] });
+      }
+    }
+  );
 });
 
 module.exports = router;

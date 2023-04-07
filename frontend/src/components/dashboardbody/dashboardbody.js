@@ -5,6 +5,7 @@ import timeAgo from "epoch-to-timeago/";
 import { useNavigate } from "react-router-dom";
 import PostBox from "../postbox/postbox";
 import GeneralLoader from "../generalloader/generalloader";
+import BounceLoader from "react-spinners/BounceLoader";
 import Popup from "../popup/Popup";
 import Cookie from "../../hooks/useCookie";
 import Button from "../utilcomps/button";
@@ -50,7 +51,7 @@ const DashboardBody = () => {
       return false;
     },
   });
-  let [postfilter, setpostfilter] = useState("recent");
+  let [postfilter, setpostfilter] = useState("Recent");
   let elemfile = useRef("");
   let righterid = cookie("get", "user");
   useEffect(() => {
@@ -101,6 +102,7 @@ const DashboardBody = () => {
     axios
       .post("/getonly/getposts", {
         righterid: righterid,
+        postfilter: postfilter,
       })
       .then((res) => {
         console.log(res.data.msg);
@@ -128,7 +130,7 @@ const DashboardBody = () => {
           setpostarray(res.data.msg);
         }
       });
-  }, [righterid]);
+  }, [righterid, postfilter]);
 
   return (
     <>
@@ -141,85 +143,175 @@ const DashboardBody = () => {
               alt={"Profile image"}
             />
           </div>
-
-          <div className={"profilesecsum"}>
-            <p>{"@" + righterdata.rightername}</p>
-            <p>{righterdata.readers + " readers"}</p>
-            <p>{postarray.length + " Posts"}</p>
+          <div className={"profilerightername"}>
+            {"@" + righterdata.rightername}
           </div>
+          <Button
+            whatbut={"buttonfirst"}
+            location={{
+              marginTop: "20px",
+              marginLeft: "110px",
+              position: "relative",
+            }}
+            val={"Update"}
+            fun={() => navigate("/becomerighter")}
+            type={"button"}
+          />
+          <div className={"pqrs"}>
+            <p>
+              {righterdata.readers +
+                " Readers" +
+                " | " +
+                postarray.length +
+                " Posts"}
+            </p>
+          </div>
+          <div className={"linkcon"}>
+            <img
+              src={"/assets/facebookicon.png"}
+              onClick={() => {
+                if (righterdata.link1) {
+                  window.open("https://" + righterdata.link1, "__blank");
+                } else {
+                  setmsg(true);
+                  setmsgprops({
+                    msg: "No link provided by righter",
+                    buttwo: false,
+                    butval1: "Ok",
+                    fun1: () => {
+                      setmsg(false);
+                    },
+                  });
+                }
+              }}
+            />
+            <img
+              src={"/assets/youtubeicon.png"}
+              onClick={() => {
+                if (righterdata.link2) {
+                  window.open("https://" + righterdata.link2, "__blank");
+                } else {
+                  setmsg(true);
+                  setmsgprops({
+                    msg: "No link provided by righter",
+                    buttwo: false,
+                    butval1: "Ok",
+                    fun1: () => {
+                      setmsg(false);
+                    },
+                  });
+                }
+              }}
+            />
+            <img
+              src={"/assets/instagramicon.png"}
+              onClick={() => {
+                if (righterdata.link3) {
+                  window.open("https://" + righterdata.link3, "__blank");
+                } else {
+                  setmsg(true);
+                  setmsgprops({
+                    msg: "No link provided by righter",
+                    buttwo: false,
+                    butval1: "Ok",
+                    fun1: () => {
+                      setmsg(false);
+                    },
+                  });
+                }
+              }}
+            />
+            <img
+              src={"/assets/linkedinicon.png"}
+              onClick={() => {
+                if (righterdata.link4) {
+                  window.open("https://" + righterdata.link4, "__blank");
+                } else {
+                  setmsg(true);
+                  setmsgprops({
+                    msg: "No link provided by righter",
+                    buttwo: false,
+                    butval1: "Ok",
+                    fun1: () => {
+                      setmsg(false);
+                    },
+                  });
+                }
+              }}
+            />
+            <img
+              src={"/assets/websiteicon.png"}
+              onClick={() => {
+                if (righterdata.link5) {
+                  window.open("https://" + righterdata.link5, "__blank");
+                } else {
+                  setmsg(true);
+                  setmsgprops({
+                    msg: "No link provided by righter",
+                    buttwo: false,
+                    butval1: "Ok",
+                    fun1: () => {
+                      setmsg(false);
+                    },
+                  });
+                }
+              }}
+            />
+          </div>
+          <div className={"descon"}>{righterdata.desc}</div>
         </div>
-      </div>
-      <div className={"profiledesc"}>{righterdata.desc}</div>
-      <div className={"linkcontainer"}>
-        <img src={facebookicon} alt={"facebook icon"} />
-        <img src={instagramicon} alt={"instagram icon"} />
-        <img src={youtubeicon} alt={"youtube icon"} />
-        <img src={linkedinicon} alt={"linkedin icon"} />
-        <img src={websiteicon} alt={"website icon"} />
-      </div>
-      <div className={"dashboardbuttons"}>
-        <Select
-          name={"postfilter"}
-          whatselect={"inputfirst"}
-          data={[{ key1: "Most Viewed" }, { key1: "Recent" }]}
-          location={{
-            top: "10px",
-            left: "10px",
-            width: "100px",
-            backgroundColor: "#0bda51",
-            color: "white",
-            fontSize: "15px",
-          }}
-          fun={(e) => {
-            if (e.split(",")[1] != "false") {
-              setpostfilter(e.split(",")[0]);
-            } else {
+        <div className={"dashbutcon"}>
+          <Select
+            name={""}
+            whatselect={"inputsecond"}
+            data={["Recent", "Popular"].map((i) => ({ key1: i, key2: i }))}
+            location={{ width: "100px", left: "10px", marginRight: "20px" }}
+            fun={(e) => {
+              if (e.split(",")[1] != "false") {
+                setpostfilter(e.split(",")[1]);
+              }
               return false;
-            }
-          }}
-        />
-
-        <Button
-          whatbut={"buttonsecond"}
-          location={{ top: "10px", left: "120px", height: "35px" }}
-          val={"New Post"}
-          fun={() => {
-            navigate("/postbuilder");
-          }}
-          type={"button"}
-        />
-        <Button
-          whatbut={"buttonsecond"}
-          location={{ top: "10px", left: "220px", height: "35px" }}
-          val={"Update Profile"}
-          fun={""}
-          type={"button"}
-        />
-      </div>
-
-      <div className={"dashboardpostcontainers"}>
-        {postarray ? (
-          postarray.map((data, index) => {
-            let ago = timeAgo.timeAgo(data.epoch, originalTime);
-            return (
-              <>
-                <PostBox
-                  key={index}
-                  whatimg={"postthumbnails"}
-                  imgtype={data.filetype}
-                  imgid={data.postid}
-                  title={data.posttitle}
-                  reads={data.reads}
-                  ago={ago}
-                  righterimg={righterdata.img}
-                  rightername={"@" + righterdata.rightername}
-                />
-              </>
-            );
-          })
-        ) : (
-          <GeneralLoader />
-        )}
+            }}
+          />
+          <Button
+            whatbut={"buttonfirst"}
+            location={{
+              width: "100px",
+              height: "40px",
+              left: "120px",
+              marginRight: "20px",
+            }}
+            val={"New Post"}
+            fun={() => {
+              window.open("/postbuilder", "__black");
+            }}
+            type={"button"}
+          />
+        </div>
+        <div className={"dashboardpostcontainer"}>
+          {postarray ? (
+            postarray.map((data, index) => {
+              let ago = timeAgo.timeAgo(data.epoch, originalTime);
+              return (
+                <>
+                  <PostBox
+                    key={index}
+                    whatimg={"postthumbnails"}
+                    imgtype={data.filetype}
+                    imgid={data.postid}
+                    title={data.posttitle}
+                    reads={data.reads}
+                    ago={ago}
+                    righterimg={righterdata.img}
+                    rightername={"@" + righterdata.rightername}
+                  />
+                </>
+              );
+            })
+          ) : (
+            <GeneralLoader />
+          )}
+        </div>
       </div>
 
       {msg ? (

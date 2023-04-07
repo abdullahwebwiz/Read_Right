@@ -33,7 +33,6 @@ const Signupface = ({ popfun }) => {
   }, []);
 
   const submitHandle = () => {
-    console.log(personinfo.password.length);
     setloading(true);
     if (
       personinfo.name &&
@@ -42,30 +41,47 @@ const Signupface = ({ popfun }) => {
       personinfo.city &&
       personinfo.password
     ) {
-      if (personinfo.password.length > 8) {
-        let otp = (Math.floor(Math.random() * 10000) + 10000)
-          .toString()
-          .substring(1);
-        let salt = bcrypt.genSaltSync(2);
-        let hash = bcrypt.hashSync(otp, salt);
-        localStorage.setItem("pin", hash);
+      if (personinfo.password.length > 7) {
         axios
-          .post("/otp/verify", {
-            email: personinfo.email,
-            otp: otp,
+          .post("/signup/checkuseravail", {
+            user: personinfo.email,
           })
           .then((res) => {
-            if (res.data.msg == "success") {
-              setotpinput(true);
+            if (res.data.msg == "allgood") {
+              let otp = (Math.floor(Math.random() * 10000) + 10000)
+                .toString()
+                .substring(1);
+              let salt = bcrypt.genSaltSync(2);
+              let hash = bcrypt.hashSync(otp, salt);
+              localStorage.setItem("pin", hash);
+              axios
+                .post("/otp/verify", {
+                  email: personinfo.email,
+                  otp: otp,
+                })
+
+                .then((res) => {
+                  if (res.data.msg == "success") {
+                    setotpinput(true);
+                    setloading(false);
+                    localStorage.setItem("otpinput", true);
+                  } else {
+                    popfun("emailsendfailed");
+                    setloading(false);
+                  }
+                })
+                .catch((error) => {
+                  console.log(error);
+                  setloading(false);
+                  popfun("somethingwrong");
+                });
+            } else if (res.data.msg == "accountexist") {
               setloading(false);
-              localStorage.setItem("otpinput", true);
+              popfun("accountexist");
             } else {
-              popfun("emailsendfailed");
               setloading(false);
+              popfun("somethingwrong");
             }
-          })
-          .catch((error) => {
-            console.log(error);
           });
       } else {
         popfun("shortpass");
@@ -92,7 +108,6 @@ const Signupface = ({ popfun }) => {
             localStorage.clear();
           } else {
             setloading(false);
-            setpersoninfo({});
             popfun("somethingwrong");
           }
         })
@@ -106,6 +121,7 @@ const Signupface = ({ popfun }) => {
       setloading(false);
     }
   };
+
   const resendotp = () => {
     setloading(true);
     let otp = (Math.floor(Math.random() * 10000) + 10000)
@@ -251,7 +267,7 @@ const Signupface = ({ popfun }) => {
         fun={() => navigate("/")}
         type={"button"}
       />
-            <Button
+      <Button
         whatbut={"buttonsecond"}
         location={{ bottom: "11px", left: "85px" }}
         val={"SignIn"}

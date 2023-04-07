@@ -20,6 +20,22 @@ const db2 = new sqlite3.Database(dest2, sqlite3.OPEN_READWRITE, (err) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+router.post("/checkuseravail", (req, res) => {
+  let user = req.body.user;
+  db1.all(`SELECT s_no FROM users WHERE email = '${user}'`, (err, result) => {
+    if (err) {
+      console.log(err);
+      res.send({ msg: "failed" });
+    } else {
+      if (result == "") {
+        res.send({ msg: "allgood" });
+      } else {
+        res.send({ msg: "accountexist" });
+      }
+    }
+  });
+});
+
 router.post("/adduser", (req, res) => {
   console.log(req.body.personinfo);
   let userid = ang.generate({ length: 20, charset: "alphanumeric" });

@@ -9,7 +9,20 @@ import { useNavigate, useLocation } from "react-router-dom";
 let profileiconimg = "/assets/profileiconimg.png";
 let uploadicon = "/assets/uploadicon.png";
 
-const BecomeRighter = () => {
+const BecomeRighter = ({ righterdata, isrighter }) => {
+  window.addEventListener("beforeunload", (ev) => {
+    ev.preventDefault();
+    localStorage.removeItem("rightername");
+    localStorage.removeItem("link1");
+    localStorage.removeItem("link2");
+    localStorage.removeItem("link3");
+    localStorage.removeItem("link4");
+    localStorage.removeItem("link5");
+    localStorage.removeItem("desc");
+    localStorage.removeItem("abc");
+    return (ev.returnValue = "Are you sure you want to close?");
+  });
+
   let cookie = useCookie;
   let user = cookie("get", "user");
 
@@ -34,6 +47,7 @@ const BecomeRighter = () => {
     link2: "",
     link3: "",
     link4: "",
+    link5: "",
   });
 
   const submithandle = () => {
@@ -44,7 +58,8 @@ const BecomeRighter = () => {
       links.link1 &&
       links.link2 &&
       links.link3 &&
-      links.link4
+      links.link4 &&
+      links.link5
     ) {
       var format = /[ `!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?~]/;
       let cat = format.test(rightername);
@@ -59,8 +74,12 @@ const BecomeRighter = () => {
           fd.append("link2", links.link2);
           fd.append("link3", links.link3);
           fd.append("link4", links.link4);
+          fd.append("link5", links.link5);
+          let endpoint1 = "/updaterighter/updaterighter";
+          let endpoint2 = "/becomerighter/becomerighter";
+
           axios
-            .post("/becomerighter/becomerighter", fd, {
+            .post(`${isrighter ? endpoint1 : endpoint2}`, fd, {
               headers: {
                 "Content-Type": "multipart/form-data",
               },
@@ -88,8 +107,15 @@ const BecomeRighter = () => {
                 });
               } else if (res.data.msg == "success") {
                 alert("all good");
-                navigate("/");
-                localStorage.clear();
+                navigate("/dashboard");
+                localStorage.removeItem("rightername");
+                localStorage.removeItem("link1");
+                localStorage.removeItem("link2");
+                localStorage.removeItem("link3");
+                localStorage.removeItem("link4");
+                localStorage.removeItem("link5");
+                localStorage.removeItem("desc");
+                localStorage.removeItem("abc");
               }
             });
         } else {
@@ -143,13 +169,21 @@ const BecomeRighter = () => {
     if (localStorage.getItem("rightername")) {
       setrightername(localStorage.getItem("rightername"));
     } else {
-      setrightername("");
+      if (isrighter) {
+        setrightername(righterdata.rightername);
+      } else {
+        setdesc("");
+      }
     }
 
     if (localStorage.getItem("desc")) {
       setdesc(localStorage.getItem("desc"));
     } else {
-      setdesc("");
+      if (isrighter) {
+        setdesc(righterdata.desc);
+      } else {
+        setdesc("");
+      }
     }
 
     if (localStorage.getItem("link1")) {
@@ -158,34 +192,53 @@ const BecomeRighter = () => {
         link1: localStorage.getItem("link1"),
       }));
     } else {
-      setlinks((prevState) => ({
-        ...prevState,
-        link1: "",
-      }));
+      if (isrighter) {
+        setlinks((prevState) => ({
+          ...prevState,
+          link1: righterdata.link1,
+        }));
+      } else {
+        setlinks((prevState) => ({
+          ...prevState,
+          link1: "",
+        }));
+      }
     }
-
     if (localStorage.getItem("link2")) {
       setlinks((prevState) => ({
         ...prevState,
         link2: localStorage.getItem("link2"),
       }));
     } else {
-      setlinks((prevState) => ({
-        ...prevState,
-        link2: "",
-      }));
+      if (isrighter) {
+        setlinks((prevState) => ({
+          ...prevState,
+          link2: righterdata.link2,
+        }));
+      } else {
+        setlinks((prevState) => ({
+          ...prevState,
+          link2: "",
+        }));
+      }
     }
-
     if (localStorage.getItem("link3")) {
       setlinks((prevState) => ({
         ...prevState,
         link3: localStorage.getItem("link3"),
       }));
     } else {
-      setlinks((prevState) => ({
-        ...prevState,
-        link3: "",
-      }));
+      if (isrighter) {
+        setlinks((prevState) => ({
+          ...prevState,
+          link3: righterdata.link3,
+        }));
+      } else {
+        setlinks((prevState) => ({
+          ...prevState,
+          link3: "",
+        }));
+      }
     }
     if (localStorage.getItem("link4")) {
       setlinks((prevState) => ({
@@ -193,12 +246,37 @@ const BecomeRighter = () => {
         link4: localStorage.getItem("link4"),
       }));
     } else {
+      if (isrighter) {
+        setlinks((prevState) => ({
+          ...prevState,
+          link4: righterdata.link4,
+        }));
+      } else {
+        setlinks((prevState) => ({
+          ...prevState,
+          link4: "",
+        }));
+      }
+    }
+    if (localStorage.getItem("link5")) {
       setlinks((prevState) => ({
         ...prevState,
-        link4: "",
+        link5: localStorage.getItem("link5"),
       }));
+    } else {
+      if (isrighter) {
+        setlinks((prevState) => ({
+          ...prevState,
+          link5: righterdata.link5,
+        }));
+      } else {
+        setlinks((prevState) => ({
+          ...prevState,
+          link5: "",
+        }));
+      }
     }
-  }, []);
+  }, [righterdata, isrighter]);
 
   return (
     <>
@@ -228,7 +306,7 @@ const BecomeRighter = () => {
           <Input
             type={"text"}
             whatinput={"inputsecond"}
-            location={{ marginTop: "120px" }}
+            location={{ marginTop: "100px" }}
             naam={"rightername"}
             fun={(e) => {
               localStorage.setItem("rightername", e);
@@ -241,7 +319,7 @@ const BecomeRighter = () => {
           <Input
             type={"text"}
             whatinput={"inputsecond"}
-            location={{ marginTop: "180px", backgroundColor: "white" }}
+            location={{ marginTop: "145px", backgroundColor: "white" }}
             naam={"link1"}
             fun={(a, b) => {
               localStorage.setItem("link1", a);
@@ -256,7 +334,7 @@ const BecomeRighter = () => {
           <Input
             type={"text"}
             whatinput={"inputsecond"}
-            location={{ marginTop: "220px", backgroundColor: "white" }}
+            location={{ marginTop: "182px", backgroundColor: "white" }}
             naam={"link2"}
             fun={(a, b) => {
               localStorage.setItem("link2", a);
@@ -271,7 +349,7 @@ const BecomeRighter = () => {
           <Input
             type={"text"}
             whatinput={"inputsecond"}
-            location={{ marginTop: "260px", backgroundColor: "white" }}
+            location={{ marginTop: "219px", backgroundColor: "white" }}
             naam={"link3"}
             fun={(a, b) => {
               localStorage.setItem("link3", a);
@@ -285,7 +363,7 @@ const BecomeRighter = () => {
           />
           <Input
             type={"text"}
-            location={{ marginTop: "300px", backgroundColor: "white" }}
+            location={{ marginTop: "256px", backgroundColor: "white" }}
             whatinput={"inputsecond"}
             naam={"link4"}
             fun={(a, b) => {
@@ -297,6 +375,21 @@ const BecomeRighter = () => {
             }}
             val={links.link4}
             placeholder={"Profile link 4"}
+          />
+          <Input
+            type={"text"}
+            location={{ marginTop: "293px", backgroundColor: "white" }}
+            whatinput={"inputsecond"}
+            naam={"link5"}
+            fun={(a, b) => {
+              localStorage.setItem("link5", a);
+              setlinks((prevState) => ({
+                ...prevState,
+                [b]: a,
+              }));
+            }}
+            val={links.link5}
+            placeholder={"Profile link 5"}
           />
           <textarea
             placeholder={"Write a Message for your readers.."}
@@ -310,7 +403,7 @@ const BecomeRighter = () => {
           <Button
             whatbut={"buttonsecond"}
             location={{ bottom: "11px", right: "10px" }}
-            val={"Done"}
+            val={isrighter ? "Update" : "Done"}
             fun={submithandle}
             type={"button"}
           />

@@ -4,6 +4,7 @@ const dotenv = require("dotenv");
 const bodyParser = require("body-parser");
 const expressFilupload = require("express-fileupload");
 const cors = require("cors");
+const sqlite3 = require("sqlite3").verbose();
 const fs = require("fs");
 const path = require("path");
 const crypto = require("crypto");
@@ -11,6 +12,11 @@ const uuid = require("uuid");
 const shuffle = require("shuffle-array");
 const app = express();
 const dest = require("../config/destination");
+
+let destxx = path.join(__dirname, "../databases/database1.db");
+const db1 = new sqlite3.Database(destxx, sqlite3.OPEN_READWRITE, (err) => {
+  if (err) console.log("failed database " + err);
+});
 
 // =================middlewares==============================
 app.use(bodyParser.json());
@@ -34,6 +40,8 @@ let data6 = require("../routes/getonly");
 let data7 = require("../routes/becomerighter");
 let data8 = require("../routes/posting");
 let data9 = require("../routes/sendimg");
+let data10 = require("../routes/updaterighter");
+let data11 = require("../routes/sendpostsarray");
 
 app.use("/csc", data1);
 app.use("/otp", data2);
@@ -44,6 +52,9 @@ app.use("/getonly", data6);
 app.use("/becomerighter", data7);
 app.use("/posting", data8);
 app.use("/sendimg", data9);
+app.use("/updaterighter", data10);
+app.use("/sendpostarray", data11);
+
 app.get("/", (req, res) => {
   res.send({ msg: "success" });
 });
@@ -53,4 +64,3 @@ app.listen(port, (err) => {
   if (err) console.log("failed to listen" + err);
   console.log("success listening " + port);
 });
-

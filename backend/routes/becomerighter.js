@@ -30,6 +30,7 @@ router.post("/becomerighter", (req, res) => {
   let link2 = req.body.link2;
   let link3 = req.body.link3;
   let link4 = req.body.link4;
+  let link5 = req.body.link5;
   let img = req.files.img;
   let filetype = req.files.img.mimetype;
   let followers = 0;
@@ -44,8 +45,8 @@ router.post("/becomerighter", (req, res) => {
       } else {
         if (result == "") {
           db1.run(
-            `INSERT INTO righters (righterid,rightername,desc,link1,link2,link3,link4,readers,filetype)
-            VALUES('${userid}','${rightername}','${desc}','${link1}','${link2}','${link3}','${link4}',${followers},'${filetype}')`,
+            `INSERT INTO righters (righterid,rightername,desc,link1,link2,link3,link4,link5,readers,filetype)
+            VALUES('${userid}','${rightername}','${desc}','${link1}','${link2}','${link3}','${link4}','${link5}',${followers},'${filetype}')`,
             (err) => {
               if (err) {
                 res.send({ msg: "failed" });
@@ -60,7 +61,7 @@ router.post("/becomerighter", (req, res) => {
                     } else {
                       let dest2 = path.join(
                         __dirname,
-                        "../righterimgs/pi_" +
+                        "../righterimgs/" +
                           rightername +
                           "." +
                           filetype.replace("image/", "")

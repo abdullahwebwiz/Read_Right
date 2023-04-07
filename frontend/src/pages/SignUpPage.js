@@ -77,6 +77,16 @@ const SignUpPage = () => {
         },
       });
     }
+    else if (x == "accountexist") {
+      setmsgprops({
+        msg: "Account already exist.",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
+    }
   };
   return (
     <>
