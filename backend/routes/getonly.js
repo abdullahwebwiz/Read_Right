@@ -76,6 +76,43 @@ router.post("/getrighterdata", (req, res) => {
   );
 });
 
+router.post("/postdata", (req, res) => {
+  let postid = req.body.postid;
+
+  db1.all(
+    `SELECT 
+    postrecords.postid,
+    postrecords.posttitle,
+    postrecords.postbody,
+    postrecords.epoch,
+    postrecords.filetype AS pfiletype, 
+    postrecords.reads,
+    postrecords.tags,
+    righters.rightername,
+    righters.filetype AS rfiletype,
+    righters.readers,
+    righters.link1,
+    righters.link2,
+    righters.link3,
+    righters.link4,
+    righters.link5,
+    righters.desc
+     FROM postrecords INNER JOIN righters ON postrecords.postid = '${postid}'`,
+    (err, result) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        if (result != "") {
+          res.send({ msg: result[0] });
+        } else {
+          res.send({ msg: "notfound" });
+        }
+      }
+    }
+  );
+});
+
 router.post("/getposts", (req, res) => {
   let righterid = req.body.righterid;
   let postfilter = req.body.postfilter;
@@ -83,9 +120,18 @@ router.post("/getposts", (req, res) => {
 
   let recent = `ORDER BY epoch DESC`;
   let popular = `ORDER BY reads DESC`;
-  
+
   db1.all(
-    `SELECT * FROM postrecords WHERE righterid = '${righterid}' ${
+    `SELECT 
+    postrecords.postid,
+    postrecords.posttitle,
+    postrecords.epoch,
+    postrecords.filetype AS pfiletype, 
+    postrecords.reads,
+    righters.rightername,
+    righters.filetype AS rfiletype,
+    righters.readers
+    FROM postrecords INNER JOIN righters ON postrecords.righterid = righters.righterid WHERE righters.righterid = '${righterid}' ${
       postfilter == "Recent" ? recent : popular
     }`,
     (err, result) => {

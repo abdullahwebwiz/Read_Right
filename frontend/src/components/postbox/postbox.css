@@ -1,10 +1,12 @@
 .mainpostbox {
   width: 330px;
-  height: 280px;
+  height: 270px;
   position: relative;
   display: inline-block;
-  margin: 3px 3px 15px 2px;
+  margin: 3px 3px 10px 2px;
   border-radius: 10px;
+  border: 1px solid rgba(0, 0, 0,0.4);
+
 }
 
 .postboxthumbnail {
@@ -28,9 +30,10 @@
   position: absolute;
   top: 192px;
   left: 52px;
-  width: 280px;
+  width: 250px;
   height: 40px;
   font-size: 17px;
+  word-wrap:break-word;
   overflow: hidden;
   text-overflow: ellipsis;
   display: -webkit-box;
@@ -62,8 +65,8 @@ color:#1d6d37;
 .postboxthreedots{
 position: absolute;
 z-index: 3;
-top: 5px;
-right: 0px;
+bottom: 35px;
+right: -4px;
 width: 30px;
 -webkit-user-drag: none;
 cursor: pointer;
@@ -71,7 +74,7 @@ cursor: pointer;
 
 .postboxdropdown{
 position: absolute;
-top: 10px;
+bottom: 80px;
 right: 25px;
 width: 100px;
 background-color: #3cda7b;

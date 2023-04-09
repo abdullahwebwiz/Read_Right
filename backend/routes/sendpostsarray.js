@@ -19,13 +19,31 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
 router.post("/homeposts", (req, res) => {
-  db1.all(`SELECT * FROM postrecords`, (err, result) => {
-    if (err) {
-      console.log(err);
-res.send({msg: 'failed'});
+  db1.all(
+    `SELECT 
+    postrecords.postid,
+    postrecords.posttitle,
+    postrecords.epoch,
+    postrecords.filetype AS pfiletype, 
+    postrecords.reads,
+    righters.rightername,
+    righters.filetype AS rfiletype,
+    righters.readers
+  FROM postrecords INNER JOIN righters ON postrecords.righterid = righters.righterid`,
+    (err, result) => {
+      if (err) {
+        console.log(err);
+        res.send({ msg: "failed" });
+      } else {
+        if (result != "") {
+          res.send({ msg: result });
+          console.log(result);
+        } else {
+          res.send({ msg: "notfound" });
+        }
+      }
     }
-    res.send({msg: result});
-  });
+  );
 });
 
 module.exports = router;

@@ -1,8 +1,12 @@
 import Header from "../components/header/Header";
 import HomeBody from "../components/homebody/homebody";
 import GeneralLoader from "../components/generalloader/generalloader";
+import { useEffect, useState } from "react";
 const HomePage = () => {
-  if (Header && HomeBody) {
+
+
+
+  if (HomeBody && Header) {
     return (
       <>
         <Header />

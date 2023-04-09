@@ -3,6 +3,7 @@ position: absolute;
 width: 100%;
 top: 60px;
 text-align: center;
+z-index: 4;
 }
 .popup {
   background-color: white;

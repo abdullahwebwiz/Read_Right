@@ -23,7 +23,6 @@ const DashboardBody = () => {
   let cookie = Cookie;
   let navigate = useNavigate();
   var originalTime = new Date().getTime();
-
   let [righterdata, setrighterdata] = useState({
     rightername: "plz wait...",
     readers: "",
@@ -32,9 +31,10 @@ const DashboardBody = () => {
     link2: "plz wait...",
     link3: "plz wait...",
     link4: "plz wait...",
+    link5: "plz wait...",
     pimg: "",
-    pimgtype: "",
     img: "",
+    filetype: "",
   });
   let [postarray, setpostarray] = useState([]);
 
@@ -90,8 +90,9 @@ const DashboardBody = () => {
             link2: res.data.msg.link2,
             link3: res.data.msg.link3,
             link4: res.data.msg.link4,
+            link5: res.data.msg.link5,
             pimg: res.data.pimg,
-            pimgtype: res.data.msg.filetype,
+            filetype: res.data.msg.filetype,
             img: "data:" + res.data.msg.filetype + ";base64," + res.data.pimg,
           }));
         }
@@ -224,7 +225,7 @@ const DashboardBody = () => {
             <img
               src={"/assets/linkedinicon.png"}
               onClick={() => {
-                if (righterdata.link4) {
+                if (righterdata.link4 != "nolink") {
                   window.open("https://" + righterdata.link4, "__blank");
                 } else {
                   setmsg(true);
@@ -296,14 +297,16 @@ const DashboardBody = () => {
                 <>
                   <PostBox
                     key={index}
+                    rightername={data.rightername}
                     whatimg={"postthumbnails"}
-                    imgtype={data.filetype}
+                    imgtype={data.pfiletype}
                     imgid={data.postid}
+                    whatrimg={"righterimgs"}
+                    rimgtype={data.rfiletype}
+                    rimgid={data.rightername}
                     title={data.posttitle}
                     reads={data.reads}
                     ago={ago}
-                    righterimg={righterdata.img}
-                    rightername={"@" + righterdata.rightername}
                   />
                 </>
               );

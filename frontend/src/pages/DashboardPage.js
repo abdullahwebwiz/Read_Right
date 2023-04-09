@@ -20,7 +20,8 @@ const DashboardPage = () => {
       setloading(false);
     });
 
-  if (loading == false) {
+
+  if (loading == false && Header && DashboardBody) {
     if (issigned) {
       if (isrighter) {
         return (

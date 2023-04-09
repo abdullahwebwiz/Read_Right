@@ -44,11 +44,24 @@ const PostBuilder = () => {
         },
       });
     }
+  
     else if (x == "firstsave") {
       setmsg(true);
       setmsg(true);
       setmsgprops({
         msg: "First save your work.",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
+    }
+    else if (x == "updated") {
+      setmsg(true);
+      setmsg(true);
+      setmsgprops({
+        msg: "Work Updated.",
         buttwo: false,
         butval1: "Ok",
         fun1: () => {

@@ -12,7 +12,7 @@ let profileiconimg = "/assets/profileiconimg.png";
 let menuicon = "/assets/menuicon.png";
 let homeicon = "/assets/homeicon.png";
 let exploreicon = "/assets/exploreicon.png";
-let likedpostsicon = "/assets/likedpostsicon.png";
+let savedposticon = "/assets/savedposticon.png";
 let followingicon = "/assets/followingicon.png";
 let historyicon = "/assets/historyicon.png";
 const Header = () => {
@@ -122,7 +122,7 @@ const Header = () => {
               <Link to="/likedposts">
                 {" "}
                 <div className={"mbone"}>
-                  <img src={likedpostsicon} />
+                  <img src={savedposticon} />
                   <p>Liked Posts</p>
                 </div>
               </Link>

@@ -9,10 +9,10 @@ const PostBox = ({
   whatimg,
   imgid,
   imgtype,
+
   whatrimg,
   rimgid,
   rimgtype,
-
   title,
   reads,
   ago,
@@ -23,6 +23,7 @@ const PostBox = ({
   let [showdropdown, setshowdropdown] = useState(false);
   let [img, setimg] = useState("");
   let [rimg, setrimg] = useState("");
+  console.log(rightername);
   useEffect(() => {
     axios
       .post("/sendimg", {
@@ -35,7 +36,7 @@ const PostBox = ({
       });
   }, [whatimg, imgid, imgtype]);
 
-  
+
   useEffect(() => {
     axios
       .post("/sendimg", {
@@ -48,6 +49,7 @@ const PostBox = ({
       });
   }, [whatrimg, rimgid, rimgtype]);
 
+  
   return (
     <>
       <div className={"mainpostbox"}>

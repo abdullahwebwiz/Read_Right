@@ -16,7 +16,9 @@ const SideEdit = ({ popfun }) => {
   let [loading, setloading] = useState(false);
   let [saveval, setsaveval] = useState("Save");
   let [tags, settags] = useState([]);
-  let [postid, setpostid] = useState("");
+  let [postid, setpostid] = useState(
+    localStorage.getItem("postid") ? localStorage.getItem("postid") : "none"
+  );
   let [posttag, setposttag] = useState("");
   let [posttitle, setposttitle] = useState("");
   let [posttaglist, setposttaglist] = useState([]);
@@ -67,6 +69,7 @@ const SideEdit = ({ popfun }) => {
       fb.append("posttaglist", posttaglist);
       fb.append("postbody", localStorage.getItem("postbody"));
       fb.append("righterid", Cookie("get", "user"));
+      fb.append("postid", postid);
       axios
         .post("/posting/savepost", fb, {
           headers: {
@@ -78,6 +81,10 @@ const SideEdit = ({ popfun }) => {
           if (res.data.msg == "success") {
             setloading(false);
             setpostid(res.data.postid);
+            localStorage.setItem("postid", res.data.postid);
+          } else if (res.data.msg == "success2") {
+            popfun("updated");
+            setloading(false);
           } else {
             setloading(false);
             popfun("sww");
@@ -93,9 +100,10 @@ const SideEdit = ({ popfun }) => {
       popfun("incompleteinput");
     }
   };
+
   const publishpost = () => {
     setloading(true);
-    if (postid) {
+    if (postid != "none") {
       axios
         .post("/posting/publishpost", {
           postid: postid,
@@ -106,6 +114,7 @@ const SideEdit = ({ popfun }) => {
             localStorage.removeItem("posttitle");
             localStorage.removeItem("posttaglist");
             localStorage.removeItem("postbody");
+            localStorage.removeItem("postid");
             setloading(false);
           } else {
             setloading(false);

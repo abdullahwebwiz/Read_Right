@@ -43,11 +43,11 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
   let [rightername, setrightername] = useState("");
   let [desc, setdesc] = useState("");
   let [links, setlinks] = useState({
-    link1: "",
-    link2: "",
-    link3: "",
-    link4: "",
-    link5: "",
+    link1: "nolink",
+    link2: "nolink",
+    link3: "nolink",
+    link4: "nolink",
+    link5: "nolink",
   });
 
   const submithandle = () => {
@@ -165,6 +165,8 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
     }
   }, [state]);
 
+
+
   useEffect(() => {
     if (localStorage.getItem("rightername")) {
       setrightername(localStorage.getItem("rightername"));
@@ -200,7 +202,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link1: "",
+          link1: "nolink",
         }));
       }
     }
@@ -218,7 +220,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link2: "",
+          link2: "nolink",
         }));
       }
     }
@@ -236,7 +238,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link3: "",
+          link3: "nolink",
         }));
       }
     }
@@ -254,7 +256,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link4: "",
+          link4: "nolink",
         }));
       }
     }
@@ -272,7 +274,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link5: "",
+          link5: "nolink",
         }));
       }
     }
