@@ -55,13 +55,14 @@ const SideEdit = ({ popfun }) => {
   }, []);
 
   const savepost = () => {
+    console.log('lao')
     setloading(true);
     if (
       postthumbnail &&
       posttitle &&
       posttaglist &&
       localStorage.getItem("postbody") &&
-      posttaglist.length == 5
+      posttaglist.length != 0
     ) {
       let fb = new FormData();
       fb.append("postthumbnail", postthumbnail);

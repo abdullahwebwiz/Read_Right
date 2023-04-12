@@ -6,6 +6,46 @@ import PostBody from "../components/postbody/postbody";
 const PostPage = () => {
   let { postid } = useParams();
   let [postdata, setpostdata] = useState("");
+  let [tenpostone, settenpostone] = useState([]);
+  let [tenposttwo, settenposttwo] = useState([]);
+  let [postcomments, setpostcomments] = useState([]);
+  let [sp, setsp] = useState(0);
+  let [ep, setep] = useState(5);
+
+
+  const inccomments = () => {
+     setsp(sp + 5);
+     setep(ep + 5);
+    axios
+    .post("/getonly/postcomments", {
+      postid: postid,
+      sp: sp + 5,
+      ep: ep + 5,
+    })
+    .then((res) => {
+      if (res.data.msg != "failed") {
+        setpostcomments(postcomments.concat(res.data.msg));
+      }
+    });
+  };
+
+
+
+  useEffect(() => {
+    axios
+      .post("/getonly/postcomments", {
+        postid: postid,
+        sp: sp,
+        ep: ep,
+      })
+      .then((res) => {
+        if (res.data.msg != "failed") {
+          setpostcomments(postcomments.concat(res.data.msg));
+        }
+      });
+  }, []);
+
+  
 
   useEffect(() => {
     axios
@@ -21,6 +61,22 @@ const PostPage = () => {
           window.history.back();
         } else {
           setpostdata(res.data.msg);
+          console.log(res.data.msg);
+          axios
+            .post("/getonly/gettenrighterposts", {
+              righterid: res.data.msg.righterid,
+            })
+            .then((res) => {
+              if (res.data.msg != "failed") {
+                settenpostone(res.data.msg);
+              }
+            });
+
+          axios.post("/getonly/gettenranposts").then((res) => {
+            if (res.data.msg != "failed") {
+              settenposttwo(res.data.msg);
+            }
+          });
         }
       });
   }, [postid]);
@@ -28,7 +84,13 @@ const PostPage = () => {
   if (postid && postdata) {
     return (
       <>
-        <PostBody postdata={postdata} />
+        <PostBody
+          postdata={postdata}
+          tenpostone={tenpostone}
+          tenposttwo={tenposttwo}
+          postcomments={postcomments}
+          inccomments={inccomments}
+        />
       </>
     );
   } else {

@@ -10,8 +10,12 @@ const path = require("path");
 const shuffle = require("shuffle-array");
 const fs = require("fs");
 let dest1 = path.join(__dirname, "../databases/database1.db");
+let dest2 = path.join(__dirname, "../databases/database3.db");
 
 const db1 = new sqlite3.Database(dest1, sqlite3.OPEN_READWRITE, (err) => {
+  if (err) console.log("failed database " + err);
+});
+const db2 = new sqlite3.Database(dest2, sqlite3.OPEN_READWRITE, (err) => {
   if (err) console.log("failed database " + err);
 });
 
@@ -28,11 +32,7 @@ router.post("/savepost", (req, res) => {
   let epoch = "none";
   let ispublished = "no";
   let reads = 0;
-  let tag1 = posttaglist[0].toString();
-  let tag2 = posttaglist[1].toString();
-  let tag3 = posttaglist[2].toString();
-  let tag4 = posttaglist[3].toString();
-  let tag5 = posttaglist[4].toString();
+
 
   if (req.body.postid == "none") {
     let postid = shuffle(uuid.v4().replace(/-/g, "").split(""))
@@ -41,14 +41,19 @@ router.post("/savepost", (req, res) => {
       .replace(/,/g, "");
 
     db1.run(
-      `INSERT INTO postrecords (postid,posttitle,postbody,righterid,epoch,ispublished,filetype,reads,tags,tag1,tag2,tag3,tag4,tag5) VALUES
+      `INSERT INTO postrecords (postid,posttitle,postbody,righterid,epoch,ispublished,filetype,reads,updated,tags,tag1,tag2,tag3,tag4,tag5) VALUES
     ('${postid}','${posttitle}',
     '${postbody}','${righterid}',
     '${epoch}','${ispublished}',
     '${filetype}','${reads}',
-    '${posttaglist}','${tag1}',
-    '${tag2}','${tag3}',
-    '${tag4}','${tag5}')`,
+'${"none"}',
+    '${posttaglist}',
+    '${posttaglist[0] ? posttaglist[0].toString() : "notag"}',
+    '${posttaglist[1] ? posttaglist[0].toString() : "notag"}',
+    '${posttaglist[2] ? posttaglist[0].toString() : "notag"}',
+    '${posttaglist[3] ? posttaglist[0].toString() : "notag"}',
+    '${posttaglist[4] ? posttaglist[0].toString() : "notag"}'
+    )`,
       (err) => {
         if (err) {
           res.send({ msg: "failed" });
@@ -63,7 +68,22 @@ router.post("/savepost", (req, res) => {
               res.send({ msg: "failed" });
               console.log("failed: " + err);
             } else {
-              res.send({ msg: "success", postid: postid });
+              db2.run(
+                `CREATE TABLE '${
+                  "commentsof" + postid
+                }' (s_no INTEGER PRIMARY KEY NOT NULL, 
+                    username VARCHAR(250) NOT NULL,
+                     userid VARCHAR(250) NOT NULL,
+                      comment VARCHAR(250) NOT NULL)`,
+                (err) => {
+                  if (err) {
+                    console.log(err);
+                    res.send({ msg: "failed" });
+                  } else {
+                    res.send({ msg: "success", postid: postid });
+                  }
+                }
+              );
             }
           });
         }
@@ -92,8 +112,6 @@ router.post("/savepost", (req, res) => {
     );
   }
 });
-
-
 
 router.post("/publishpost", (req, res) => {
   let postid = req.body.postid;

@@ -4,23 +4,25 @@ import Header from "../components/header/Header";
 import DashboardBody from "../components/dashboardbody/dashboardbody";
 import GeneralLoader from "../components/generalloader/generalloader";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 const DashboardPage = () => {
   let cookie = useCookie;
   let issigned = cookie("get", "user");
   let [isrighter, setisrighter] = useState(false);
   let [loading, setloading] = useState(true);
 
-  axios
-    .post("/getonly/checkisrighter", {
-      userid: issigned,
-    })
-    .then((res) => {
-      setisrighter(res.data.msg);
-      setloading(false);
-    });
+  useEffect(() => {
+    axios
+      .post("/getonly/checkisrighter", {
+        userid: issigned,
+      })
+      .then((res) => {
+        setisrighter(res.data.msg);
+        setloading(false);
+      });
+  }, []);
 
-
+  
   if (loading == false && Header && DashboardBody) {
     if (issigned) {
       if (isrighter) {

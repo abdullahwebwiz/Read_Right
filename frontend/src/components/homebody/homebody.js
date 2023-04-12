@@ -63,6 +63,7 @@ const HomeBody = () => {
                 <PostBox
                   key={index}
                   rightername={data.rightername}
+                  righterid={data.righterid}
                   whatimg={"postthumbnails"}
                   imgtype={data.pfiletype}
                   imgid={data.postid}
@@ -70,6 +71,7 @@ const HomeBody = () => {
                   rimgtype={data.rfiletype}
                   rimgid={data.rightername}
                   title={data.posttitle}
+                  postid={data.postid}
                   reads={data.reads}
                   ago={ago}
                 />

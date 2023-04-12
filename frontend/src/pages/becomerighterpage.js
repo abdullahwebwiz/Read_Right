@@ -28,6 +28,8 @@ const BecomeRighterPage = () => {
       });
   }, []);
 
+
+  
   if (issigned) {
     return (
       <>

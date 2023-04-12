@@ -23,6 +23,7 @@ import FollowingPage from "./pages/followingpage";
 import LikedPostsPage from "./pages/likedpostspage";
 import BecomeRighterPage from "./pages/becomerighterpage";
 import GeneralLoader from "./components/generalloader/generalloader";
+import PostBoxExtra from "./components/postboxextra/postboxextra";
 
 
 const App = () => {
@@ -46,7 +47,7 @@ const App = () => {
           <Route path="/likedposts" element={<LikedPostsPage />} />
           <Route path="/becomerighter" element={<BecomeRighterPage />} />
           <Route path="/imagecropper" element={<ImgCropper />} />
-          <Route path="/pb" element={<PostPage />} />
+
         </Routes>
       </BrowserRouter>
     </>

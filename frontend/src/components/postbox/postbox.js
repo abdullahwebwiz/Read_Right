@@ -1,6 +1,7 @@
 import "./postbox.css";
 import Linker from "../utilcomps/linker";
 import { useEffect, useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import axios from "axios";
 let dumbimg = "/assets/dumimg.png";
 let profileiconimg = "/assets/profileiconimg.png";
@@ -9,7 +10,8 @@ const PostBox = ({
   whatimg,
   imgid,
   imgtype,
-
+  postid,
+  righterid,
   whatrimg,
   rimgid,
   rimgtype,
@@ -36,7 +38,6 @@ const PostBox = ({
       });
   }, [whatimg, imgid, imgtype]);
 
-
   useEffect(() => {
     axios
       .post("/sendimg", {
@@ -49,19 +50,22 @@ const PostBox = ({
       });
   }, [whatrimg, rimgid, rimgtype]);
 
-  
   return (
     <>
       <div className={"mainpostbox"}>
-        <img
-          src={img ? "data:" + imgtype + ";base64," + img : dumbimg}
-          className={"postboxthumbnail"}
-          alt={"Thumbnail"}
-        />
-        <img
-          src={rimg ? "data:" + rimgtype + ";base64," + rimg : profileiconimg}
-          className={"postboxrighterimg"}
-        />
+        <Link to={"/post/" + postid}>
+          <img
+            src={img ? "data:" + imgtype + ";base64," + img : dumbimg}
+            className={"postboxthumbnail"}
+            alt={"Thumbnail"}
+          />
+        </Link>
+        <Link to={"/righter/@" + rightername}>
+          <img
+            src={rimg ? "data:" + rimgtype + ";base64," + rimg : profileiconimg}
+            className={"postboxrighterimg"}
+          />
+        </Link>
 
         <img
           src={threedots}
@@ -72,11 +76,15 @@ const PostBox = ({
             } else {
               setshowdropdown(true);
             }
-          }}
+          }}  
         />
-        <div className={"postboxtitle"}>{title}</div>
+        <Link to={"/post/" + postid} className={"postboxtitle"}>
+          {title}
+        </Link>
         <div className={"postboxinfo"}>
-          <p>{rightername}</p>
+          <Link to={"/righter/@" + rightername}>
+            <p>{rightername}</p>
+          </Link>
           <p>{reads + " reads"}</p>
         </div>
         <p className={"postboxago"}>{ago}</p>

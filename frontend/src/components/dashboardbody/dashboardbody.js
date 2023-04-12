@@ -2,7 +2,7 @@ import axios from "axios";
 import { useEffect, useRef, useState } from "react";
 import "./dashboardbody.css";
 import timeAgo from "epoch-to-timeago/";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import PostBox from "../postbox/postbox";
 import GeneralLoader from "../generalloader/generalloader";
 import BounceLoader from "react-spinners/BounceLoader";
@@ -37,7 +37,6 @@ const DashboardBody = () => {
     filetype: "",
   });
   let [postarray, setpostarray] = useState([]);
-
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
     msg: "",
@@ -54,13 +53,19 @@ const DashboardBody = () => {
   let [postfilter, setpostfilter] = useState("Recent");
   let elemfile = useRef("");
   let righterid = cookie("get", "user");
+  let { rname } = useParams();
+
+
+
   useEffect(() => {
     axios
       .post("/getonly/getrighterdata", {
         righterid: righterid,
+        rname: rname,
       })
       .then((res) => {
         if (res.data.msg == "failed") {
+          window.history.back();
           setmsg(true);
           setmsgprops({
             msg: "Something went wrong.",
@@ -72,14 +77,8 @@ const DashboardBody = () => {
           });
         } else if (res.data.msg == "notfound") {
           setmsg(true);
-          setmsgprops({
-            msg: "Not able to find you.",
-            buttwo: false,
-            butval1: "Ok",
-            fun1: () => {
-              setmsg(false);
-            },
-          });
+          alert('No righter found');
+          window.history.back();
         } else {
           setrighterdata((prevState) => ({
             ...prevState,
@@ -103,6 +102,7 @@ const DashboardBody = () => {
     axios
       .post("/getonly/getposts", {
         righterid: righterid,
+        rname: rname,
         postfilter: postfilter,
       })
       .then((res) => {
@@ -305,6 +305,7 @@ const DashboardBody = () => {
                     rimgtype={data.rfiletype}
                     rimgid={data.rightername}
                     title={data.posttitle}
+                    postid={data.postid}
                     reads={data.reads}
                     ago={ago}
                   />
