@@ -42,6 +42,7 @@ let data8 = require("../routes/posting");
 let data9 = require("../routes/sendimg");
 let data10 = require("../routes/updaterighter");
 let data11 = require("../routes/sendpostsarray");
+let data12 = require("../routes/followsys");
 
 app.use("/csc", data1);
 app.use("/otp", data2);
@@ -54,6 +55,7 @@ app.use("/posting", data8);
 app.use("/sendimg", data9);
 app.use("/updaterighter", data10);
 app.use("/sendpostarray", data11);
+app.use("/followingsys", data12);
 
 app.get("/", (req, res) => {
   res.send({ msg: "success" });

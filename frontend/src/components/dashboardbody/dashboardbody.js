@@ -36,6 +36,7 @@ const DashboardBody = () => {
     img: "",
     filetype: "",
   });
+  let [readbutval, setreadbutval] = useState("Readit");
   let [postarray, setpostarray] = useState([]);
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
@@ -55,17 +56,35 @@ const DashboardBody = () => {
   let righterid = cookie("get", "user");
   let { rname } = useParams();
 
-
+  useEffect(() => {
+    if (righterid) {
+      axios
+        .post("/followingsys/checkfollowing", {
+          user: righterid,
+          righter: righterdata.rightername,
+        })
+        .then((res) => {
+          if (res.data.msg != "failed") {
+            if (res.data.msg == "yesfollowing") {
+              setreadbutval("UnReadit");
+            } else {
+              setreadbutval("Readit");
+            }
+          }
+        });
+    }
+  }, [righterid, righterdata]);
 
   useEffect(() => {
+    console.log("get righter data.");
     axios
       .post("/getonly/getrighterdata", {
         righterid: righterid,
         rname: rname,
       })
       .then((res) => {
+        console.log("lolo:" + res.data.msg);
         if (res.data.msg == "failed") {
-          window.history.back();
           setmsg(true);
           setmsgprops({
             msg: "Something went wrong.",
@@ -73,12 +92,20 @@ const DashboardBody = () => {
             butval1: "Ok",
             fun1: () => {
               setmsg(false);
+              window.history.back();
             },
           });
         } else if (res.data.msg == "notfound") {
           setmsg(true);
-          alert('No righter found');
-          window.history.back();
+          setmsgprops({
+            msg: "No Righter Found.",
+            buttwo: false,
+            butval1: "Ok",
+            fun1: () => {
+              setmsg(false);
+              window.history.back();
+            },
+          });
         } else {
           setrighterdata((prevState) => ({
             ...prevState,
@@ -118,20 +145,51 @@ const DashboardBody = () => {
             },
           });
         } else if (res.data.msg == "notfound") {
-          setmsg(true);
-          setmsgprops({
-            msg: "You have no posts yet.",
-            buttwo: false,
-            butval1: "Ok",
-            fun1: () => {
-              setmsg(false);
-            },
-          });
+          console.log('');
         } else {
           setpostarray(res.data.msg);
         }
       });
   }, [righterid, postfilter]);
+
+  const followhandle = () => {
+    if (righterid) {
+      axios
+        .post("/followingsys/followact", {
+          user: righterid,
+          righter: righterdata.rightername,
+        })
+        .then((res) => {
+          if (res.data.msg != "failed") {
+            if (res.data.msg == "readsuccess") {
+              setreadbutval("UnReadit");
+            } else if (res.data.msg == "unreadsuccess") {
+              setreadbutval("Readit");
+            }
+          } else {
+            setmsg(true);
+            setmsgprops({
+              msg: "Something went wrong.",
+              buttwo: false,
+              butval1: "Ok",
+              fun1: () => {
+                setmsg(false);
+              },
+            });
+          }
+        });
+    } else {
+      setmsg(true);
+      setmsgprops({
+        msg: "Signin to do the following action.",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
+    }
+  };
 
   return (
     <>
@@ -147,17 +205,33 @@ const DashboardBody = () => {
           <div className={"profilerightername"}>
             {"@" + righterdata.rightername}
           </div>
-          <Button
-            whatbut={"buttonfirst"}
-            location={{
-              marginTop: "20px",
-              marginLeft: "110px",
-              position: "relative",
+          <div
+            style={{
+              width: "100%",
+              textAlign: "center",
+              marginTop: "10px",
+              marginBottom: "10px",
             }}
-            val={"Update"}
-            fun={() => navigate("/becomerighter")}
-            type={"button"}
-          />
+          >
+            {" "}
+            {rname ? (
+              <Button
+                whatbut={"buttonfirst"}
+                location={{ position: "relative" }}
+                val={readbutval}
+                fun={followhandle}
+                type={"button"}
+              />
+            ) : (
+              <Button
+                whatbut={"buttonfirst"}
+                location={{ position: "relative" }}
+                val={"Update"}
+                fun={() => navigate("/becomerighter")}
+                type={"button"}
+              />
+            )}
+          </div>
           <div className={"pqrs"}>
             <p>
               {righterdata.readers +

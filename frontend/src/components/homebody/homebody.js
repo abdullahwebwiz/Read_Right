@@ -52,6 +52,28 @@ const HomeBody = () => {
     });
   }, []);
 
+  const todofun = (x, y) => {
+    console.log(x);
+    console.log(y);
+    if (x == "Share") {
+      navigator.clipboard.writeText(window.location.origin + "/post/" + y);
+      setmsg(true);
+      setmsgprops({
+        msg: "Post link Copied",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
+    } else if (x == "Save") {
+      let spa = localStorage.getItem("spa");
+      if (spa) {
+        spa;
+      }
+    }
+  };
+
   if (!loading) {
     return (
       <>
@@ -74,6 +96,8 @@ const HomeBody = () => {
                   postid={data.postid}
                   reads={data.reads}
                   ago={ago}
+                  todoarray={["Save", "Share", "Report"]}
+                  todofun={todofun}
                 />
               </>
             );

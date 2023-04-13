@@ -3,16 +3,13 @@ import timeAgo from "epoch-to-timeago/";
 import PostBox from "../postbox/postbox";
 const TagBody = ({ postarray, tagname }) => {
   console.log(postarray);
-  let originalTime =  Date.now();
-
+  let originalTime = Date.now();
   return (
     <>
-
-
-<div className={'tagname'}>{"#"+tagname}</div>
+      <div className={"tagname"}>{"#" + tagname + " | " + postarray.length + " post(s)"}</div>
       <div className={"homebodypostcontainer"}>
         {postarray.map((data, index) => {
-            let ago = timeAgo.timeAgo(data.epoch, originalTime);
+          let ago = timeAgo.timeAgo(data.epoch, originalTime);
           return (
             <>
               <PostBox

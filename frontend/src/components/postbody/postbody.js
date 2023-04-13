@@ -12,6 +12,7 @@ let dumimg1 = "/assets/profileiconimg.png";
 let dumimg2 = "/assets/dumimg.png";
 let reporticon = "/assets/reporticon.png";
 let saveicon = "/assets/saveposticon2.png";
+let crossicon = "/assets/crossicon.png";
 let user = cookie("get", "user");
 
 const PostBody = ({
@@ -78,7 +79,7 @@ const PostBody = ({
           <div className={"posttitleblock"}>{postdata.posttitle}</div>
 
           <div className={"postrighterinfoanddates"}>
-            <Link to={'/righter/@'+postdata.rightername}>
+            <Link to={"/righter/@" + postdata.rightername}>
               <div className={"one"}>
                 <img
                   src={
@@ -110,6 +111,19 @@ const PostBody = ({
                   moment.unix(postdata.epoch / 1000).format("DD MMM YYYY")}
               </p>
             </div>
+          </div>
+          <div className={"tagconpb"}>
+            {postdata.tags.split(",").map((data, index) => {
+              return (
+                <>
+                  <div className={"posttagitself"} key={index} onClick={()=>{
+                    window.open('/tag/'+data,'__blank');
+                  }}>
+                    {data}
+                  </div>
+                </>
+              );
+            })}
           </div>
           <div className={"postbodytncon"}>
             <img

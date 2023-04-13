@@ -48,16 +48,12 @@ router.post("/getrighterdata", (req, res) => {
   console.log("getrighterdata reached");
   let righterid = req.body.righterid;
   let rname = req.body.rname;
-  console.log(rname);
 
-  let x1 = `rightername = '${rname}'`;
-  let x2 = `righterid = '${righterid}'`;
+  let x1 = ` rightername = '${rname ? rname.replace("@", "") : ""}'`;
+  let x2 = ` righterid = '${righterid}'`;
 
-  console.log(x1);
-  console.log(x2);
+  let query = `SELECT * FROM righters WHERE  ${rname ? x1 : x2}`;
 
-  let query = `SELECT * FROM righters WHERE ${rname ? x1 : x2}`;
-  console.log(query);
   db1.all(query, (err, result) => {
     if (err) {
       res.send({ msg: "failed" });
@@ -138,13 +134,10 @@ router.post("/getposts", (req, res) => {
   let postfilter = req.body.postfilter;
   console.log(righterid);
 
-
-  
-  let x1 = ` righters.rightername = '${rname? rname.replace('@','') : ''}'`;
+  let x1 = ` righters.rightername = '${rname ? rname.replace("@", "") : ""}'`;
   let x2 = ` righters.righterid = '${righterid}'`;
   let recent = ` ORDER BY epoch DESC`;
   let popular = ` ORDER BY reads DESC`;
-
 
   db1.all(
     `SELECT 

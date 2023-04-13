@@ -28,6 +28,7 @@
   border-top: 3px solid black;
   border-bottom: 3px solid black;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 .postrighterinfoanddates .one {
   display: flex;
@@ -226,4 +227,18 @@
   font-size: 23px;
   font-family: "calibri", Times, serif;
   margin-bottom: 30px;
+}
+
+.tagconpb {
+  width: 70%;
+  margin-top: 20px;
+  margin: auto;
+  position: relative;
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: row;
+}
+.tagconpb div{
+cursor: pointer !important;
+margin-right: 10px !important;
 }

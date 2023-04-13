@@ -21,6 +21,7 @@ const PostBox = ({
   rightername,
   righterimg,
   todoarray,
+  todofun,
 }) => {
   let [showdropdown, setshowdropdown] = useState(false);
   let [img, setimg] = useState("");
@@ -76,7 +77,7 @@ const PostBox = ({
             } else {
               setshowdropdown(true);
             }
-          }}  
+          }}
         />
         <Link to={"/post/" + postid} className={"postboxtitle"}>
           {title}
@@ -90,9 +91,20 @@ const PostBox = ({
         <p className={"postboxago"}>{ago}</p>
         {showdropdown ? (
           <div className={"postboxdropdown"}>
-            <div>Edit</div>
-            <div>UnPublish</div>
-            <div>delete</div>
+            {todoarray.map((d, i) => {
+              return (
+                <>
+                  <div
+                    key={i}
+                    onClick={() => {
+                      todofun(d, postid);
+                    }}
+                  >
+                    {d}
+                  </div>
+                </>
+              );
+            })}
           </div>
         ) : (
           ""

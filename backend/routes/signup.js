@@ -59,7 +59,7 @@ router.post("/adduser", (req, res) => {
               console.log("failed inserting." + err);
             }
             db2.run(
-              `CREATE TABLE '${"historyofuser_" + userid}'
+              `CREATE TABLE '${"historyofuser" + userid}'
                 (s_no INTEGER PRIMARY KEY NOT NULL,
                 postid VARCHAR(250) NOT NULL,
                 posttitle VARCHAR(250) NOT NULL,
@@ -70,7 +70,7 @@ router.post("/adduser", (req, res) => {
                   console.log("failed history " + err);
                 }
                 db2.run(
-                  `CREATE TABLE '${"tagsofuser_" + userid}'
+                  `CREATE TABLE '${"tagsofuser" + userid}'
                     (s_no INTEGER PRIMARY KEY NOT NULL,
                     tag VARCHAR(20) NOT NULL)
                       `,
@@ -80,7 +80,7 @@ router.post("/adduser", (req, res) => {
                       console.log("failed tags " + err);
                     }
                     db2.run(
-                      `CREATE TABLE '${"followingsofuser_" + userid}'
+                      `CREATE TABLE '${"followingsofuser" + userid}'
                         (s_no INTEGER PRIMARY KEY NOT NULL,
                        following VARCHAR(100) NOT NULL)`,
                       (err) => {
