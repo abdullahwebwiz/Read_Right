@@ -33,7 +33,6 @@ router.post("/savepost", (req, res) => {
   let ispublished = "no";
   let reads = 0;
 
-
   if (req.body.postid == "none") {
     let postid = shuffle(uuid.v4().replace(/-/g, "").split(""))
       .slice(0, 12)
@@ -122,6 +121,103 @@ router.post("/publishpost", (req, res) => {
       if (err) {
         res.send({ msg: "failed" });
         console.log("failed: " + err);
+      } else {
+        res.send({ msg: "success" });
+      }
+    }
+  );
+});
+
+router.post("/updatepost", (req, res) => {
+  let postid = req.body.postid;
+  let posttitle = req.body.posttitle;
+  let posttaglist = req.body.posttaglist.split(",");
+  let postthumbnail = req.files.postthumbnail;
+  let postbody = req.body.postbody;
+  let filetype = req.files.postthumbnail.mimetype;
+  let epoch = Date.now();
+
+  db1.run(
+    `UPDATE postrecords SET     postbody = '${postbody}',
+                                posttitle = '${posttitle}',
+                                tags = '${posttaglist}',
+                                updated = '${epoch}'
+                                WHERE postid = '${postid}'`,
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.send({ msg: "failed" });
+      } else {
+        let dest2 = path.join(
+          __dirname,
+          "../postthumbnails/" + postid + "." + filetype.replace("image/", "")
+        );
+        fs.unlink(dest2, (err) => {
+          if (err) {
+            console.log(err);
+            res.send({ msg: "failed" });
+          } else {
+            postthumbnail.mv(dest2, (err) => {
+              if (err) {
+                res.send({ msg: "failed" });
+                console.log("failed: " + err);
+              } else {
+                res.send({ msg: "success" });
+              }
+            });
+          }
+        });
+      }
+    }
+  );
+});
+
+router.post("/deletepost", (req, res) => {
+  let postid = req.body.postid;
+  let imgtype = req.body.imgtype;
+  db1.run(`DELETE FROM postrecords WHERE postid = '${postid}'`, (err) => {
+    if (err) {
+      res.send({ msg: "failed" });
+      console.log(err);
+    } else {
+      let dest2 = path.join(
+        __dirname,
+        "../postthumbnails/" + postid + "." + imgtype.replace("image/", "")
+      );
+      fs.unlink(dest2, (err) => {
+        if (err) {
+          console.log(err);
+          res.send({ msg: "failed" });
+        } else {
+          res.send({ msg: "success" });
+        }
+      });
+    }
+  });
+});
+
+router.post("/unpublishpost", (req, res) => {
+  let postid = req.body.postid;
+  db1.run(
+    `UPDATE postrecords SET ispublished = 'no' WHERE postid = '${postid}'`,
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.send({ msg: "failed" });
+      } else {
+        res.send({ msg: "success" });
+      }
+    }
+  );
+});
+router.post("/unpublishpost", (req, res) => {
+  let postid = req.body.postid;
+  db1.run(
+    `UPDATE postrecords SET ispublished = 'yes' WHERE postid = '${postid}'`,
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.send({ msg: "failed" });
       } else {
         res.send({ msg: "success" });
       }

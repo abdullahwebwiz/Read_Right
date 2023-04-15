@@ -146,6 +146,7 @@ router.post("/getposts", (req, res) => {
     postrecords.epoch,
     postrecords.filetype AS pfiletype, 
     postrecords.reads,
+    postrecords.ispublished,
     righters.rightername,
     righters.filetype AS rfiletype,
     righters.readers
@@ -291,4 +292,37 @@ router.post("/tagposts", (req, res) => {
     }
   );
 });
+
+router.post("/submitreport", (req, res) => {
+  console.log(req.body);
+  let user = req.body.user;
+  let subject = req.body.subject;
+  let message = req.body.message;
+  db1.run(
+    `INSERT INTO reports (user,subject,message)VALUES('${user}','${subject}','${message}')`,
+    (err) => {
+      if (err) {
+        res.send({ msg: "failed" });
+      } else {
+        res.send({ msg: "success" });
+      }
+    }
+  );
+});
+
+router.post("/gpdfu", (req, res) => {
+  let postid = req.body.postid;
+  db1.all(
+    `SELECT postid,postbody, posttitle, tags FROM postrecords WHERE postid = '${postid}'`,
+    (err, result) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        res.send({ msg: result[0] });
+      }
+    }
+  );
+});
+
 module.exports = router;

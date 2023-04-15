@@ -19,7 +19,8 @@ let instagramicon = "/assets/instagramicon.png";
 let youtubeicon = "/assets/youtubeicon.png";
 let linkedinicon = "/assets/linkedinicon.png";
 let websiteicon = "/assets/websiteicon.png";
-const DashboardBody = () => {
+const DashboardBody = ({todoarray, todofun}) => {
+  let todoarray2 = ["Edit", "Publish", "Delete"]
   let cookie = Cookie;
   let navigate = useNavigate();
   var originalTime = new Date().getTime();
@@ -56,6 +57,7 @@ const DashboardBody = () => {
   let righterid = cookie("get", "user");
   let { rname } = useParams();
 
+  console.log(postarray);
   useEffect(() => {
     if (righterid) {
       axios
@@ -370,6 +372,7 @@ const DashboardBody = () => {
               return (
                 <>
                   <PostBox
+                    published={data.ispublished}
                     key={index}
                     rightername={data.rightername}
                     whatimg={"postthumbnails"}
@@ -382,6 +385,9 @@ const DashboardBody = () => {
                     postid={data.postid}
                     reads={data.reads}
                     ago={ago}
+                    todoarray={todoarray}
+                    todoarray2={todoarray2}
+                    todofun={todofun}
                   />
                 </>
               );

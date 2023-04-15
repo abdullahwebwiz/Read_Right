@@ -1,6 +1,6 @@
 import { useEffect, useRef } from "react";
 import "./popup.css";
-const Popup = ({ msg, twobut, butval1, butval2, fun1, fun2, closepop }) => {
+const Popup = ({ msg, buttwo, butval1, butval2, fun1, fun2, closepop }) => {
   let crossimg = "/assets/crossimg.png";
 
   return (
@@ -12,7 +12,7 @@ const Popup = ({ msg, twobut, butval1, butval2, fun1, fun2, closepop }) => {
           <div>{msg}</div>
           <span>
             <button onClick={fun1}>{butval1}</button>
-            {twobut ? <button onClick={fun2}>{butval2}</button> : ""}
+            {buttwo ? <button onClick={fun2}>{butval2}</button> : ""}
           </span>
         </div>
       </div>

@@ -1,4 +1,4 @@
-import { Navigate } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import useCookie from "../hooks/useCookie";
 import axios from "axios";
 import { useNavigate } from "react-router-dom";
@@ -12,7 +12,10 @@ const PostBuilderPage = () => {
   let issigned = cookie("get", "user");
   let [isrighter, setisrighter] = useState("none");
   let [loading, setloading] = useState("");
+  let { state } = useLocation();
+  let postdata = state ? state.postdata : "";
 
+  console.log(postdata);
   useEffect(() => {
     axios
       .post("/updaterighter/checkrighter", {
@@ -30,21 +33,18 @@ const PostBuilderPage = () => {
       });
   }, [issigned]);
 
-  
   useEffect(() => {
     if (isrighter != "none") {
       setloading(false);
     }
   }, [isrighter]);
 
-
-
   if (!loading) {
     if (issigned) {
       if (isrighter) {
         return (
           <>
-            <PostBuilder />
+            <PostBuilder postdata={postdata} />
           </>
         );
       } else {

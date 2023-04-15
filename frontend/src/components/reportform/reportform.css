@@ -1,0 +1,44 @@
+.reportformcontainer{
+position: absolute !important;
+width: 100%;
+top: 60px;
+text-align: center !important;
+z-index: 4;
+border: 2px solid black;
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.reportform{
+width: 340px;
+height: 450px;
+background-color: #63dd8c;
+box-shadow: 5px 5px 10px black;
+/* position: relative; */
+border-radius: 30px;
+display: flex;
+/* justify-content: center; */
+align-items: center;
+flex-direction: column;
+}
+
+.reportform div{
+margin-top: 20px;
+}
+
+.reportform textarea{
+width: 95%;
+height: 250px;
+outline: none;
+border: none;
+border-radius: 20px;
+resize: none;
+margin-top: 20px;
+padding:10px;
+font-size: 20px;
+}
+
+.reportform span{
+margin-top: 30px;
+}

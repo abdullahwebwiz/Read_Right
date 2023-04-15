@@ -1,10 +1,14 @@
 import React, { useState, useRef } from "react";
 import JoditEditor from "jodit-react";
 import "./postbuilder.css";
-const Editor = () => {
+const Editor = ({ postbody }) => {
   const editor = useRef(null);
   let [content, setContent] = useState(
-    localStorage.getItem("postbody") ? localStorage.getItem("postbody") : ""
+    postbody
+      ? postbody
+      : localStorage.getItem("postbody")
+      ? localStorage.getItem("postbody")
+      : ""
   );
   const config = {
     zIndex: 0,

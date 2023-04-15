@@ -8,7 +8,7 @@ import { dataURLtoFile } from "./dataURLtoFile";
 import PopUp from "../popup/Popup";
 import axios from "axios";
 
-const ImgCropper = () => {
+const ImgCropper = ({ imgaspect, donefun }) => {
   let { state } = useLocation();
   let navigate = useNavigate();
   const [image, setImage] = React.useState(null);
@@ -54,8 +54,7 @@ const ImgCropper = () => {
       let canvadataurl = canvas.toDataURL("image/jpg");
       let x = dataURLtoFile(canvadataurl, "img." + imgtype);
       console.log(x);
-      navigate("/"+state.sender, { state: { img: x } });
-      console.log("all done");
+      donefun(x);
     } else {
       setmsg(true);
       setmsgprops({
@@ -78,7 +77,7 @@ const ImgCropper = () => {
             image={image}
             crop={crop}
             zoom={zoom}
-            aspect={state.aspect}
+            aspect={imgaspect}
             onCropChange={setCrop}
             onZoomChange={setZoom}
             onCropComplete={onCropComplete}

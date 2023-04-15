@@ -5,6 +5,8 @@ import timeAgo from "epoch-to-timeago/";
 import Popup from "../popup/Popup";
 import { useEffect, useState } from "react";
 import axios from "axios";
+import ReportForm from "../reportform/reportform";
+import cookie from '../../hooks/useCookie';
 const HomeBody = () => {
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
@@ -19,6 +21,16 @@ const HomeBody = () => {
       return false;
     },
   });
+  let [report, setreport] = useState(false);
+  let [reportprops, setreportprops] = useState({
+    title: "",
+    msg: "",
+    subject: "",
+    fun: () => {
+      return false;
+    },
+  });
+
   let [postarray, setpostarray] = useState([]);
   let [loading, setloading] = useState(true);
   var originalTime = new Date().getTime();
@@ -66,12 +78,29 @@ const HomeBody = () => {
           setmsg(false);
         },
       });
-    } else if (x == "Save") {
-      let spa = localStorage.getItem("spa");
-      if (spa) {
-        spa;
+    } else if (x == "Report") {
+      if(cookie('get','user')){
+        setreport(true);
+        setreportprops({
+          msg: "Post ID " + y,
+          title: "Report Form",
+          subject: y,
+          fun: () => {
+            setreport(false);
+          },
+        });  
+      }else{
+      setmsg(true);
+      setmsgprops({
+        msg: "You are not signedin",
+        buttwo: false,
+        butval1: "Ok",
+        fun1: () => {
+          setmsg(false);
+        },
+      });
       }
-    }
+     }
   };
 
   if (!loading) {
@@ -96,7 +125,7 @@ const HomeBody = () => {
                   postid={data.postid}
                   reads={data.reads}
                   ago={ago}
-                  todoarray={["Save", "Share", "Report"]}
+                  todoarray={["Share", "Report"]}
                   todofun={todofun}
                 />
               </>
@@ -113,6 +142,18 @@ const HomeBody = () => {
             fun1={msgprops.fun1}
             fun2={msgprops.fun2}
           />
+        ) : (
+          ""
+        )}
+        {report ? (
+          <>
+            <ReportForm
+              title={reportprops.title}
+              msg={reportprops.msg}
+              subject={reportprops.subject}
+              fun={reportprops.fun}
+            />
+          </>
         ) : (
           ""
         )}

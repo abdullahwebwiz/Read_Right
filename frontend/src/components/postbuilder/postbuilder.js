@@ -4,7 +4,7 @@ import SideEdit from "./sideedit";
 import "./postbuilder.css";
 import Popup from "../popup/Popup";
 import GeneralLoader from "../generalloader/generalloader";
-const PostBuilder = () => {
+const PostBuilder = ({ postdata }) => {
   let [what, setwhat] = useState(false);
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
@@ -43,9 +43,7 @@ const PostBuilder = () => {
           setmsg(false);
         },
       });
-    }
-  
-    else if (x == "firstsave") {
+    } else if (x == "firstsave") {
       setmsg(true);
       setmsg(true);
       setmsgprops({
@@ -56,8 +54,7 @@ const PostBuilder = () => {
           setmsg(false);
         },
       });
-    }
-    else if (x == "updated") {
+    } else if (x == "updated") {
       setmsg(true);
       setmsg(true);
       setmsgprops({
@@ -74,8 +71,13 @@ const PostBuilder = () => {
   if (Editor && SideEdit) {
     return (
       <>
-        <Editor />
-        <SideEdit popfun={popfun} />
+        <Editor postbody={postdata ? postdata.postbody : ""} />
+        <SideEdit
+          popfun={popfun}
+          upperposttitle={postdata ? postdata.posttitle : ""}
+          upperposttags={postdata ? postdata.tags : ""}
+          upperpostid={postdata ? postdata.postid : ""}
+        />
         {msg ? (
           <Popup
             closepop={() => setmsg(false)}

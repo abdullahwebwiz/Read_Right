@@ -24,7 +24,7 @@ import LikedPostsPage from "./pages/likedpostspage";
 import BecomeRighterPage from "./pages/becomerighterpage";
 import GeneralLoader from "./components/generalloader/generalloader";
 import PostBoxExtra from "./components/postboxextra/postboxextra";
-
+import ReportForm from "./components/reportform/reportform";
 
 const App = () => {
   return (
@@ -47,6 +47,7 @@ const App = () => {
           <Route path="/likedposts" element={<LikedPostsPage />} />
           <Route path="/becomerighter" element={<BecomeRighterPage />} />
           <Route path="/imagecropper" element={<ImgCropper />} />
+          <Route path="/pp" element={<ReportForm msg={'post id: 123456'} title={'Report Form'}/>} />
 
         </Routes>
       </BrowserRouter>

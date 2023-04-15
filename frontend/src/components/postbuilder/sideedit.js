@@ -5,9 +5,17 @@ import Select from "../utilcomps/select";
 import Button from "../utilcomps/button";
 import GeneralLoader from "../generalloader/generalloader";
 import { Form, useLocation, useNavigate } from "react-router-dom";
+import ImgCropper from "../imgcropper/ImgCropper";
 import axios from "axios";
 import Cookie from "../../hooks/useCookie";
-const SideEdit = ({ popfun }) => {
+const SideEdit = ({
+  popfun,
+  upperposttitle,
+  upperposttags,
+  upperpostid,
+  posttags,
+}) => {
+  console.log(upperpostid);
   let navigate = useNavigate();
   let { state } = useLocation();
   let crossicon = "/assets/crossicon.png";
@@ -23,14 +31,12 @@ const SideEdit = ({ popfun }) => {
   let [posttitle, setposttitle] = useState("");
   let [posttaglist, setposttaglist] = useState([]);
   let [postthumbnail, setpostthumbnail] = useState("");
-
-  useEffect(() => {
-    if (state) {
-      setpostthumbnail(state.img);
-    } else {
-      setpostthumbnail("");
-    }
-  }, [state]);
+  let [imgcropper, setimgcropper] = useState(false);
+  const addimg = (x) => {
+    setpostthumbnail(x);
+    setimgcropper(false);
+    console.log(x);
+  };
 
   useEffect(() => {
     axios.get("/getonly/tagnames").then((res) => {
@@ -42,20 +48,34 @@ const SideEdit = ({ popfun }) => {
   useEffect(() => {
     if (localStorage.getItem("posttitle")) {
       setposttitle(localStorage.getItem("posttitle"));
+    } else if (upperposttitle) {
+      setposttitle(upperposttitle);
     } else {
       setposttitle("");
     }
   }, []);
+
   useEffect(() => {
     if (localStorage.getItem("posttaglist")) {
       setposttaglist(localStorage.getItem("posttaglist").split(","));
+    } else if (upperposttags) {
+      setposttaglist(upperposttags.split(","));
     } else {
       setposttaglist([]);
     }
   }, []);
+  useEffect(() => {
+    if (localStorage.getItem("postid")) {
+      setpostid(localStorage.getItem("postid"));
+    } else if (upperpostid) {
+      setpostid(upperpostid);
+    } else {
+      setpostid("none");
+    }
+  }, []);
 
   const savepost = () => {
-    console.log('lao')
+    console.log("lao");
     setloading(true);
     if (
       postthumbnail &&
@@ -133,6 +153,38 @@ const SideEdit = ({ popfun }) => {
     }
   };
 
+  const updatehandle = () => {
+    if(postthumbnail && postid && posttaglist && localStorage.getItem('postbody')){
+      let fb = new FormData();
+      fb.append("postthumbnail", postthumbnail);
+      fb.append("posttitle", posttitle);
+      fb.append("posttaglist", posttaglist);
+      fb.append("postbody", localStorage.getItem("postbody"));
+      fb.append("postid", postid);
+      axios
+        .post("/posting/updatepost", fb, {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        })
+        .then((res) => {
+          if (res.data.msg == "failed") {
+            alert("Something went wrong.");
+          } else {
+            localStorage.removeItem('postid');
+            localStorage.removeItem('postbody');
+            localStorage.removeItem('posttaglist');
+            localStorage.removeItem('posttitle');
+            alert("Post Updated");
+            navigate("/dashboard");
+          }
+        });
+    }
+else{
+  alert('Fill all fields')
+}
+  };
+
   const addtag = () => {
     if (posttag) {
       if (posttaglist.length <= 4) {
@@ -161,31 +213,48 @@ const SideEdit = ({ popfun }) => {
   return (
     <>
       <div className={"sideedit"}>
-        <Button
-          whatbut={"buttonsecond"}
-          location={{ top: "11px", right: "170px" }}
-          val={"Upload Thumbnail"}
-          fun={() => {
-            navigate("/imagecropper", {
-              state: { aspect: 1.77777777778, sender: "postbuilder" },
-            });
-          }}
-          type={"button"}
-        />
-        <Button
-          whatbut={"buttonsecond"}
-          location={{ top: "11px", right: "90px" }}
-          val={saveval}
-          fun={savepost}
-          type={"button"}
-        />
-        <Button
-          whatbut={"buttonfirst"}
-          location={{ top: "11px", right: "10px" }}
-          val={"Publish"}
-          fun={publishpost}
-          type={"button"}
-        />
+        {upperposttags && upperposttitle ? (
+          <>
+            <Button
+              whatbut={"buttonsecond"}
+              location={{ top: "11px", right: "10px" }}
+              val={"Update"}
+              fun={updatehandle}
+              type={"button"}
+            />
+            <Button
+              whatbut={"buttonsecond"}
+              location={{ top: "11px", right: "170px" }}
+              val={"Upload Thumbnail"}
+              fun={() => setimgcropper(true)}
+              type={"button"}
+            />
+          </>
+        ) : (
+          <>
+            <Button
+              whatbut={"buttonsecond"}
+              location={{ top: "11px", right: "170px" }}
+              val={"Upload Thumbnail"}
+              fun={() => setimgcropper(true)}
+              type={"button"}
+            />
+            <Button
+              whatbut={"buttonsecond"}
+              location={{ top: "11px", right: "90px" }}
+              val={saveval}
+              fun={savepost}
+              type={"button"}
+            />
+            <Button
+              whatbut={"buttonfirst"}
+              location={{ top: "11px", right: "10px" }}
+              val={"Publish"}
+              fun={publishpost}
+              type={"button"}
+            />
+          </>
+        )}
 
         <Input
           type={"text"}
@@ -251,6 +320,11 @@ const SideEdit = ({ popfun }) => {
         </div>
       </div>
       {loading ? <GeneralLoader /> : ""}
+      {imgcropper ? (
+        <ImgCropper imgaspect={1.77777777778} donefun={addimg} />
+      ) : (
+        ""
+      )}
     </>
   );
 };

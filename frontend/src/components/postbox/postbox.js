@@ -21,8 +21,11 @@ const PostBox = ({
   rightername,
   righterimg,
   todoarray,
+  todoarray2,
+  published,
   todofun,
 }) => {
+  console.log(todoarray2);
   let [showdropdown, setshowdropdown] = useState(false);
   let [img, setimg] = useState("");
   let [rimg, setrimg] = useState("");
@@ -91,20 +94,40 @@ const PostBox = ({
         <p className={"postboxago"}>{ago}</p>
         {showdropdown ? (
           <div className={"postboxdropdown"}>
-            {todoarray.map((d, i) => {
-              return (
-                <>
-                  <div
-                    key={i}
-                    onClick={() => {
-                      todofun(d, postid);
-                    }}
-                  >
-                    {d}
-                  </div>
-                </>
-              );
-            })}
+            {
+            published == "yes"
+              ? 
+              todoarray
+              .map((d, i) => {
+                  return (
+                    <>
+                      <div
+                        key={i}
+                        onClick={() => {
+                          todofun(d, postid, imgtype);
+                        }}
+                      >
+                        {d}
+                      </div>
+                    </>
+                  );
+                })
+
+              : todoarray2.map((d, i) => {
+                  return (
+                    <>
+                      <div
+                        key={i}
+                        onClick={() => {
+                          todofun(d, postid, imgtype);
+                        }}
+                      >
+                        {d}
+                      </div>
+                    </>
+                  );
+                })
+                }
           </div>
         ) : (
           ""
