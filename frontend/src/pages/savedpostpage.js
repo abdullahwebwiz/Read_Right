@@ -1,14 +1,13 @@
 import { Navigate } from "react-router-dom";
 import useCookie from "../hooks/useCookie";
 import Header from '../components/header/Header';
-const LikedPostsPage = () =>{
+const SavedPostsPage = () =>{
     let cookie = useCookie;
     let issigned = cookie("get", "user");
     if (issigned) {
       return (
         <>
-          <Header />
-          <h1>Liked post Page</h1>
+          <h1>Saved post Page</h1>
         </>
       );
     } else {
@@ -20,4 +19,4 @@ const LikedPostsPage = () =>{
       );
     }
     }
-    export default LikedPostsPage;
+    export default SavedPostsPage;

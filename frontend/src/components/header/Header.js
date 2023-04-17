@@ -119,11 +119,11 @@ const Header = () => {
                   <p>Following</p>
                 </div>
               </Link>
-              <Link to="/likedposts">
+              <Link to="/savedposts">
                 {" "}
                 <div className={"mbone"}>
                   <img src={savedposticon} />
-                  <p>Liked Posts</p>
+                  <p>Saved Posts</p>
                 </div>
               </Link>
             </div>

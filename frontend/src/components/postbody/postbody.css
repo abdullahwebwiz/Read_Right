@@ -99,6 +99,17 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
+.pbshareicon{
+  position: absolute;
+  top: 10px;
+  right: 110px;
+  cursor: pointer;
+  width: 42px;
+  padding: 7px 6px 6px 6px;
+  border-radius: 50%;
+  background-color: rgba(0, 0, 0, 0.3);
+}
+
 .pbbody {
   width: 70%;
   margin: auto;
@@ -212,6 +223,12 @@
   color: #02882e;
   font-size: 18px;
   text-align: center;
+}
+
+.commentitself img{
+position: absolute;
+width: 25px;
+right:10px
 }
 
 .commentsection textarea {

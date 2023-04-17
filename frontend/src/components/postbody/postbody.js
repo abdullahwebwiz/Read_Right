@@ -8,11 +8,14 @@ import PostBoxExtra from "../postboxextra/postboxextra";
 import Header from "../header/Header";
 import cookie from "../../hooks/useCookie";
 import { Link } from "react-router-dom";
+import ReportForm from "../reportform/reportform";
 let dumimg1 = "/assets/profileiconimg.png";
 let dumimg2 = "/assets/dumimg.png";
 let reporticon = "/assets/reporticon.png";
 let saveicon = "/assets/saveposticon2.png";
 let crossicon = "/assets/crossicon.png";
+let shareicon = "/assets/shareicon.png";
+let threedots = "/assets/threedots.png";
 let user = cookie("get", "user");
 
 const PostBody = ({
@@ -21,14 +24,27 @@ const PostBody = ({
   tenposttwo,
   postcomments,
   inccomments,
+  postid,
+  addcomment,
+  deletecomment,
 }) => {
   console.log(postdata);
+  let [commentmenu, setcommentmenu] = useState(false);
   let [comment, setcomment] = useState("");
   let [msg, setmsg] = useState(false);
   let [noheight1, setnoheight1] = useState(false);
   let [noheight2, setnoheight2] = useState(false);
   let [thumbnail, setthumbnail] = useState("");
   let [profileimg, setprofileimg] = useState("");
+  let [report, setreport] = useState(false);
+  let [reportprops, setreportprops] = useState({
+    title: "",
+    msg: "",
+    subject: "",
+    fun: () => {
+      return false;
+    },
+  });
   let [msgprops, setmsgprops] = useState({
     msg: "",
     twobut: false,
@@ -66,8 +82,9 @@ const PostBody = ({
   }, [postdata]);
 
   const commentsubmit = (e) => {
-    if (e.key != "Enter") {
-      console.log("all good");
+    if (e.key == "Enter") {
+      addcomment(user, comment, postid);
+      setcomment("");
     }
   };
 
@@ -116,9 +133,13 @@ const PostBody = ({
             {postdata.tags.split(",").map((data, index) => {
               return (
                 <>
-                  <div className={"posttagitself"} key={index} onClick={()=>{
-                    window.open('/tag/'+data,'__blank');
-                  }}>
+                  <div
+                    className={"posttagitself"}
+                    key={index}
+                    onClick={() => {
+                      window.open("/tag/" + data, "__blank");
+                    }}
+                  >
                     {data}
                   </div>
                 </>
@@ -134,8 +155,86 @@ const PostBody = ({
               }
               className={"pbtnimg"}
             />
-            <img src={reporticon} className={"pbreporticon"} />
-            <img src={saveicon} className={"pbsaveicon"} />
+            <img
+              src={reporticon}
+              className={"pbreporticon"}
+              onClick={() => {
+                setreport(true);
+                setreportprops({
+                  msg: "Post ID " + postid,
+                  title: "Report Form",
+                  subject: postid,
+                  fun: () => {
+                    setreport(false);
+                  },
+                });
+              }}
+            />
+            <img
+              src={saveicon}
+              className={"pbsaveicon"}
+              onClick={() => {
+                let spc = localStorage.getItem("spc");
+                if (spc) {
+                  let spcarray = spc.split(",");
+                  if (spcarray.includes(postid)) {
+                    let ii = spcarray.indexOf(postid);
+                    spcarray.splice(ii, 1);
+                    localStorage.setItem("spc", spcarray);
+                    setmsg(true);
+                    setmsgprops({
+                      msg: "Post Unsaved successfully",
+                      buttwo: false,
+                      butval1: "Ok",
+                      fun1: () => {
+                        setmsg(false);
+                      },
+                    });
+                  } else {
+                    spcarray.push(postid);
+                    localStorage.setItem("spc", spcarray);
+                    setmsg(true);
+                    setmsgprops({
+                      msg: "Post Saved successfully",
+                      buttwo: false,
+                      butval1: "Ok",
+                      fun1: () => {
+                        setmsg(false);
+                      },
+                    });
+                  }
+                } else {
+                  let sp = [];
+                  sp.push(postid);
+                  localStorage.setItem("spc", sp);
+                  setmsg(true);
+                  setmsgprops({
+                    msg: "Post Saved successfully",
+                    buttwo: false,
+                    butval1: "Ok",
+                    fun1: () => {
+                      setmsg(false);
+                    },
+                  });
+                }
+              }}
+            />
+            <img
+              src={shareicon}
+              className={"pbshareicon"}
+              onClick={() => {
+                window.navigator.clipboard.writeText(window.location.href);
+                setmsg(true);
+                setmsgprops({
+                  msg: "Post link as been copied.",
+                  buttwo: false,
+                  butval1: "Ok",
+                  fun1: () => {
+                    setmsg(false);
+                  },
+                });
+              }}
+            />
           </div>
 
           <div
@@ -231,6 +330,26 @@ const PostBody = ({
                     return (
                       <>
                         <div className={"commentitself"} key={i}>
+                          {user == d.userid && d.s_no ? (
+                            <>
+                              <div
+                                style={{
+                                  cursor: "pointer",
+                                  fontSize: "15px",
+                                  position: "absolute",
+                                  right: "10px",
+                                }}
+                                onClick={() => {
+                                  deletecomment(d.s_no, i, postid);
+                                }}
+                              >
+                                DELETE
+                              </div>
+                            </>
+                          ) : (
+                            ""
+                          )}
+
                           <div className={"commentusername"}>{d.username}</div>
                           <div className={"commentmessage"}>{d.comment}</div>
                         </div>
@@ -255,6 +374,18 @@ const PostBody = ({
             fun1={msgprops.fun1}
             fun2={msgprops.fun2}
           />
+        ) : (
+          ""
+        )}
+        {report ? (
+          <>
+            <ReportForm
+              title={reportprops.title}
+              msg={reportprops.msg}
+              subject={reportprops.subject}
+              fun={reportprops.fun}
+            />
+          </>
         ) : (
           ""
         )}

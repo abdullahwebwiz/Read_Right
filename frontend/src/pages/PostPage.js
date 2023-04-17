@@ -12,24 +12,65 @@ const PostPage = () => {
   let [sp, setsp] = useState(0);
   let [ep, setep] = useState(5);
 
-
   const inccomments = () => {
-     setsp(sp + 5);
-     setep(ep + 5);
+    setsp(sp + 5);
+    setep(ep + 5);
     axios
-    .post("/getonly/postcomments", {
-      postid: postid,
-      sp: sp + 5,
-      ep: ep + 5,
-    })
-    .then((res) => {
-      if (res.data.msg != "failed") {
-        setpostcomments(postcomments.concat(res.data.msg));
-      }
-    });
+      .post("/getonly/postcomments", {
+        postid: postid,
+        sp: sp + 5,
+        ep: ep + 5,
+      })
+      .then((res) => {
+        if (res.data.msg != "failed") {
+          setpostcomments(postcomments.concat(res.data.msg));
+        }
+      });
   };
 
+  const addcomment = (x, y, z) => {
+    axios
+      .post("/commentsys/addcomment", {
+        userid: x,
+        comment: y,
+        postid: z,
+      })
+      .then((res) => {
+        if (res.data.msg == "failed") {
+          alert("Something went wrong");
+        } else {
+          setpostcomments([
+            {
+              userid: x,
+              username: res.data.name,
+              comment: y,
+            },
+            ...postcomments,
+          ]);
+        }
+      });
+  };
 
+  const deletecomment = (x, y, z) => {
+    // x s_n0
+    // y index
+    //z postid
+
+    axios
+      .post("/commentsys/deletecomment", {
+        s_no: x,
+        postid: z,
+      })
+      
+      .then((res) => {
+        if (res.data.msg == "failed") {
+          alert("Something went wrong");
+        } else {
+          postcomments.splice(y, 1);
+          setpostcomments([...postcomments]);
+        }
+      });
+  };
 
   useEffect(() => {
     axios
@@ -44,8 +85,6 @@ const PostPage = () => {
         }
       });
   }, []);
-
-  
 
   useEffect(() => {
     axios
@@ -90,6 +129,9 @@ const PostPage = () => {
           tenposttwo={tenposttwo}
           postcomments={postcomments}
           inccomments={inccomments}
+          postid={postid}
+          addcomment={addcomment}
+          deletecomment={deletecomment}
         />
       </>
     );
