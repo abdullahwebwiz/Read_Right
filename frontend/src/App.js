@@ -20,9 +20,9 @@ import ImgCropper from "./components/imgcropper/ImgCropper";
 import ExplorePage from "./pages/explorepage";
 import HistoryPage from "./pages/historypage";
 import FollowingPage from "./pages/followingpage";
-import SavedPostsPage from "./pages/savedpostpage";
 import BecomeRighterPage from "./pages/becomerighterpage";
-import ReportForm from "./components/reportform/reportform";
+import SavedPostList from "./components/savedpostlist/savedpostlist";
+import FollowingBox from "./components/followingbox/followingbox";
 
 const App = () => {
   return (
@@ -42,10 +42,10 @@ const App = () => {
           <Route path="/rec" element={<ImgCropper />} />
           <Route path="/history" element={<HistoryPage />} />
           <Route path="/following" element={<FollowingPage />} />
-          <Route path="/savedposts" element={<SavedPostsPage />} />
+          <Route path="/savedposts" element={<SavedPostList />} />
           <Route path="/becomerighter" element={<BecomeRighterPage />} />
           <Route path="/imagecropper" element={<ImgCropper />} />
-          <Route path="/pp" element={<ReportForm msg={'post id: 123456'} title={'Report Form'}/>} />
+          <Route path="/pp" element={<FollowingBox />} />
 
         </Routes>
       </BrowserRouter>

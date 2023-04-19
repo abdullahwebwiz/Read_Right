@@ -6,7 +6,7 @@ import GeneralLoader from "../components/generalloader/generalloader";
 import axios from "axios";
 import ReportForm from "../components/reportform/reportform";
 import Popup from "../components/popup/Popup";
-import cookie from '../hooks/useCookie';
+import cookie from "../hooks/useCookie";
 import { useState } from "react";
 
 const RighterPage = () => {
@@ -72,12 +72,15 @@ const RighterPage = () => {
     }
   };
 
-
   if (DashboardBody) {
     return (
       <>
         <Header />
-        <DashboardBody todoarray={["Share", "Report"]} todofun={todofun} />
+        <DashboardBody
+          todoarray={["Share", "Report"]}
+          todofun={todofun}
+          iamrighterpage={true}
+        />
         {report ? (
           <>
             <ReportForm
@@ -90,7 +93,7 @@ const RighterPage = () => {
         ) : (
           ""
         )}
-          {msg ? (
+        {msg ? (
           <Popup
             closepop={() => setmsg(false)}
             msg={msgprops.msg}

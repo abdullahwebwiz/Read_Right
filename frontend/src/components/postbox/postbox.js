@@ -24,6 +24,7 @@ const PostBox = ({
   todoarray2,
   published,
   todofun,
+  iamrighterpage,
 }) => {
   console.log(todoarray2);
   let [showdropdown, setshowdropdown] = useState(false);
@@ -94,11 +95,8 @@ const PostBox = ({
         <p className={"postboxago"}>{ago}</p>
         {showdropdown ? (
           <div className={"postboxdropdown"}>
-            {
-            published == "yes"
-              ? 
-              todoarray
-              .map((d, i) => {
+            {iamrighterpage
+              ? todoarray.map((d, i) => {
                   return (
                     <>
                       <div
@@ -112,7 +110,21 @@ const PostBox = ({
                     </>
                   );
                 })
-
+              : published == "yes"
+              ? todoarray.map((d, i) => {
+                  return (
+                    <>
+                      <div
+                        key={i}
+                        onClick={() => {
+                          todofun(d, postid, imgtype);
+                        }}
+                      >
+                        {d}
+                      </div>
+                    </>
+                  );
+                })
               : todoarray2.map((d, i) => {
                   return (
                     <>
@@ -126,8 +138,7 @@ const PostBox = ({
                       </div>
                     </>
                   );
-                })
-                }
+                })}
           </div>
         ) : (
           ""

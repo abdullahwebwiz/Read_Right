@@ -22,6 +22,23 @@ const db2 = new sqlite3.Database(dest2, sqlite3.OPEN_READWRITE, (err) => {
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 
+router.post("/getfollowinglist", (req, res) => {
+  let user = req.body.user;
+  db2.all(`SELECT * FROM '${"followingsofuser" + user}'`, (err, result) => {
+    if (err) {
+      res.send({ msg: "failed" });
+      console.log(err);
+    } else {
+      if (result != "") {
+        res.send({ msg: result });
+        console.log(result);
+      } else {
+        res.send({ msg: "nofollowing" });
+      }
+    }
+  });
+});
+
 router.post("/checkfollowing", (req, res) => {
   let user = req.body.user;
   let righter = req.body.righter;
@@ -136,6 +153,43 @@ router.post("/followact", (req, res) => {
             }
           );
         }
+      }
+    }
+  );
+});
+
+router.post("/remfoll", (req, res) => {
+  let s_no = req.body.s_no;
+  let userid = req.body.userid;
+  let righter = req.body.righter;
+  db2.run(
+    `DELETE FROM '${"followingsofuser" + userid}' WHERE s_no = '${s_no}'`,
+    (err) => {
+      if (err) {
+        console.log(err);
+        res.send({ msg: "failed" });
+      } else {
+        db1.all(
+          `SELECT readers FROM righters WHERE rightername = '${righter}'`,
+          (err, result) => {
+            if (err) {
+              console.log(err);
+              res.send({ msg: "failed" });
+            } else {
+              db1.run(
+                `UPDATE righters SET readers = '${result[0].readers - 1}' WHERE rightername = '${righter}'`,
+                (err) => {
+                  if (err) {
+                    console.log(err);
+                    res.send({ msg: "failed" });
+                  } else {
+                    res.send({ msg: "success" });
+                  }
+                }
+              );
+            }
+          }
+        );
       }
     }
   );

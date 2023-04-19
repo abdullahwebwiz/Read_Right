@@ -19,8 +19,8 @@ let instagramicon = "/assets/instagramicon.png";
 let youtubeicon = "/assets/youtubeicon.png";
 let linkedinicon = "/assets/linkedinicon.png";
 let websiteicon = "/assets/websiteicon.png";
-const DashboardBody = ({todoarray, todofun}) => {
-  let todoarray2 = ["Edit", "Publish", "Delete"]
+const DashboardBody = ({ todoarray, todofun, iamrighterpage }) => {
+  let todoarray2 = ["Edit", "Publish", "Delete"];
   let cookie = Cookie;
   let navigate = useNavigate();
   var originalTime = new Date().getTime();
@@ -147,7 +147,7 @@ const DashboardBody = ({todoarray, todofun}) => {
             },
           });
         } else if (res.data.msg == "notfound") {
-          console.log('');
+          console.log("");
         } else {
           setpostarray(res.data.msg);
         }
@@ -372,6 +372,7 @@ const DashboardBody = ({todoarray, todofun}) => {
               return (
                 <>
                   <PostBox
+                    iamrighterpage={iamrighterpage}
                     published={data.ispublished}
                     key={index}
                     rightername={data.rightername}

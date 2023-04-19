@@ -1,0 +1,63 @@
+.splmc{
+width: 100%;
+height: 100vh;
+display: flex;
+justify-content: center;
+align-items: center;
+position: absolute;
+z-index: 4;
+}
+.splc{
+width: 370px;
+height: 70vh;
+background-color: white;
+box-shadow: 5px 5px 10px #0bda51;
+position: relative;
+overflow: auto;
+}
+.spl{
+position: absolute;
+display: flex;
+flex-direction: column;
+width: 100%;
+top:40px;
+}
+.sp{
+width: 100%;
+height: 100px;
+position: relative;
+margin-bottom: 10px;
+}
+.sp img{
+position: absolute;
+top: 0;
+left: 0;
+height: 100%;
+}
+.sp p{
+position: absolute;
+width: 150px;
+height: 80%;
+top: 0;
+right: 20px;
+text-align: left;
+word-wrap:break-word;
+overflow: hidden;
+text-overflow: ellipsis;
+display: -webkit-box;
+-webkit-line-clamp: 4;
+-webkit-box-orient: vertical;
+}
+
+.sp div{
+position: absolute;
+font-weight: bolder;
+font-size: 15px;
+top: 4px;
+right: 2px;
+border-radius: 50%;
+background-color: rgba(0, 0,0,0.3);
+padding-left: 4px;
+padding-right: 4px;
+cursor: pointer;
+}

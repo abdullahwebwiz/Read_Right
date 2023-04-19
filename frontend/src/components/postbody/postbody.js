@@ -59,6 +59,22 @@ const PostBody = ({
   });
 
   useEffect(() => {
+    axios.post("/harc/addhistory", {
+      user: user,
+      postid: postid,
+      posttitle: postdata.posttitle,
+    });
+  }, [postdata, postid]);
+
+  useEffect(() => {
+    setTimeout(() => {
+      axios.post("/harc/readsinc", {
+        postid: postid,
+      });
+    }, 1000 * 10);
+  }, [postdata, postid]);
+
+  useEffect(() => {
     axios
       .post("/sendimg", {
         whatimg: "postthumbnails",

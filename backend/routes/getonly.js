@@ -112,7 +112,8 @@ router.post("/postdata", (req, res) => {
     righters.link4,
     righters.link5,
     righters.desc
-     FROM postrecords INNER JOIN righters ON postrecords.postid = '${postid}'`,
+     FROM postrecords INNER JOIN righters 
+     ON postrecords.righterid = righters.righterid WHERE postrecords.postid = '${postid}'`,
     (err, result) => {
       if (err) {
         res.send({ msg: "failed" });
@@ -320,6 +321,42 @@ router.post("/gpdfu", (req, res) => {
         console.log(err);
       } else {
         res.send({ msg: result[0] });
+      }
+    }
+  );
+});
+
+router.post("/savedpostlist", (req, res) => {
+  console.log("Savedpostlist reached");
+  let postid = req.body.postid;
+  console.log(postid);
+  db1.all(
+    `SELECT * FROM postrecords WHERE postid = '${postid}'`,
+    (err, result) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        let dest = path.join(
+          __dirname,
+          "../postthumbnails/" +
+            result[0].postid +
+            "." +
+            result[0].filetype.toString().replace("image/", "")
+        );
+        fs.readFile(dest, (err, data) => {
+          if (err) {
+            res.send({ msg: "failed" });
+            console.log(err);
+          } else {
+            let base64Image = new Buffer.from(data, "binary").toString(
+              "base64"
+            );
+            let postobj = result[0];
+            Object.assign(postobj, { img: base64Image });
+            res.send({ msg: postobj });
+          }
+        });
       }
     }
   );
