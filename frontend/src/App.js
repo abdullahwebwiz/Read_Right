@@ -23,6 +23,7 @@ import FollowingPage from "./pages/followingpage";
 import BecomeRighterPage from "./pages/becomerighterpage";
 import SavedPostList from "./components/savedpostlist/savedpostlist";
 import FollowingBox from "./components/followingbox/followingbox";
+import HistoryBox from "./components/historybox/historybox";
 
 const App = () => {
   return (
@@ -45,7 +46,7 @@ const App = () => {
           <Route path="/savedposts" element={<SavedPostList />} />
           <Route path="/becomerighter" element={<BecomeRighterPage />} />
           <Route path="/imagecropper" element={<ImgCropper />} />
-          <Route path="/pp" element={<FollowingBox />} />
+          <Route path="/pp" element={<HistoryBox />} />
 
         </Routes>
       </BrowserRouter>

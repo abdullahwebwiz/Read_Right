@@ -95,6 +95,34 @@ router.post("/readsinc", (req, res) => {
   );
 });
 
+router.post("/gethistory", (req, res) => {
+  let user = req.body.user;
+  db2.all(`SELECT * FROM '${"historyofuser" + user}'`, (err, result) => {
+    if (err) {
+      res.send({ msg: "failed" });
+      console.log(err);
+    } else {
+      res.send({ msg: result });
+    }
+  });
+});
+
+router.post("/remhis", (req, res) => {
+  let postid = req.body.postid;
+  let user = req.body.user;
+  db2.run(
+    `DELETE FROM '${"historyofuser" + user}' WHERE postid = '${postid}'`,
+    (err) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        res.send({ msg: "success" });
+      }
+    }
+  );
+});
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
 

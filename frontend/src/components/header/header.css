@@ -90,7 +90,6 @@ header .mainlogo {
   cursor: pointer;
   color: #027529;
   margin-top: 10px;
-
 }
 
 .mbone img {
@@ -100,7 +99,7 @@ header .mainlogo {
   cursor: pointer;
 }
 
-.profilemenu{
+.profilemenu {
   position: absolute;
   top: 50px;
   right: 0px;
@@ -118,12 +117,37 @@ header .mainlogo {
   overflow: hidden;
 }
 
-.profilemenu div{
-position: absolute;
-left: 2px;
-top: 2px;
-white-space: nowrap;
-overflow: hidden;
-text-overflow: ellipsis;
-width: 100%;
+.profilemenu div {
+  position: absolute;
+  left: 2px;
+  top: 2px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: 100%;
+}
+
+.searchlistbar {
+  background-color: #079937;
+  padding: 10px;
+  width: 640px;
+  left: 310px;
+  top: 40px;
+  position: absolute;
+  display: none;
+}
+
+.searchlistone {
+  color: white;
+  font-size: 20px;
+  margin-bottom: 5px;
+  border-bottom: 1px solid white;
+  font-style: italic;
+  transition: all 0s linear;
+  cursor: pointer;
+}
+
+.searchlistone:hover {
+  color: rgb(0, 0, 116);
+  border-bottom: 1px solid rgb(0, 0, 116);
 }

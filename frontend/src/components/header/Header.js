@@ -7,6 +7,7 @@ import { useNavigate, Link } from "react-router-dom";
 import useCookie from "../../hooks/useCookie";
 import SavedPostList from "../savedpostlist/savedpostlist";
 import FollowingBox from "../followingbox/followingbox";
+import HistoryBox from "../historybox/historybox";
 import Popup from "../popup/Popup";
 let mainlogo = "/assets/mainlogo.png";
 let addpostimg = "/assets/addpostimg.png";
@@ -19,16 +20,19 @@ let followingicon = "/assets/followingicon.png";
 let historyicon = "/assets/historyicon.png";
 const Header = () => {
   let cookie = useCookie;
+  let searchlistelem = useRef("");
   let menuelem = useRef("");
   let profileelem = useRef("");
   let [val, setval] = useState("");
   let [spl, setspl] = useState(false);
   let [followingbox, setfollowingbox] = useState(false);
+  let [historybox, sethistorybox] = useState(false);
   let [menushow, setmenushow] = useState(false);
   let [profilemenushow, setprofilemenushow] = useState(false);
   let [email, setemail] = useState("wait...");
   let [isrighter, setisrighter] = useState("");
   let [msg, setmsg] = useState(false);
+  let [searchlist, setsearchlist] = useState([]);
   let [msgprops, setmsgprops] = useState({
     msg: "",
     twobut: false,
@@ -59,6 +63,29 @@ const Header = () => {
         });
     }
   }, []);
+
+  const inputhandle = (e) => {
+    setval(e);
+    if (e == "") {
+      searchlistelem.current.style.display = "none";
+    }
+  };
+
+  useEffect(() => {
+    axios
+      .post("/getonly/searchlist", {
+        x: val,
+      })
+      .then((res) => {
+        if (res.data.msg != "failed") {
+          setsearchlist(res.data.msg);
+          searchlistelem.current.style.display = "block";
+        } else {
+          setsearchlist([]);
+          searchlistelem.current.style.display = "block";
+        }
+      });
+  }, [val]);
 
   return (
     <>
@@ -108,13 +135,16 @@ const Header = () => {
               <p>Explore</p>
             </div>
           </Link>
-          <Link to="/history">
-            {" "}
-            <div className={"mbone"}>
-              <img src={historyicon} />
-              <p>History</p>
-            </div>
-          </Link>{" "}
+          <div
+            className={"mbone"}
+            onClick={() => {
+              sethistorybox(true);
+              menuelem.current.style.display = "none";
+            }}
+          >
+            <img src={historyicon} />
+            <p>History</p>
+          </div>
           <div
             className={"mbone"}
             onClick={() => {
@@ -141,7 +171,7 @@ const Header = () => {
           type={"text"}
           whatinput={"headersearch"}
           naam={"input"}
-          fun={(e) => setval(e)}
+          fun={(x, y) => inputhandle(x, y)}
           val={val}
           placeholder={"Search..."}
         />
@@ -220,6 +250,24 @@ const Header = () => {
             type={"button"}
           />
         )}
+
+        {searchlist.length != 0 ? (
+          <div className={"searchlistbar"} ref={searchlistelem}>
+            {
+            searchlist.map((d, i) => {
+              return (
+                <>
+                  <div className={"searchlistone"} key={i}>
+                    {d.posttitle}
+                  </div>
+                </>
+              );
+            })
+            }
+          </div>
+        ) : (
+          ""
+        )}
       </header>
       {msg ? (
         <Popup
@@ -252,8 +300,17 @@ const Header = () => {
       ) : (
         ""
       )}
+      {historybox ? (
+        <HistoryBox
+          fun1={() => {
+            sethistorybox(false);
+          }}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
 
-export default memo(Header);
+export default Header;

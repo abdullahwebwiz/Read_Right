@@ -5,6 +5,7 @@ const crypto = require("crypto");
 const bodyParser = require("body-parser");
 const sqlite3 = require("sqlite3").verbose();
 const ang = require("randomstring");
+const sarray = require("shuffle-array");
 const path = require("path");
 const fs = require("fs");
 let dest1 = path.join(__dirname, "../databases/database1.db");
@@ -362,4 +363,25 @@ router.post("/savedpostlist", (req, res) => {
   );
 });
 
+
+router.post("/searchlist", (req, res) => {
+  let x = req.body.x;
+  db1.all(
+    `SELECT posttitle, postid FROM postrecords WHERE
+    posttitle LIKE '${"%" + x + "%"}' OR
+    posttitle LIKE '${x + "%"}' LIMIT 7`,
+    (err, result1) => {
+      if (err) {
+        res.send({ msg: "failed" });
+        console.log(err);
+      } else {
+        if (result1.length != 0) {
+          res.send({ msg: result1 });
+        } else {
+          res.send({ msg: "failed" });
+        }
+      }
+    }
+  );
+});
 module.exports = router;

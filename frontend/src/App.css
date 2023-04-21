@@ -75,7 +75,8 @@
   background-color: #577d82;
   height: 35px;
   width: 660px;
-  border-radius: 20px;
+  border-top-right-radius: 20px;
+  border-bottom-right-radius: 20px;
   border: none;
   outline: none;
   padding-left: 20px;
@@ -83,3 +84,5 @@
   font-size: 20px;
   letter-spacing: 2px;
 }
+
+
