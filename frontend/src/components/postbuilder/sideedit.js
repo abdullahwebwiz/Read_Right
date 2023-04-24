@@ -32,6 +32,7 @@ const SideEdit = ({
   let [posttaglist, setposttaglist] = useState([]);
   let [postthumbnail, setpostthumbnail] = useState("");
   let [imgcropper, setimgcropper] = useState(false);
+  
   const addimg = (x) => {
     setpostthumbnail(x);
     setimgcropper(false);

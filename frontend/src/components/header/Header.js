@@ -20,7 +20,6 @@ let followingicon = "/assets/followingicon.png";
 let historyicon = "/assets/historyicon.png";
 const Header = () => {
   let cookie = useCookie;
-  let searchlistelem = useRef("");
   let menuelem = useRef("");
   let profileelem = useRef("");
   let [val, setval] = useState("");
@@ -66,25 +65,24 @@ const Header = () => {
 
   const inputhandle = (e) => {
     setval(e);
-    if (e == "") {
-      searchlistelem.current.style.display = "none";
-    }
   };
 
   useEffect(() => {
-    axios
-      .post("/getonly/searchlist", {
-        x: val,
-      })
-      .then((res) => {
-        if (res.data.msg != "failed") {
-          setsearchlist(res.data.msg);
-          searchlistelem.current.style.display = "block";
-        } else {
-          setsearchlist([]);
-          searchlistelem.current.style.display = "block";
-        }
-      });
+    if (val) {
+      axios
+        .post("/getonly/searchlist", {
+          x: val,
+        })
+        .then((res) => {
+          if (res.data.msg != "failed") {
+            setsearchlist(res.data.msg);
+          } else {
+            setsearchlist([]);
+          }
+        });
+    } else {
+      setsearchlist([]);
+    }
   }, [val]);
 
   return (
@@ -167,11 +165,12 @@ const Header = () => {
           </div>
         </div>
 
-        <Input
+        <input
           type={"text"}
-          whatinput={"headersearch"}
+          className={"headersearch"}
           naam={"input"}
-          fun={(x, y) => inputhandle(x, y)}
+          onChange={(e) => setval(e.target.value)}
+          onBlur={() => setsearchlist([])}
           val={val}
           placeholder={"Search..."}
         />
@@ -250,20 +249,17 @@ const Header = () => {
             type={"button"}
           />
         )}
-
         {searchlist.length != 0 ? (
-          <div className={"searchlistbar"} ref={searchlistelem}>
-            {
-            searchlist.map((d, i) => {
+          <div className={"searchbar"}>
+            {searchlist.map((d, i) => {
               return (
                 <>
-                  <div className={"searchlistone"} key={i}>
+                  <div className={"searchbarone"} key={i}>
                     {d.posttitle}
                   </div>
                 </>
               );
-            })
-            }
+            })}
           </div>
         ) : (
           ""

@@ -4,6 +4,7 @@ import axios from "axios";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
 import Popup from "../popup/Popup";
+import ImgCropper from "../imgcropper/ImgCropper";
 import useCookie from "../../hooks/useCookie";
 import { useNavigate, useLocation } from "react-router-dom";
 let profileiconimg = "/assets/profileiconimg.png";
@@ -25,7 +26,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
 
   let cookie = useCookie;
   let user = cookie("get", "user");
-
+  let [imgcropper, setimgcropper] = useState(false);
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
     msg: "",
@@ -49,6 +50,12 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
     link4: "nolink",
     link5: "nolink",
   });
+
+  const addimg = (x) => {
+    setimg(x);
+    setimgcropper(false);
+    console.log(x);
+  };
 
   const submithandle = () => {
     if (
@@ -156,16 +163,6 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
   let navigate = useNavigate();
   let { state } = useLocation();
 
-  useEffect(() => {
-    if (state) {
-      setimg(state.img);
-      console.log(state.img);
-    } else {
-      setimg("");
-    }
-  }, [state]);
-
-
 
   useEffect(() => {
     if (localStorage.getItem("rightername")) {
@@ -202,10 +199,14 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link1: "nolink",
+          link1: "",
         }));
       }
     }
+
+
+
+
     if (localStorage.getItem("link2")) {
       setlinks((prevState) => ({
         ...prevState,
@@ -220,7 +221,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link2: "nolink",
+          link2: "",
         }));
       }
     }
@@ -238,7 +239,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link3: "nolink",
+          link3: "",
         }));
       }
     }
@@ -256,7 +257,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       } else {
         setlinks((prevState) => ({
           ...prevState,
-          link4: "nolink",
+          link4: "",
         }));
       }
     }
@@ -293,15 +294,12 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
             <img
               src={!img ? profileiconimg : `${URL.createObjectURL(img)}`}
               className={"brfimg-1"}
+              onClick={() => setimgcropper(true)}
             />
             <img
               src={uploadicon}
               className={"brfimg-2"}
-              onClick={() => {
-                navigate("/imagecropper", {
-                  state: { aspect: 1, sender: "becomerighter" },
-                });
-              }}
+              onClick={() => setimgcropper(true)}
             />
           </div>
 
@@ -424,6 +422,8 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
       ) : (
         ""
       )}
+
+      {imgcropper ? <ImgCropper imgaspect={1} donefun={addimg} /> : ""}
     </>
   );
 };

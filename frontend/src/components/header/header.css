@@ -127,17 +127,16 @@ header .mainlogo {
   width: 100%;
 }
 
-.searchlistbar {
+.searchbar {
   background-color: #079937;
   padding: 10px;
   width: 640px;
   left: 310px;
   top: 40px;
   position: absolute;
-  display: none;
 }
 
-.searchlistone {
+.searchbarone {
   color: white;
   font-size: 20px;
   margin-bottom: 5px;
@@ -147,7 +146,7 @@ header .mainlogo {
   cursor: pointer;
 }
 
-.searchlistone:hover {
+.searchbarone:hover {
   color: rgb(0, 0, 116);
   border-bottom: 1px solid rgb(0, 0, 116);
 }

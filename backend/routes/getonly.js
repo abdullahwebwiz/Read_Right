@@ -363,25 +363,27 @@ router.post("/savedpostlist", (req, res) => {
   );
 });
 
-
 router.post("/searchlist", (req, res) => {
   let x = req.body.x;
-  db1.all(
-    `SELECT posttitle, postid FROM postrecords WHERE
-    posttitle LIKE '${"%" + x + "%"}' OR
-    posttitle LIKE '${x + "%"}' LIMIT 7`,
-    (err, result1) => {
-      if (err) {
-        res.send({ msg: "failed" });
-        console.log(err);
-      } else {
-        if (result1.length != 0) {
-          res.send({ msg: result1 });
-        } else {
+  console.log(x);
+  if (x != "") {
+    db1.all(
+      `SELECT posttitle, postid FROM postrecords WHERE
+      posttitle LIKE '${"%" + x + "%"}' OR
+      posttitle LIKE '${x + "%"}' LIMIT 7`,
+      (err, result1) => {
+        if (err) {
           res.send({ msg: "failed" });
+          console.log(err);
+        } else {
+          if (result1.length != 0) {
+            res.send({ msg: result1 });
+          } else {
+            res.send({ msg: "failed" });
+          }
         }
       }
-    }
-  );
+    );
+  }
 });
 module.exports = router;

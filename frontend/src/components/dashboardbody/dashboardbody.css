@@ -59,20 +59,19 @@
   display: flex;
   justify-content: center;
   align-items: center;
+
 }
 
 .linkcon img {
   width: 40px;
-  margin-left: 10px;
+  margin-left: 5px;
   cursor: pointer;
 }
 .descon {
   width: 100%;
   position: relative;
   margin-top: 20px;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  text-align: center;
   font-size: 21px;
   color: white;
 }
