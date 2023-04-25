@@ -290,7 +290,8 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
             <img
               src={!img ? profileiconimg : `${URL.createObjectURL(img)}`}
               className={"brfimg-1"}
-              onClick={() => setimgcropper(true)}
+              onClick={() => {
+                setimgcropper(true)}}
             />
             <img
               src={uploadicon}
@@ -423,7 +424,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
         <ImgCropper
           imgaspect={1}
           donefun={addimg}
-          closefun={setimgcropper(false)}
+          closefun={()=> setimgcropper(false)}
         />
       ) : (
         ""
