@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import "./dashboardbody.css";
 import timeAgo from "epoch-to-timeago/";
 import { useNavigate, useParams } from "react-router-dom";
@@ -415,4 +415,4 @@ const DashboardBody = ({ todoarray, todofun, iamrighterpage }) => {
     </>
   );
 };
-export default DashboardBody;
+export default memo(DashboardBody);

@@ -170,7 +170,11 @@ const Header = () => {
           className={"headersearch"}
           naam={"input"}
           onChange={(e) => setval(e.target.value)}
-          onBlur={() => setsearchlist([])}
+          onBlur={() => {
+            setTimeout(() => {
+              setsearchlist([]);
+            }, 100);
+          }}
           val={val}
           placeholder={"Search..."}
         />
@@ -254,9 +258,12 @@ const Header = () => {
             {searchlist.map((d, i) => {
               return (
                 <>
-                  <div className={"searchbarone"} key={i}>
-                    {d.posttitle}
-                  </div>
+                  <Link to={"/post/" + d.postid}>
+                    {" "}
+                    <div className={"searchbarone"} key={i}>
+                      {d.posttitle}
+                    </div>
+                  </Link>
                 </>
               );
             })}
@@ -309,4 +316,4 @@ const Header = () => {
   );
 };
 
-export default Header;
+export default memo(Header);

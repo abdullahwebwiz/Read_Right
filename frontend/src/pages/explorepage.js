@@ -1,4 +1,5 @@
 import Header from "../components/header/Header";
+import { memo } from "react";
 const ExplorePage = () => {
   return (
     <>
@@ -6,4 +7,4 @@ const ExplorePage = () => {
     </>
   );
 };
-export default ExplorePage;
+export default memo(ExplorePage);

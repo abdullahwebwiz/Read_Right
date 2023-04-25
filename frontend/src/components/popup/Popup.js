@@ -1,4 +1,4 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, memo } from "react";
 import "./popup.css";
 const Popup = ({ msg, buttwo, butval1, butval2, fun1, fun2, closepop }) => {
   let crossimg = "/assets/crossimg.png";
@@ -19,4 +19,4 @@ const Popup = ({ msg, buttwo, butval1, butval2, fun1, fun2, closepop }) => {
     </>
   );
 };
-export default Popup;
+export default memo(Popup);

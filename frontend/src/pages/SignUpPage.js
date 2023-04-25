@@ -120,4 +120,4 @@ const SignUpPage = () => {
     </>
   );
 };
-export default SignUpPage;
+export default React.memo(SignUpPage);

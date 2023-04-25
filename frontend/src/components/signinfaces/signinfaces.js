@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useRef, useState,memo } from "react";
 import { useNavigate } from "react-router-dom";
 import bcrypt from "bcryptjs";
 import PropagateLoader from "react-spinners/PropagateLoader";
@@ -144,4 +144,4 @@ const Signinface = ({ popfun }) => {
     </>
   );
 };
-export default Signinface;
+export default memo(Signinface);

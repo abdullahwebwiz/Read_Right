@@ -1,7 +1,7 @@
 import "./reportform.css";
 import Button from "../utilcomps/button";
 import axios from "axios";
-import { useState } from "react";
+import { useState,memo } from "react";
 import Cookie from "../../hooks/useCookie";
 const ReportForm = ({ title, msg, subject,fun }) => {
   let [val, setval] = useState("");
@@ -54,4 +54,4 @@ const ReportForm = ({ title, msg, subject,fun }) => {
     </>
   );
 };
-export default ReportForm;
+export default memo(ReportForm);

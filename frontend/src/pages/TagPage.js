@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
 import GeneralLoader from "../components/generalloader/generalloader";
@@ -79,4 +79,4 @@ const TagPage = () => {
     );
   }
 };
-export default TagPage;
+export default memo(TagPage);

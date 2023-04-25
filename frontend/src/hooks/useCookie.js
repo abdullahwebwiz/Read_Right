@@ -1,5 +1,5 @@
 import cookie from 'js-cookie';
-
+import { memo } from 'react';
 const useCookie = (todo,key,value,path,expiry) =>{
 if(todo == 'set'){
 cookie.set(key,value,{path: path, expires: expiry});

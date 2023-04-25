@@ -2,7 +2,7 @@ import { Navigate, useNavigate } from "react-router-dom";
 import useCookie from "../hooks/useCookie";
 import axios from "axios";
 import BecomeRighter from "../components/becomerighter/becomerighter";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 const BecomeRighterPage = () => {
   let cookie = useCookie;
   let issigned = cookie("get", "user");
@@ -45,4 +45,4 @@ const BecomeRighterPage = () => {
     );
   }
 };
-export default BecomeRighterPage;
+export default memo(BecomeRighterPage);

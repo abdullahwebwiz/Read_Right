@@ -6,7 +6,7 @@ import axios from "axios";
 import moment from "moment";
 import PostBoxExtra from "../postboxextra/postboxextra";
 import Header from "../header/Header";
-import cookie from "../../hooks/useCookie";
+import Cookie from "../../hooks/useCookie";
 import { Link } from "react-router-dom";
 import ReportForm from "../reportform/reportform";
 let dumimg1 = "/assets/profileiconimg.png";
@@ -16,7 +16,7 @@ let saveicon = "/assets/saveposticon2.png";
 let crossicon = "/assets/crossicon.png";
 let shareicon = "/assets/shareicon.png";
 let threedots = "/assets/threedots.png";
-let user = cookie("get", "user");
+let user = Cookie("get", "user");
 
 const PostBody = ({
   postdata,
@@ -415,4 +415,4 @@ const PostBody = ({
     );
   }
 };
-export default PostBody;
+export default memo(PostBody);

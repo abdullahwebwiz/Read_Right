@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import Header from "../components/header/Header";
 import PostBuilder from "../components/postbuilder/postbuilder";
 import GeneralLoader from "../components/generalloader/generalloader";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 const PostBuilderPage = () => {
   let cookie = useCookie;
   let navigate = useNavigate();
@@ -71,4 +71,4 @@ const PostBuilderPage = () => {
     );
   }
 };
-export default PostBuilderPage;
+export default memo(PostBuilderPage);

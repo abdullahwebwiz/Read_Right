@@ -1,6 +1,6 @@
 import "./historybox.css";
 import cookie from "../../hooks/useCookie";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import moment from "moment";
 import axios from "axios";
 import { Link } from "react-router-dom";
@@ -84,4 +84,4 @@ const HistoryBox = ({ fun1 }) => {
     </>
   );
 };
-export default HistoryBox;
+export default memo(HistoryBox);

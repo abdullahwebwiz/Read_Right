@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+import { memo } from "react";
 import useCookie from "../hooks/useCookie";
 import Header from "../components/header/Header";
 const HistoryPage = () => {
@@ -20,4 +21,4 @@ const HistoryPage = () => {
     );
   }
 };
-export default HistoryPage;
+export default memo(HistoryPage);

@@ -1,6 +1,7 @@
 import "./tagbody.css";
 import timeAgo from "epoch-to-timeago/";
 import PostBox from "../postbox/postbox";
+import { memo } from "react";
 const TagBody = ({ postarray, tagname }) => {
   console.log(postarray);
   let originalTime = Date.now();
@@ -34,4 +35,4 @@ const TagBody = ({ postarray, tagname }) => {
     </>
   );
 };
-export default TagBody;
+export default memo(TagBody);

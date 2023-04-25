@@ -8,7 +8,7 @@ import { dataURLtoFile } from "./dataURLtoFile";
 import PopUp from "../popup/Popup";
 import axios from "axios";
 
-const ImgCropper = ({ imgaspect, donefun }) => {
+const ImgCropper = ({ imgaspect, donefun, closefun }) => {
   let { state } = useLocation();
   let navigate = useNavigate();
   const [image, setImage] = React.useState(null);
@@ -103,52 +103,25 @@ const ImgCropper = ({ imgaspect, donefun }) => {
 
         <div className={"cropbuttons"}>
           <Button
-            beauty={{
-              backgroundColor: "#0bda51",
-              color: "white",
-              fontSize: "17px",
-              border: "none",
-              outline: "none",
-              borderRadius: "5px",
-              padding: "0 5px 0 5px",
-              height: "35px",
-              fontStyle: "Calibri",
-              cursor: "pointer",
-            }}
+            whatbut={"buttonfirst"}
+            location={{ position: "relative" }}
             val={"Choose"}
             fun={triggerFileSelectPopup}
             type={"button"}
           />
           <Button
-            beauty={{
-              backgroundColor: "#0bda51",
-              color: "white",
-              fontSize: "17px",
-              border: "none",
-              outline: "none",
-              borderRadius: "5px",
-              height: "35px",
-              fontStyle: "Calibri",
-              cursor: "pointer",
-              padding: "0 5px 0 5px",
-            }}
+            whatbut={"buttonfirst"}
+            location={{ position: "relative" }}
             val={"Close"}
-            fun={() => setImage(null)}
+            fun={() => {
+              setImage(null);
+              closefun();
+            }}
             type={"button"}
           />
           <Button
-            beauty={{
-              backgroundColor: "#0bda51",
-              color: "white",
-              fontSize: "17px",
-              border: "none",
-              outline: "none",
-              borderRadius: "5px",
-              height: "35px",
-              fontStyle: "Calibri",
-              cursor: "pointer",
-              padding: "0 5px 0 5px",
-            }}
+            whatbut={"buttonfirst"}
+            location={{ position: "relative" }}
             val={"done"}
             fun={sendimg}
             type={"button"}

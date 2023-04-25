@@ -1,7 +1,7 @@
 import Header from "../components/header/Header";
 import HomeBody from "../components/homebody/homebody";
 import GeneralLoader from "../components/generalloader/generalloader";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 const HomePage = () => {
 
 
@@ -21,4 +21,4 @@ const HomePage = () => {
     );
   }
 };
-export default HomePage;
+export default memo(HomePage);

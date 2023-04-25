@@ -32,7 +32,7 @@ const SideEdit = ({
   let [posttaglist, setposttaglist] = useState([]);
   let [postthumbnail, setpostthumbnail] = useState("");
   let [imgcropper, setimgcropper] = useState(false);
-  
+
   const addimg = (x) => {
     setpostthumbnail(x);
     setimgcropper(false);
@@ -155,7 +155,12 @@ const SideEdit = ({
   };
 
   const updatehandle = () => {
-    if(postthumbnail && postid && posttaglist && localStorage.getItem('postbody')){
+    if (
+      postthumbnail &&
+      postid &&
+      posttaglist &&
+      localStorage.getItem("postbody")
+    ) {
       let fb = new FormData();
       fb.append("postthumbnail", postthumbnail);
       fb.append("posttitle", posttitle);
@@ -172,18 +177,17 @@ const SideEdit = ({
           if (res.data.msg == "failed") {
             alert("Something went wrong.");
           } else {
-            localStorage.removeItem('postid');
-            localStorage.removeItem('postbody');
-            localStorage.removeItem('posttaglist');
-            localStorage.removeItem('posttitle');
+            localStorage.removeItem("postid");
+            localStorage.removeItem("postbody");
+            localStorage.removeItem("posttaglist");
+            localStorage.removeItem("posttitle");
             alert("Post Updated");
             navigate("/dashboard");
           }
         });
+    } else {
+      alert("Fill all fields");
     }
-else{
-  alert('Fill all fields')
-}
   };
 
   const addtag = () => {
@@ -322,7 +326,11 @@ else{
       </div>
       {loading ? <GeneralLoader /> : ""}
       {imgcropper ? (
-        <ImgCropper imgaspect={1.77777777778} donefun={addimg} />
+        <ImgCropper
+          imgaspect={1.77777777778}
+          donefun={addimg}
+          closefun={()=> setimgcropper(false)}
+        />
       ) : (
         ""
       )}

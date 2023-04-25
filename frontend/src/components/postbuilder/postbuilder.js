@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useRef,memo } from "react";
 import Editor from "./editor";
 import SideEdit from "./sideedit";
 import "./postbuilder.css";
@@ -101,4 +101,4 @@ const PostBuilder = ({ postdata }) => {
     );
   }
 };
-export default PostBuilder;
+export default memo(PostBuilder);

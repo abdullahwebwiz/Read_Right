@@ -3,10 +3,10 @@ import PostBox from "../postbox/postbox";
 import GeneralLoader from "../generalloader/generalloader";
 import timeAgo from "epoch-to-timeago/";
 import Popup from "../popup/Popup";
-import { useEffect, useState } from "react";
+import { useEffect, useState, memo } from "react";
 import axios from "axios";
 import ReportForm from "../reportform/reportform";
-import cookie from '../../hooks/useCookie';
+import cookie from "../../hooks/useCookie";
 const HomeBody = () => {
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
@@ -79,7 +79,7 @@ const HomeBody = () => {
         },
       });
     } else if (x == "Report") {
-      if(cookie('get','user')){
+      if (cookie("get", "user")) {
         setreport(true);
         setreportprops({
           msg: "Post ID " + y,
@@ -88,19 +88,19 @@ const HomeBody = () => {
           fun: () => {
             setreport(false);
           },
-        });  
-      }else{
-      setmsg(true);
-      setmsgprops({
-        msg: "You are not signedin",
-        buttwo: false,
-        butval1: "Ok",
-        fun1: () => {
-          setmsg(false);
-        },
-      });
+        });
+      } else {
+        setmsg(true);
+        setmsgprops({
+          msg: "You are not signedin",
+          buttwo: false,
+          butval1: "Ok",
+          fun1: () => {
+            setmsg(false);
+          },
+        });
       }
-     }
+    }
   };
 
   if (!loading) {
@@ -167,4 +167,4 @@ const HomeBody = () => {
     );
   }
 };
-export default HomeBody;
+export default memo(HomeBody);

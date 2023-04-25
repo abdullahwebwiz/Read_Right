@@ -1,5 +1,5 @@
 import "./becomerighter.css";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState, memo } from "react";
 import axios from "axios";
 import Input from "../utilcomps/input";
 import Button from "../utilcomps/button";
@@ -163,7 +163,6 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
   let navigate = useNavigate();
   let { state } = useLocation();
 
-
   useEffect(() => {
     if (localStorage.getItem("rightername")) {
       setrightername(localStorage.getItem("rightername"));
@@ -203,9 +202,6 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
         }));
       }
     }
-
-
-
 
     if (localStorage.getItem("link2")) {
       setlinks((prevState) => ({
@@ -423,8 +419,16 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
         ""
       )}
 
-      {imgcropper ? <ImgCropper imgaspect={1} donefun={addimg} /> : ""}
+      {imgcropper ? (
+        <ImgCropper
+          imgaspect={1}
+          donefun={addimg}
+          closefun={setimgcropper(false)}
+        />
+      ) : (
+        ""
+      )}
     </>
   );
 };
-export default BecomeRighter;
+export default memo(BecomeRighter);

@@ -1,5 +1,6 @@
 import ScaleLoader from "react-spinners/ScaleLoader";
 import "./generalloader.css";
+import { memo } from "react";
 const GeneralLoader = () => {
   return (
     <>
@@ -10,4 +11,4 @@ const GeneralLoader = () => {
   );
 };
 
-export default GeneralLoader;
+export default memo(GeneralLoader);

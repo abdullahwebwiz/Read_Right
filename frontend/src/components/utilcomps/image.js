@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 
 const Image = ({ whatimg, imgid, imgtype, className, alt }) => {
   let [img, setimg] = useState("");
@@ -21,4 +21,4 @@ const Image = ({ whatimg, imgid, imgtype, className, alt }) => {
     </>
   );
 };
-export default Image;
+export default memo(Image);

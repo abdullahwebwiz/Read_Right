@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import { useParams } from "react-router-dom";
 import GeneralLoader from "../components/generalloader/generalloader";
 import PostBody from "../components/postbody/postbody";
@@ -52,9 +52,7 @@ const PostPage = () => {
   };
 
   const deletecomment = (x, y, z) => {
-    // x s_n0
-    // y index
-    //z postid
+
 
     axios
       .post("/commentsys/deletecomment", {
@@ -143,4 +141,4 @@ const PostPage = () => {
     );
   }
 };
-export default PostPage;
+export default memo(PostPage);

@@ -5,7 +5,7 @@ import DashboardBody from "../components/dashboardbody/dashboardbody";
 import GeneralLoader from "../components/generalloader/generalloader";
 import axios from "axios";
 import Popup from "../components/popup/Popup";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 const DashboardPage = () => {
   let [msg, setmsg] = useState(false);
   let [msgprops, setmsgprops] = useState({
@@ -166,4 +166,4 @@ const DashboardPage = () => {
     );
   }
 };
-export default DashboardPage;
+export default memo(DashboardPage);

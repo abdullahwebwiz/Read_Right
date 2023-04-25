@@ -1,6 +1,6 @@
 import "./followingbox.css";
 import { useState } from "react";
-import { useEffect } from "react";
+import { useEffect, memo } from "react";
 import axios from "axios";
 import cookie from "../../hooks/useCookie";
 import Button from "../utilcomps/button";
@@ -56,7 +56,7 @@ const FollowingBox = ({ fun1 }) => {
               top: "0",
               right: "0",
               width: "30px",
-              cursor:'pointer',
+              cursor: "pointer",
             }}
             onClick={fun1}
           />
@@ -91,4 +91,4 @@ const FollowingBox = ({ fun1 }) => {
     </>
   );
 };
-export default FollowingBox;
+export default memo(FollowingBox);

@@ -1,6 +1,6 @@
 import "./postbox.css";
 import Linker from "../utilcomps/linker";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState, memo } from "react";
 import { Link } from "react-router-dom";
 import axios from "axios";
 let dumbimg = "/assets/dumimg.png";
@@ -147,4 +147,4 @@ const PostBox = ({
     </>
   );
 };
-export default PostBox;
+export default memo(PostBox);

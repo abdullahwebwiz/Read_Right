@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect, useState,memo } from "react";
 import "./savedpostlist.css";
 import Button from "../utilcomps/button";
 let dumimg = "/assets/dumimg.png";
@@ -79,4 +79,4 @@ const SavedPostList = ({ fun }) => {
     </>
   );
 };
-export default SavedPostList;
+export default memo(SavedPostList);

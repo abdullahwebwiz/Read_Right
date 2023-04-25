@@ -94,4 +94,4 @@ const SignInPage = () => {
     </>
   );
 };
-export default SignInPage;
+export default React.memo(SignInPage);

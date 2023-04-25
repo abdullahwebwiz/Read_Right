@@ -1,4 +1,5 @@
 import { Navigate } from "react-router-dom";
+import { memo } from "react";
 import useCookie from "../hooks/useCookie";
 import Header from '../components/header/Header';
 const SavedPostsPage = () =>{
@@ -19,4 +20,4 @@ const SavedPostsPage = () =>{
       );
     }
     }
-    export default SavedPostsPage;
+    export default memo(SavedPostsPage);
