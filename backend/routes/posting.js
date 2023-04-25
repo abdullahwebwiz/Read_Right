@@ -196,6 +196,7 @@ router.post("/deletepost", (req, res) => {
   });
 });
 
+
 router.post("/unpublishpost", (req, res) => {
   let postid = req.body.postid;
   db1.run(
@@ -210,7 +211,7 @@ router.post("/unpublishpost", (req, res) => {
     }
   );
 });
-router.post("/unpublishpost", (req, res) => {
+router.post("/publishpostnow", (req, res) => {
   let postid = req.body.postid;
   db1.run(
     `UPDATE postrecords SET ispublished = 'yes' WHERE postid = '${postid}'`,

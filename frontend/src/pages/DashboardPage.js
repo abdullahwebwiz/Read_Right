@@ -104,7 +104,7 @@ const DashboardPage = () => {
     }
     else if (x == "Publish") {
       axios
-        .post("/posting/publishpost", {
+        .post("/posting/publishpostnow", {
           postid: y,
         })
         .then((res) => {
