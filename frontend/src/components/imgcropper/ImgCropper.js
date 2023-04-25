@@ -144,4 +144,4 @@ const ImgCropper = ({ imgaspect, donefun, closefun }) => {
     </>
   );
 };
-export default React.memo(ImgCropper);
+export default ImgCropper;
