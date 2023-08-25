@@ -20,8 +20,8 @@ const db1 = new sqlite3.Database(destxx, sqlite3.OPEN_READWRITE, (err) => {
 
 // =================middlewares==============================
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.static(dest.public));
+app.use(bodyParser.urlencoded({ extended: true }));
 dotenv.config({ path: dest.env });
 app.use(cors({ origin: "*", optionsSuccessStatus: 200, credentials: true }));
 app.use(
@@ -61,9 +61,11 @@ app.use("/followingsys", data12);
 app.use("/commentsys", data13);
 app.use("/harc", data14);
 
-app.get("/", (req, res) => {
-  res.send({ msg: "success" });
-});
+// if (process.env.NODE_ENV == "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../public/index.html"));
+  });
+// }
 
 let port = process.env.PORT || 3500;
 app.listen(port, (err) => {

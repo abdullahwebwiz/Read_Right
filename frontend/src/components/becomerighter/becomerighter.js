@@ -407,7 +407,7 @@ const BecomeRighter = ({ righterdata, isrighter }) => {
         </div>
       </div>
       {msg ? (
-        <Popup
+        <Popup              
           closepop={() => setmsg(false)}
           msg={msgprops.msg}
           buttwo={msgprops.buttwo}

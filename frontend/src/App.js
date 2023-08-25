@@ -47,7 +47,6 @@ const App = () => {
           <Route path="/becomerighter" element={<BecomeRighterPage />} />
           <Route path="/imagecropper" element={<ImgCropper />} />
           <Route path="/pp" element={<HistoryBox />} />
-
         </Routes>
       </BrowserRouter>
     </>

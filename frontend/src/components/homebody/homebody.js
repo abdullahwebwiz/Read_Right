@@ -35,7 +35,7 @@ const HomeBody = () => {
   let [loading, setloading] = useState(true);
   var originalTime = new Date().getTime();
 
-  useEffect(() => {
+  useEffect(() => {  
     axios.post("/sendpostarray/homeposts").then((res) => {
       if (res.data.msg == "failed") {
         setmsg(true);
